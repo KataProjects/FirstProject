@@ -1,13 +1,16 @@
 import { Route, Routes } from 'react-router';
 
-import { navRoutes } from './navRoutes';
+import { navRoutes, ROUTES } from './navRoutes';
+import { Layout } from '../../widgets';
 
 export const AppRoutes = () => {
   return (
     <Routes>
-      {navRoutes.map((route) => (
-        <Route key={route.path} path={route.path} element={route.element} />
-      ))}
+      <Route path={ROUTES.HOME} element={<Layout/>}>
+        {navRoutes.map((route) => (
+          <Route key={route.path} path={route.path} element={route.element} />
+        ))}
+      </Route>
     </Routes>
   );
 };
