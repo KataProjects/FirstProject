@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 
-import { navRoutes, ROUTES } from '@app/routes/navRoutes';
-import { Layout } from '@widgets/index';
+import { navRoutes, ROUTES } from '@app/routes';
+import { Layout } from '@widgets';
 
 export const AppRoutes = () => {
   return (

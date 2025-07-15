@@ -1,4 +1,4 @@
-import { HomePage, NotFoundPage, SignIn, SignUp } from '@pages/index';
+import { HomePage, NotFoundPage, SignIn, SignUp } from '@pages';
 import type { RoutesProps } from '@app/types';
 
 export const ROUTES = {
