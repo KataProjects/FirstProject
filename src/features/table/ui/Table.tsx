@@ -1,6 +1,6 @@
 import { Table, type TableProps } from 'antd';
 
-import styles from './Table.module.css';
+import styles from './Table.module.scss';
 
 export const MyTable = <T extends object = any>({
   pagination = { position: ['bottomLeft'], showSizeChanger: false },
