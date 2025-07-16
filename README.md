@@ -105,9 +105,9 @@ npm run format:check
 ## 🤝 Вклад в проект
 
 1. Fork репозитория
-2. Создайте feature ветку (`git checkout -b feature/amazing-feature`)
+2. Создайте ветку, используя ключ задачи в jira (`git checkout -b FELL02-1`)
 3. Commit изменения (`git commit -m 'Add amazing feature'`)
-4. Push в ветку (`git push origin feature/amazing-feature`)
+4. Push в ветку (`git push origin FELL02-1`)
 5. Откройте Pull Request
 
 prettier:
