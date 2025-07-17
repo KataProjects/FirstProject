@@ -7,7 +7,8 @@ const initialState = {
 };
 
 const globalSlice = createSlice({
-    name: 'global', initialState,
+    name: 'global',
+    initialState,
     reducers: {
         setLoading(state, action){
             state.isLoading = action.payload;
