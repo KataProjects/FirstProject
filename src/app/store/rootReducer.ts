@@ -1,8 +1,9 @@
-import {combineReducers} from '@reduxjs/toolkit';
+import { combineReducers } from '@reduxjs/toolkit';
+
 import globalReducer from './globalSlice.ts';
 
 const rootReducer = combineReducers({
-    global: globalReducer,
+  global: globalReducer,
 });
 
 export default rootReducer;
