@@ -1,0 +1,17 @@
+@use "tailwindcss" as *;
+
+.signInForm {
+  @apply flex flex-col gap-[10px] mb-[30px];
+
+  &__inputLabel {
+    @apply flex flex-col gap-[10px] mb-[10px] text-xs;
+  }
+  &__input {
+    @apply h-[48px];
+  }
+  &__button {
+    @apply block w-fit bg-[#006FFF] text-white 
+           px-[16px] py-[10px] border-none rounded-[5px] 
+           mx-auto mt-[10px];
+  }
+}

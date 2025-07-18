@@ -1,0 +1,18 @@
+@use "tailwindcss" as *;
+
+.signInBox {
+  @apply w-[600px] min-h-[400px] rounded-[16px] bg-[rgb(220,235,235)] 
+         p-[40px_45px_20px_45px] box-border;
+
+  &__title {
+    @apply text-[36px] font-bold m-0 mb-[20px];
+  }
+
+  &__linkBox {
+    @apply w-fit mx-auto;
+  }
+
+  &__link {
+    @apply text-black underline;
+  }
+}
