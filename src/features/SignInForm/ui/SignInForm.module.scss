@@ -1,12 +1,12 @@
-@use "tailwindcss" as *;
+@use 'tailwindcss' as *;
 
 .signInForm {
   @apply flex flex-col gap-[10px] mb-[30px];
 
   &__inputLabel {
     @apply flex flex-col gap-[10px] mb-[10px] text-xs;
-    .signInForm__error{
-      @apply text-red-500
+    .signInForm__error {
+      @apply text-red-500;
     }
   }
   &__input {

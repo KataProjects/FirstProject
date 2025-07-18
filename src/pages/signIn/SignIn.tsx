@@ -10,7 +10,7 @@ export const SignIn = () => {
       <h1 className={styles.signInBox__title}>Вход</h1>
       <SignInForm />
       <div className={styles.signInBox__linkBox}>
-        Ещё нет аккаунта?{' '} 
+        Ещё нет аккаунта?{' '}
         <Link to="/sign_up" className={styles.signInBox__link}>
           Зарегистрируйтесь
         </Link>

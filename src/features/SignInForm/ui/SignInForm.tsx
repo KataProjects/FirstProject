@@ -1,5 +1,7 @@
 import { Input } from 'antd';
-import { useForm, Controller } from 'react-hook-form';
+
+import { Controller, useForm } from 'react-hook-form';
+
 import styles from './SignInForm.module.scss';
 
 type FormValues = {
@@ -8,12 +10,11 @@ type FormValues = {
 };
 
 const SignInForm: React.FC = () => {
-
-    const {
+  const {
     control,
     formState: { errors },
   } = useForm<FormValues>({
-    mode: 'onChange'
+    mode: 'onChange',
   });
 
   return (
@@ -39,9 +40,7 @@ const SignInForm: React.FC = () => {
             />
           )}
         />
-        {errors.email && (
-          <span className={styles.signInForm__error}>{errors.email.message}</span>
-        )}
+        {errors.email && <span className={styles.signInForm__error}>{errors.email.message}</span>}
       </label>
 
       <label className={styles.signInForm__inputLabel}>

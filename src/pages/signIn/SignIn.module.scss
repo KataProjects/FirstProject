@@ -1,4 +1,4 @@
-@use "tailwindcss" as *;
+@use 'tailwindcss' as *;
 
 .signInBox {
   @apply w-[600px] min-h-[400px] rounded-[16px] bg-[rgb(220,235,235)] 
