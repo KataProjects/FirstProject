@@ -1,9 +1,17 @@
-import { Outlet } from 'react-router-dom';
+import type { ReactNode } from 'react';
+import { Header } from '@widgets/header';
+import { Footer } from '@widgets/Footer';
 
-export const Layout = () => {
+interface LayoutProps {
+  children: ReactNode;
+}
+
+export const Layout = ({ children }: LayoutProps) => {
   return (
-    <>
-      <Outlet />
-    </>
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">{children}</main>
+      <Footer />
+    </div>
   );
 };
