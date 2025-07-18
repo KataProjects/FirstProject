@@ -1,16 +1,12 @@
-import store from '@app/store/store';
-
-import { type ReactNode, StrictMode } from 'react';
-
+import React, { type FC, StrictMode } from 'react';
 import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import store from '@app/store';
 
-export const withProviders = (component: ReactNode) => {
-  return (
-    <StrictMode>
-      <Provider store={store}>
-        <BrowserRouter>{component}</BrowserRouter>
-      </Provider>
-    </StrictMode>
-  );
-};
+export const WithProviders: FC <{ children: React.ReactNode }> = ({ children }) => (
+  <StrictMode>
+    <Provider store={store}>
+      <BrowserRouter>{children}</BrowserRouter>
+    </Provider>
+  </StrictMode>
+);
