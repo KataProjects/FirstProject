@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router';
 
 import { navRoutes, ROUTES } from '@app/routes';
-import { Layout } from '@widgets';
+import { Layout } from '@widgets/layouts';
 
 export const AppRoutes = () => {
   return (
