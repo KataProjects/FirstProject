@@ -1,8 +1,15 @@
-/** @type {import('tailwindcss').Config} */
+import defaultTheme from 'tailwindcss/defaultTheme'
+
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ['Roboto', ...defaultTheme.fontFamily.sans],
+      },
       colors: {
         ring: 'hsl(var(--ring))',
         background: 'hsl(var(--background))',
