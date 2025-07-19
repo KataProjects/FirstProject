@@ -2,12 +2,10 @@ import { Input } from 'antd';
 
 import { Controller, useForm } from 'react-hook-form';
 
+import { type FormValues } from '../model/types';
+
 import styles from './SignInForm.module.scss';
 
-type FormValues = {
-  email: string;
-  password: string;
-};
 
 const SignInForm: React.FC = () => {
   const {

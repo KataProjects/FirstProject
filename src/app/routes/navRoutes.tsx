@@ -1,5 +1,9 @@
+import { HomePage } from '@pages/homePage';
+import { SignIn } from '@pages/signIn';
+import { SignUp } from '@pages/signUp';
+import { NotFoundPage } from '@pages/notFoundPage';
+
 import type { RoutesProps } from '@app/types';
-import { HomePage, NotFoundPage, SignIn, SignUp } from '@pages';
 
 export const ROUTES = {
   HOME: '/',

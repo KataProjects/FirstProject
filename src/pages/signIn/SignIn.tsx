@@ -1,4 +1,4 @@
-import { SignInForm } from '@features';
+import { SignInForm } from '@features/SignInForm';
 
 import { Link } from 'react-router-dom';
 
