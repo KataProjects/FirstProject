@@ -1,0 +1,26 @@
+@use 'tailwindcss';
+
+.header {
+  --row-table-child2-bg: #d9d9d926;
+  --pagination-bg-color: #398aea;
+  --pagination-border-color: #dedede;
+
+  @apply flex items-center justify-between mb-2 md:mb-6;
+
+  &__title {
+    @apply font-semibold;
+  }
+
+  &__btn {
+    @apply py-2 px-5 ml-2 whitespace-nowrap flex justify-center items-center font-semibold border border-[var(--pagination-border-color)] shadow-md inset-shadow-sm rounded-none cursor-pointer transition-colors duration-300;
+    &:hover {
+      @apply text-[var(--pagination-bg-color)] border border-[var(--pagination-bg-color)];
+    }
+    &--wrapper {
+      @apply flex items-center;
+    }
+  }
+  .btn__icon {
+    @apply text-2xl ml-2;
+  }
+}
