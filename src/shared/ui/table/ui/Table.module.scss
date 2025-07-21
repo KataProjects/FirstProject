@@ -8,11 +8,10 @@
   :global {
     .ant-pagination {
       .ant-pagination-item {
-        @apply border-none bg-[var(--pagination-bg-color)] text-[#393939] bg-[var(--row-table-child2-bg)];
-        @apply bg-white border border-[var(--pagination-border-color)];
+        @apply border-none bg-[var(--pagination-bg-color)] text-[#393939] bg-[var(--row-table-child2-bg)] transition-colors duration-300;
 
         a {
-          @apply border border-[var(--pagination-border-color)] inset-shadow-sm;
+          @apply border border-[var(--pagination-border-color)] inset-shadow-sm transition-colors duration-300;
 
           &:hover {
             @apply text-[var(--pagination-bg-color)] border border-[var(--pagination-bg-color)];
@@ -30,6 +29,9 @@
             @apply text-white;
           }
         }
+        &-link {
+          @apply flex justify-center items-center h-full;
+        }
       }
 
       .ant-pagination-next {
@@ -40,16 +42,22 @@
       }
     }
   }
+}
 
-  .customTable {
-    :global {
-      .ant-table-tbody {
-        tr.ant-table-row:nth-child(2n) {
-          @apply bg-[var(--row-table-child2-bg)];
-        }
+.customTable {
+  :global {
+    .ant-table-tbody {
+      tr.ant-table-row:nth-child(2n) {
+        @apply bg-[var(--row-table-child2-bg)];
       }
-      .ant-table-container {
-        @apply border border-[#f0f0f0]  shadow-xl/5;
+    }
+    .ant-table-container {
+      @apply border border-[#f0f0f0]  shadow-xl/5;
+    }
+
+    .ant-table-row {
+      &:hover {
+        @apply bg-[#E3E3E3];
       }
     }
   }
