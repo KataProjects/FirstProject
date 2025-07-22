@@ -1,1 +1,1 @@
-export { MyTable as Table } from "./ui/Table";
+export { MyTable as Table } from './ui/Table';
