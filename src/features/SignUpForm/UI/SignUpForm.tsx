@@ -1,33 +1,16 @@
 import {  Form, Input, Select, Checkbox, Button } from 'antd'
 
-type SecurityQuestions = {
-  value: string,
-  label: string
-}
-const securityQuestions: SecurityQuestions[] = [
-  {
-    value: 'name_first_pet',
-    label: 'Как звали вашего первого питомца?'
-  },
-  {
-    value: 'favorite_teacher_name',
-    label: 'Имя вашего любимого преподавателя?'
-  },
-  {
-    value: 'first_vacation_place',
-    label: 'Где вы провели свой первый отпуск?'
-  },
-  {
-    value: 'favorite_movie',
-    label: 'Ваш любимый фильм?'
-  }
-]
+import { securityQuestions } from '../model/constants'
+
+import styles from './SignUpForm.module.scss'
+
+
 export const SignUpForm: React.FC = () => {
 
   return (
-    <Form  layout='vertical' initialValues={{securityQuestion: securityQuestions[0].label}}>
-      <Form.Item label='Email' name='email' required={false} rules={[{required: true, message: 'Введите email'}, {type: 'email', message: 'Введите корректный email'}]}>
-        <Input placeholder='Введите ваш email' />
+    <Form  layout='vertical' initialValues={{securityQuestion: securityQuestions[0].label}} className={styles['signup-form']}>
+      <Form.Item label='Email' name='email' required={false} rules={[{required: true, message: 'Введите email'}, {type: 'email', message: 'Введите корректный email'}]} className={styles['signup-form__input-label']}>
+        <Input placeholder='Введите ваш email' className={styles['signup-form__input']}/>
       </Form.Item>
       <Form.Item label='Секретный вопрос' name='securityQuestion'>
         <Select>
@@ -50,7 +33,7 @@ export const SignUpForm: React.FC = () => {
       <Form.Item>
         <Checkbox>Я прочитал(-а) все условия <a href='#'>пользовательского соглашения</a> и согласен(-на) с ними</Checkbox>
       </Form.Item>
-      <Form.Item label={null}>
+      <Form.Item label={null} className={styles['signup-form__submit']}>
         <Button type="primary" htmlType="submit">
           Зарегистрироваться
         </Button>
