@@ -25,11 +25,11 @@ const securityQuestions: SecurityQuestions[] = [
 export const SignUpForm: React.FC = () => {
 
   return (
-    <Form  layout='vertical'>
-      <Form.Item label='Email'>
+    <Form  layout='vertical' initialValues={{securityQuestion: securityQuestions[0].label}}>
+      <Form.Item label='Email' name='email' required={false} rules={[{required: true, message: 'Введите email'}, {type: 'email', message: 'Введите корректный email'}]}>
         <Input placeholder='Введите ваш email' />
       </Form.Item>
-      <Form.Item label='Секретный вопрос'>
+      <Form.Item label='Секретный вопрос' name='securityQuestion'>
         <Select>
           {securityQuestions.map((q) => {
             return (
@@ -38,10 +38,10 @@ export const SignUpForm: React.FC = () => {
           })}
         </Select>
       </Form.Item>
-      <Form.Item label='Ответ на секрестный вопрос'>
+      <Form.Item label='Ответ на секрестный вопрос' name='password' required={false} rules={[{required: true, message: 'Введите пароль'}, {min: 6, message: 'Пароль должен состоять минимум из 6 символов'}]}>
         <Input placeholder='Введите ответ на секретный вопрос' />
       </Form.Item>
-      <Form.Item label='Пароль'>
+      <Form.Item label='Пароль' name='password' required={false} rules={[{required: true, message: 'Повторите пароль'}]}>
         <Input.Password placeholder='Придумайте пароль' />
       </Form.Item>
       <Form.Item label='Повторите пароль'>
