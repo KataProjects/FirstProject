@@ -3,7 +3,7 @@ import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
-import { TableAircraftPage } from '@pages/tableAircraft';
+import { TableAircraftPage } from '@pages/admin/tableAircraft';
 
 export const ROUTES = {
   HOME: '/',
