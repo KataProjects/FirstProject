@@ -1,16 +1,12 @@
 import App from '@app/App';
-
-import { StrictMode } from 'react';
+import { WithProviders } from '@app/providers';
 
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter } from 'react-router-dom';
 
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </StrictMode>,
+  <WithProviders>
+    <App />
+  </WithProviders>
 );
