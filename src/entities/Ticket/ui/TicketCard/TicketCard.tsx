@@ -1,9 +1,14 @@
-import type { ITicket } from '../model/types.ts';
-import { TicketHeader } from './TicketHeader.tsx';
-import { RouteInfo } from './RouteInfo.tsx';
-import { TariffsSection } from './TariffsSection.tsx';
+import type { ITicket } from '@entities/Ticket';
+import { TicketHeader } from '@entities/Ticket';
+import { RouteInfo } from '@entities/Ticket';
+import { TariffsSection } from '@entities/Ticket';
 
-export const TicketCard = ({ ticket }: { ticket: ITicket }) => {
+// Явно объявляем интерфейс пропсов
+export interface TicketCardProps {
+  ticket: ITicket;
+}
+
+export const TicketCard = ({ ticket }: TicketCardProps) => {
   return (
     <div className="bg-white rounded-lg shadow-[0_4px_4px_0_rgba(0,0,0,0.25)] border border-gray-200 w-[1356px]  ml-0">
       <div className="flex">
@@ -25,4 +30,3 @@ export const TicketCard = ({ ticket }: { ticket: ITicket }) => {
     </div>
   );
 };
-

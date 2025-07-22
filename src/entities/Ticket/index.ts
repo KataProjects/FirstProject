@@ -1,3 +1,8 @@
-export { TicketCard } from './ui/TicketCard.tsx';
-export type { ITicket } from './model/types';
-export { mockTicket } from './model/constants';
+export { TicketCard } from './ui/TicketCard';
+export { TariffsSection } from './ui/TariffsSection';
+export { RouteInfo } from './ui/RouteInfo';
+export { SeatsLeft } from './ui/SeatsLeft';
+export { TicketHeader } from './ui/TicketHeader';
+
+export type { ITicket } from './model';
+export { mockTicket } from './model';
