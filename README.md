@@ -41,7 +41,7 @@ src/
 ### Принципы:
 
 - **Сслайсы слоя могут зависеть только от слоев ниже себя**
-- **Каждый слайс имеет свою структуру:  api/, config/, lib/, model/, ui/**
+- **Каждый слайс имеет свою структуру: api/, config/, lib/, model/, ui/**
 - **Строгая изоляция между слоями**
 - **Переиспользование через shared слой**
 
@@ -76,7 +76,6 @@ npm run format
 npm run format:check
 ```
 
-
 ## 🔧 Разработка
 
 ### Добавление нового feature:
@@ -106,26 +105,27 @@ npm run format:check
 ## 🤝 Вклад в проект
 
 1. Fork репозитория
-2. Создайте feature ветку (`git checkout -b feature/amazing-feature`)
+2. Создайте ветку, используя ключ задачи в jira (`git checkout -b FELL02-1`)
 3. Commit изменения (`git commit -m 'Add amazing feature'`)
-4. Push в ветку (`git push origin feature/amazing-feature`)
+4. Push в ветку (`git push origin FELL02-1`)
 5. Откройте Pull Request
 
 prettier:
 ✅ Установлен плагин @trivago/prettier-plugin-sort-imports для сортировки импортов:
- - React импорты первыми
- - Затем внешние библиотеки
- - Потом внутренние импорты
- - Локальные импорты
-✅ Правила форматирования в .prettierrc:
- - printWidth: 100 - максимальная ширина строки
- - tabWidth: 2 - отступ в 2 пробела
- - useTabs: false - использовать пробелы вместо табов
- - semi: true - добавлять точку с запятой
- - singleQuote: true - одинарные кавычки
- - trailingComma: "all" - запятые в конце
- - bracketSpacing: true - пробелы в скобках
- - bracketSameLine: false - закрывающие скобки на новой строке
- - arrowParens: "always" - всегда скобки для стрелочных функций
- - endOfLine: "lf" - Unix окончания строк
-✅ .prettierignore для исключения ненужных файлов
+
+- React импорты первыми
+- Затем внешние библиотеки
+- Потом внутренние импорты
+- Локальные импорты
+  ✅ Правила форматирования в .prettierrc:
+- printWidth: 100 - максимальная ширина строки
+- tabWidth: 2 - отступ в 2 пробела
+- useTabs: false - использовать пробелы вместо табов
+- semi: true - добавлять точку с запятой
+- singleQuote: true - одинарные кавычки
+- trailingComma: "all" - запятые в конце
+- bracketSpacing: true - пробелы в скобках
+- bracketSameLine: false - закрывающие скобки на новой строке
+- arrowParens: "always" - всегда скобки для стрелочных функций
+- endOfLine: "lf" - Unix окончания строк
+  ✅ .prettierignore для исключения ненужных файлов
