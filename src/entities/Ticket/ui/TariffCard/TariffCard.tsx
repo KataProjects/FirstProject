@@ -14,16 +14,16 @@ export interface TariffCardProps {
 }
 
 export const TariffCard = ({
-                             title,
-                             price,
-                             isSelected,
-                             onClick,
-                             icons,
-                             showSeatsLeft = false,
-                             seatsLeft = 0,
-                             bgColor = 'bg-[#EBF3FF]',
-                             dimensions = ''
-                           }: TariffCardProps) => {
+ title,
+ price,
+ isSelected,
+ onClick,
+ icons,
+ showSeatsLeft = false,
+ seatsLeft = 0,
+ bgColor = 'bg-[#EBF3FF]',
+ dimensions = ''
+}: TariffCardProps) => {
   const shadowClass = 'shadow-[0_4px_4px_rgba(0,0,0,0.25)]';
 
   return (

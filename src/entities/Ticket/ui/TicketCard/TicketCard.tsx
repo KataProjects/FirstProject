@@ -3,7 +3,6 @@ import { TicketHeader } from '@entities/Ticket';
 import { RouteInfo } from '@entities/Ticket';
 import { TariffsSection } from '@entities/Ticket';
 
-// Явно объявляем интерфейс пропсов
 export interface TicketCardProps {
   ticket: ITicket;
 }
