@@ -4,6 +4,8 @@
   --row-table-child2-bg: #d9d9d926;
   --pagination-bg-color: #398aea;
   --pagination-border-color: #dedede;
+  --row-hover-bg: #e3e3e3;
+  --row-focus-bg: #e3e3e3;
 
   :global {
     .ant-pagination {
@@ -23,7 +25,7 @@
         }
 
         &-active {
-          @apply rounded-none  bg-[var(--pagination-bg-color)] text-white;
+          @apply rounded-none bg-[var(--pagination-bg-color)] text-white;
 
           a {
             @apply text-white;
@@ -47,17 +49,34 @@
 .customTable {
   :global {
     .ant-table-tbody {
-      tr.ant-table-row:nth-child(2n) {
-        @apply bg-[var(--row-table-child2-bg)];
+      tr.ant-table-row {
+        &:nth-child(2n) {
+          background-color: var(--row-table-child2-bg) !important;
+        }
+
+        &:hover {
+          background-color: var(--row-hover-bg) !important;
+
+          td {
+            background-color: transparent !important;
+          }
+        }
       }
     }
+
     .ant-table-container {
-      @apply border border-[#f0f0f0]  shadow-xl/5;
+      @apply border border-[#f0f0f0] shadow-xl/5;
     }
 
     .ant-table-row {
+      transition: background-color 0.3s ease !important;
+
       &:hover {
-        @apply bg-[#E3E3E3];
+        background-color: var(--row-hover-bg) !important;
+
+        td {
+          background-color: transparent !important;
+        }
       }
     }
   }
