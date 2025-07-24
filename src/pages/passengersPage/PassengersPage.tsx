@@ -1,61 +1,74 @@
 import { Table } from '@shared/ui/table';
 
-const data = [{
-    name: 'John Doe',
-    email: 'john.doe@example.com',
-    phone: '+1234567890',
-    address: '123 Main St, Anytown, USA',
-    city: 'Anytown',
-    state: 'CA',
-    zip: '12345',
-},
-{
-    name: 'Jane Doe',
-    email: 'jane.doe@example.com',
-    phone: '+1234567890',
-    address: '123 Main St, Anytown, USA',
-    city: 'Anytown',
-    state: 'CA',
-    zip: '12345',
-},
-]
+import { data } from './mockData';
+import type { Passenger } from './dataTypes';
+
+import { Button } from 'antd';
+import moment from 'moment';
 
 const columns = [
     {
-        title: 'Name',
-        dataIndex: 'name',
+        title: 'iD',
+        dataIndex: 'id',
     },
     {
-        title: 'Email',
-        dataIndex: 'email',
+        title: 'Имя, Фамилия, Отчество',
+        render: (record: Passenger) => (
+            `${record.firstName} ${record.lastName} ${record.passport.middleName}`
+        ),
     },
     {
-        title: 'Phone',
-        dataIndex: 'phone',
+        title: 'Пол',
+        render: (record: Passenger) => {
+            if(record.passport.gender === 'male') {
+                return 'Муж.'
+            } else if(record.passport.gender === 'female') {
+                return 'Жен.'
+            }
+        }
     },
     {
-        title: 'Address',
-        dataIndex: 'address',
+        title: 'Телефон',
+        render: (record: Passenger) => {
+            return `+${record.phoneNumber}`;
+        }
     },
     {
-        title: 'City',
-        dataIndex: 'city',
+        title: 'Дата рождения',
+        render: (record: Passenger) => {
+            const date = record.birthDate;
+            return moment(date).format("DD.MM.YYYY");
+        }
     },
     {
-        title: 'State',
-        dataIndex: 'state',
+        title: 'Серийный номер',
+        render: (record: Passenger) => {
+            return record.passport.serialNumberPassport
+        }
     },
     {
-        title: 'Zip',
-        dataIndex: 'zip',
+        title: 'Гражданство',
+        render: (record: Passenger) => {
+            return record.passport.passportIssuingCountry
+        }
     },
-]
+    {
+        title: 'Дата выдачи паспорта',
+        render: (record: Passenger) => {
+            const date =  record.passport.passportIssuingDate;
+            return moment(date).format("DD.MM.YYYY");
+        }
+    },
+]   
+
 
 export const PassengersPage = () => {
     return (
         <div>
-            <h1>Пассажиры</h1>
-            <button>Добавить пассажира</button>
+            <div className='flex justify-between mb-[15px]'>
+                <h1 className='text-[20px] italic'>Пассажиры</h1>
+                <Button className='flex justify-start w-[200px] rounded-[1px] text-[14px] italic'>Добавить пассажира +</Button>
+                </div>
             <Table dataSource={data} columns={columns} />
         </div>
     )
