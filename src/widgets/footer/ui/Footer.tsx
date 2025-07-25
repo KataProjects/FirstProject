@@ -22,11 +22,10 @@ export const Footer = () => {
 
       <div className={styles.footer__logo}>
         <LogoIcon />
-        <span>Air Alien</span>
+        <span className={styles['logo-text']}>Air Alien</span>
       </div>
 
       {/* <p>&copy; 2025 Aviasales. All rights reserved.</p> */}
     </footer>
   );
 };
-

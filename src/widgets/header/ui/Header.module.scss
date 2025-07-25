@@ -1,0 +1,24 @@
+@use 'tailwindcss';
+
+.header {
+  --bg-color-footer: #445ebd;
+  @apply bg-[var(--bg-color-footer)] text-white p-4 flex items-center justify-between;
+  &__logo {
+    @apply flex items-center;
+  }
+  &__navList {
+    @apply flex items-center;
+
+    & > li {
+      @apply text-white p-2;
+    }
+  }
+
+  .logo-text {
+    @apply ml-2;
+  }
+
+  .active {
+    @apply text-[rgb(92,149,247)];
+  }
+}

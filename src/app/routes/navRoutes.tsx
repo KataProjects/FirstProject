@@ -12,10 +12,18 @@ export const ROUTES = {
   HOME: '/',
   SIGN_UP: '/sign_up',
   SIGN_IN: '/sign_in',
-  TABLE_PLANE: '/aircrafts',
   ABOUT_US: '/about_us',
   CONTACT_US: '/contact_us',
   PRIVACY_POLICY: '/privacy_policy',
+  TABLE_AIRCRAFTS: '/admin/aircrafts',
+  TABLE_PASSENGERS: '/admin/passengers',
+  TABLE_SEATS: '/admin/seats',
+  TABLE_TIMEZONES: '/admin/timezones',
+  TABLE_TICKETS: '/admin/tickets',
+  TABLE_FLIGHTS: '/admin/flights',
+  TABLE_BOOKINGS: '/admin/bookings',
+  TABLE_BOARDING: '/admin/boarding',
+  TABLE_USERS: '/admin/users',
   NOT_FOUND: '*',
 };
 
@@ -26,6 +34,6 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.ABOUT_US, element: <About /> },
   { path: ROUTES.CONTACT_US, element: <Contact /> },
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
-  { path: ROUTES.TABLE_PLANE, element: <TableAircraftPage /> },
+  { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
 ];

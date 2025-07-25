@@ -15,4 +15,8 @@
   &__logo {
     @apply flex items-center;
   }
+
+  .logo-text {
+    @apply ml-1;
+  }
 }
