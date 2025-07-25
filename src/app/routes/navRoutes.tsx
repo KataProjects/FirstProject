@@ -9,7 +9,7 @@ export const ROUTES = {
   HOME: '/',
   SIGN_UP: '/sign_up',
   SIGN_IN: '/sign_in',
-  TABLE_PLANE: '/aircrafts',
+  TABLE_AIRCRAFTS: '/admin/aircrafts',
   NOT_FOUND: '*',
 };
 
@@ -17,6 +17,6 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.HOME, element: <HomePage /> },
   { path: ROUTES.SIGN_IN, element: <SignIn /> },
   { path: ROUTES.SIGN_UP, element: <SignUp /> },
-  { path: ROUTES.TABLE_PLANE, element: <TableAircraftPage /> },
+  { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
 ];
