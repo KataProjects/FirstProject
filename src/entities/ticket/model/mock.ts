@@ -1,6 +1,6 @@
-import type { Ticket } from './dataTypes';
+import type { Ticket } from './types';
 
-export const data: Ticket[] = [
+export const ticketsMockData: Ticket[] = [
   {
     id: 1,
     ticketNumber: "SD-2222",
