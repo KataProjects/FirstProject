@@ -1,0 +1,9 @@
+@use 'tailwindcss';
+
+.wrapper {
+  @apply flex flex-col min-h-screen;
+
+  .main {
+    @apply flex-grow;
+  }
+}
