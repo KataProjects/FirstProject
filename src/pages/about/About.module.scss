@@ -1,7 +1,7 @@
 @use 'tailwindcss';
 
 .container {
-  @apply bg-[url('https://media.giphy.com/media/3o7TKUM3IgJBX2as9O/giphy.gif')] min-h-screen p-8;
+  @apply bg-[#E0EFEA] min-h-screen p-8;
 
   .header {
     @apply text-center mb-8;

@@ -21,4 +21,8 @@
   .active {
     @apply text-[rgb(92,149,247)];
   }
+
+  .btn-nav {
+    @apply text-[#006FFF] text-sm font-semibold px-3 py-2 bg-white rounded-md;
+  }
 }

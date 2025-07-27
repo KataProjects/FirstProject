@@ -1,13 +1,15 @@
 import { UserOutlined } from '@ant-design/icons';
+import { ROUTES } from '@app/routes';
 import { LogoIcon } from '@shared/ui/icons';
-import { Avatar, Space } from 'antd';
+import { Avatar, Button, Space, Tooltip } from 'antd';
 
-import { NavLink } from 'react-router-dom';
+import { useState } from 'react';
+
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 import styles from './Header.module.scss';
-import { ROUTES } from '@app/routes';
 
-const navItems = [
+const ADMIN_NAV_ITEMS = [
   { label: 'Пассажиры', path: ROUTES.TABLE_PASSENGERS },
   { label: 'Самолёты', path: ROUTES.TABLE_AIRCRAFTS },
   { label: 'Места', path: ROUTES.TABLE_SEATS },
@@ -20,6 +22,17 @@ const navItems = [
 ];
 
 export const Header = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [isAuth, setIsAuth] = useState(true);
+
+  const isAdminRoute = location.pathname.includes('/admin');
+
+  const handleLogout = () => {
+    setIsAuth(false);
+    navigate(ROUTES.HOME);
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.header__logo}>
@@ -27,21 +40,44 @@ export const Header = () => {
         <span className={styles['logo-text']}>Air Alien</span>
       </div>
 
-      <nav className={styles.header__nav}>
-        <ul className={styles.header__navList}>
-          {navItems.map((item) => (
-            <li key={item.label} className={styles.header__navItem}>
-              <NavLink className={({ isActive }) => (isActive ? styles.active : '')} to={item.path}>
-                {item.label}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
-      </nav>
+      {isAdminRoute && (
+        <nav className={styles.header__nav}>
+          <ul className={styles.header__navList}>
+            {ADMIN_NAV_ITEMS.map((item) => (
+              <li key={item.path} className={styles.header__navItem}>
+                <NavLink
+                  className={({ isActive }) => (isActive ? styles.active : '')}
+                  to={item.path}
+                >
+                  {item.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )}
 
-      <Space wrap size={16}>
-        <span>UserName</span>
-        <Avatar size={40} icon={<UserOutlined />} />
+      <Space wrap size={16} align="center">
+        {!isAuth ? (
+          <>
+            <Tooltip title="Профиль">
+              <Space>
+                <span>UserName</span>
+                <Avatar size={40} icon={<UserOutlined />} />
+              </Space>
+            </Tooltip>
+            <Button onClick={handleLogout}>Выйти</Button>
+          </>
+        ) : (
+          <>
+            <Link to={ROUTES.SIGN_IN} className={styles['btn-nav']}>
+              Вход
+            </Link>
+            <Link to={ROUTES.SIGN_UP} className={styles['btn-nav']}>
+              Регистрация
+            </Link>
+          </>
+        )}
       </Space>
     </header>
   );
