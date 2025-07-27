@@ -19,13 +19,8 @@ const columns = [
     },
     {
         title: 'Пол',
-        render: (record: Passenger) => {
-            if(record.passport.gender === 'male') {
-                return 'Муж.'
-            } else if(record.passport.gender === 'female') {
-                return 'Жен.'
-            }
-        }
+        render: ({ passport } : Passenger) => passport.gender === 'male' ? 'Муж.' : 'Жен.'
+        
     },
     {
         title: 'Телефон',
@@ -39,6 +34,7 @@ const columns = [
             const date = record.birthDate;
             return moment(date).format("DD.MM.YYYY");
         }
+
     },
     {
         title: 'Серийный номер',
@@ -69,7 +65,7 @@ export const PassengersPage = () => {
                 <h1 className='text-[20px] italic'>Пассажиры</h1>
                 <Button className='flex justify-start w-[200px] rounded-[1px] text-[14px] italic'>Добавить пассажира +</Button>
                 </div>
-            <Table dataSource={data} columns={columns} />
+            <Table<Passenger> dataSource={data} columns={columns} />
         </div>
     )
 }
