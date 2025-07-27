@@ -1,6 +1,6 @@
-import type { IDataSource } from '../models/types';
+import type { IContentAircraftTable, IDataSource } from '@shared/types';
 
-export const aircraftMock: IDataSource = {
+export const aircraftMock: IDataSource<IContentAircraftTable> = {
   content: [
     {
       id: 1821,

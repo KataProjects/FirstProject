@@ -12,7 +12,7 @@ export interface IPageable {
   pageNumber: number;
   pageSize: number;
   offset: number;
-  sort: IDataSort;
+  sort: IDataSort | [];
 }
 
 export interface IContentAircraftTable {

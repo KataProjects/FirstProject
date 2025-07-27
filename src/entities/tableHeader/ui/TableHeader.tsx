@@ -43,22 +43,3 @@ export const TableHeader = memo(
     );
   },
 );
-
-// import styles from './TableHeader.module.scss';
-
-// interface ITableHeader {
-//   title: string;
-//   btnName: string;
-// }
-
-// export const TableHeader = ({ title = '', btnName = '' }: ITableHeader) => {
-//   return (
-//     <div className={styles.header}>
-//       <h1 className={styles.header__title}>{title}</h1>
-//       <button className={styles.header__btn}>
-//         {btnName}
-//         <span className={styles.btn__icon}>+</span>
-//       </button>
-//     </div>
-//   );
-// };
