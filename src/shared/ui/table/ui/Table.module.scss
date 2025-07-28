@@ -4,15 +4,16 @@
   --row-table-child2-bg: #d9d9d926;
   --pagination-bg-color: #398aea;
   --pagination-border-color: #dedede;
+  --row-hover-bg: #e3e3e3;
+  --row-focus-bg: #e3e3e3;
 
   :global {
     .ant-pagination {
       .ant-pagination-item {
-        @apply border-none bg-[var(--pagination-bg-color)] text-[#393939] bg-[var(--row-table-child2-bg)];
-        @apply bg-white border border-[var(--pagination-border-color)];
+        @apply border-none bg-[var(--pagination-bg-color)] text-[#393939] bg-[var(--row-table-child2-bg)] transition-colors duration-300;
 
         a {
-          @apply border border-[var(--pagination-border-color)] inset-shadow-sm;
+          @apply border border-[var(--pagination-border-color)] inset-shadow-sm transition-colors duration-300;
 
           &:hover {
             @apply text-[var(--pagination-bg-color)] border border-[var(--pagination-bg-color)];
@@ -24,11 +25,14 @@
         }
 
         &-active {
-          @apply rounded-none  bg-[var(--pagination-bg-color)] text-white;
+          @apply rounded-none bg-[var(--pagination-bg-color)] text-white;
 
           a {
             @apply text-white;
           }
+        }
+        &-link {
+          @apply flex justify-center items-center h-full;
         }
       }
 
@@ -40,16 +44,39 @@
       }
     }
   }
+}
 
-  .customTable {
-    :global {
-      .ant-table-tbody {
-        tr.ant-table-row:nth-child(2n) {
-          @apply bg-[var(--row-table-child2-bg)];
+.customTable {
+  :global {
+    .ant-table-tbody {
+      tr.ant-table-row {
+        &:nth-child(2n) {
+          background-color: var(--row-table-child2-bg) !important;
+        }
+
+        &:hover {
+          background-color: var(--row-hover-bg) !important;
+
+          td {
+            background-color: transparent !important;
+          }
         }
       }
-      .ant-table-container {
-        @apply border border-[#f0f0f0]  shadow-xl/5;
+    }
+
+    .ant-table-container {
+      @apply border border-[#f0f0f0] shadow-xl/5;
+    }
+
+    .ant-table-row {
+      transition: background-color 0.3s ease !important;
+
+      &:hover {
+        background-color: var(--row-hover-bg) !important;
+
+        td {
+          background-color: transparent !important;
+        }
       }
     }
   }
