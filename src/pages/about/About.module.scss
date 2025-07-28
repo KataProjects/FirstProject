@@ -1,0 +1,46 @@
+@use 'tailwindcss';
+
+.container {
+  @apply bg-[#E0EFEA] min-h-screen p-8;
+
+  .header {
+    @apply text-center mb-8;
+
+    h1 {
+      @apply text-5xl font-bold text-green-400 mb-4;
+    }
+
+    p {
+      @apply text-xl text-gray-300;
+    }
+  }
+
+  .section {
+    @apply bg-gray-900 p-6 rounded-lg shadow-lg mb-6 backdrop-blur-sm;
+
+    h2 {
+      @apply text-3xl font-semibold text-yellow-400 mb-4;
+    }
+
+    p,
+    ul {
+      @apply text-gray-200 mb-3;
+    }
+
+    li {
+      @apply list-disc ml-6 mb-1;
+    }
+  }
+
+  .teamCard {
+    @apply bg-gray-800 p-4 rounded-lg shadow-md hover:shadow-green-400 transition-all;
+
+    h3 {
+      @apply text-xl font-bold text-green-400;
+    }
+
+    p {
+      @apply text-gray-300 italic;
+    }
+  }
+}
