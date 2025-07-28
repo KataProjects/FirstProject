@@ -7,7 +7,6 @@ import { NotFoundPage } from '@pages/notFoundPage';
 import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
-
 export const ROUTES = {
   HOME: '/',
   SIGN_UP: '/sign_up',
@@ -25,6 +24,7 @@ export const ROUTES = {
   TABLE_BOARDING: '/admin/boarding',
   TABLE_USERS: '/admin/users',
   NOT_FOUND: '*',
+  TIMEZONES: 'admin/timezones',
 };
 
 export const navRoutes: RoutesProps = [
@@ -36,4 +36,5 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
+  { path: ROUTES.TIMEZONES, element: <TimeZonesPage /> }
 ];
