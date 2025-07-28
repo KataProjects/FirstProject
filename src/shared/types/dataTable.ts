@@ -12,11 +12,8 @@ export interface IPageable {
   pageNumber: number;
   pageSize: number;
   offset: number;
-<<<<<<< HEAD
-  sort: IDataSort;
-=======
   sort: IDataSort | [];
->>>>>>> dev
+
 }
 
 export interface IContentAircraftTable {
@@ -27,7 +24,6 @@ export interface IContentAircraftTable {
   flightRange: number;
 }
 
-<<<<<<< HEAD
 export interface IContentDestinationTable {
   id: number;
   airportCode: string;
@@ -37,18 +33,6 @@ export interface IContentDestinationTable {
   airportName: string;
 }
 
-export interface IColumnTableAntd<T> {
-  title: string;
-  dataIndex?: keyof T;
-  key: string;
-  render?: (value: any, record: T, index: number) => React.ReactNode;
-  sorter?: boolean | ((a: T, b: T) => number);
-  width?: number | string;
-  align?: 'left' | 'right' | 'center';
-}
-
-=======
->>>>>>> dev
 export interface IDataSource<T> {
   totalPages: number;
   totalElements: number;
@@ -62,8 +46,6 @@ export interface IDataSource<T> {
   pageable: IPageable | string;
   empty: boolean;
 }
-<<<<<<< HEAD
-=======
 
 export interface IColumnTableAntd<T> {
   title: string;
@@ -74,4 +56,3 @@ export interface IColumnTableAntd<T> {
   width?: number | string;
   align?: 'left' | 'right' | 'center';
 }
->>>>>>> dev

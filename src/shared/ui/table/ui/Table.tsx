@@ -2,13 +2,9 @@ import { Table, type TableProps } from 'antd';
 
 import styles from './Table.module.scss';
 
-<<<<<<< HEAD
-export const MyTable = <T extends object = any>({
-  pagination = { position: ['bottomLeft'], showSizeChanger: true },
-=======
+
 export const MyTable = <T extends { id?: number | string } = any>({
   dataSource = [],
->>>>>>> dev
   ...props
 }: TableProps<T>) => {
   const data = dataSource?.map((item) => ({
