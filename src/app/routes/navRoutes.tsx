@@ -34,7 +34,6 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.HOME, element: <HomePage /> },
   { path: ROUTES.SIGN_IN, element: <SignIn /> },
   { path: ROUTES.SIGN_UP, element: <SignUp /> },
-  { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
   { path: ROUTES.ABOUT_US, element: <About /> },
   { path: ROUTES.CONTACT_US, element: <Contact /> },
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
