@@ -1,0 +1,24 @@
+@use 'tailwindcss' as *;
+.signup-form {
+  :global {
+    .ant-input, .ant-select {
+      @apply h-12
+    }
+
+    .ant-form-item {
+      @apply mb-5
+    }
+    
+    .ant-form-item-label label, .ant-checkbox-label {
+      @apply text-xs
+    }
+
+    .ant-btn {
+      @apply w-[169px] h-10 bg-[#006EFF] 
+    }
+  }
+  
+  &__submit {
+    @apply flex justify-center
+  }
+}
