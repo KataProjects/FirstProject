@@ -1,12 +1,14 @@
 import type { RoutesProps } from '@app/types';
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
+import { TableTimeZonesPage } from '@pages/admin/tableTimeZones';
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
 import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
+
 export const ROUTES = {
   HOME: '/',
   SIGN_UP: '/sign_up',
@@ -36,5 +38,5 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
-  { path: ROUTES.TIMEZONES, element: <TimeZonesPage /> }
+  { path: ROUTES.TIMEZONES, element: <TableTimeZonesPage /> },
 ];

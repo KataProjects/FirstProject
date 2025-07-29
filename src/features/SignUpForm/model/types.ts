@@ -1,4 +1,4 @@
 export type SecurityQuestion = {
-  value: string,
-  label: string
-}
+  value: string;
+  label: string;
+};

@@ -1,10 +1,10 @@
 import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
+import { useGetTimeZonesListQuery } from '@features/tableTimeZone/models/timeZoneApi';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentTimeZoneTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
 import { Button } from 'antd';
-import { useGetTimeZonesListQuery } from '@features/tableTimeZone/models/timeZoneApi'
 
 import { type FC, useCallback } from 'react';
 
@@ -15,8 +15,7 @@ const DragHandle: FC = () => {
 };
 
 export const TableTimeZone = () => {
-
-const { data, isLoading, error } = useGetTimeZonesListQuery();
+  const { data, isLoading, error } = useGetTimeZonesListQuery();
 
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
@@ -57,8 +56,8 @@ const { data, isLoading, error } = useGetTimeZonesListQuery();
     },
   ];
 
-    if (isLoading) return <div>Loading...</div>;
-    if (error) return <div>Error!</div>;
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error!</div>;
 
   return (
     <div className={styles.wrapper}>
@@ -71,13 +70,13 @@ const { data, isLoading, error } = useGetTimeZonesListQuery();
       />
 
       <Table<IContentTimeZoneTable>
-        dataSource={data.content}
+        dataSource={data?.content}
         columns={columns}
         rowKey="id"
         pagination={{
-          current: data.number + 1,
-          pageSize: data.size,
-          total: data.totalElements,
+          current: (data?.number ?? 0) + 1,
+          pageSize: data?.size,
+          total: data?.totalElements,
         }}
       />
     </div>
