@@ -23,6 +23,14 @@ export interface IContentAircraftTable {
   flightRange: number;
 }
 
+export interface IContentTimeZoneTable {
+  id: number;
+  countryName: string;
+  cityName: string;
+  gmt: string;
+  gmtWinter: string;
+}
+
 export interface IDataSource<T> {
   totalPages: number;
   totalElements: number;
