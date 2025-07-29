@@ -1,6 +1,7 @@
 import type { RoutesProps } from '@app/types';
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
+import { TimeZonesPage } from '@pages/admin/timeZones/timeZonesPage'
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
