@@ -2,6 +2,7 @@ import { Table, type TableProps } from 'antd';
 
 import styles from './Table.module.scss';
 
+
 export const MyTable = <T extends { id?: number | string } = any>({
   dataSource = [],
   ...props
