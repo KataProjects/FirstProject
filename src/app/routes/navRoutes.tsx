@@ -9,7 +9,6 @@ import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
 
-
 export const ROUTES = {
   HOME: '/',
   SIGN_UP: '/sign_up',
@@ -27,7 +26,7 @@ export const ROUTES = {
   TABLE_BOARDING: '/admin/boarding',
   TABLE_USERS: '/admin/users',
   NOT_FOUND: '*',
-  TICKETS: '/tickets',
+  TIMEZONES: 'admin/timezones',
 };
 
 export const navRoutes: RoutesProps = [
@@ -39,5 +38,6 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
-  { path: ROUTES.TICKETS, element: <TicketsPage /> },
+  { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
+  { path: ROUTES.TIMEZONES, element: <TimeZonesPage /> },
 ];
