@@ -43,4 +43,5 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
+  { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage />}
 ];
