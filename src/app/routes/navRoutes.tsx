@@ -10,10 +10,8 @@ import { NotFoundPage } from '@pages/notFoundPage';
 import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
-import { NotFoundPage } from '@pages/notFoundPage';
 import { PassengersPage } from '@pages/passengersPage';
 
-import type { RoutesProps } from '@app/types';
 
 export const ROUTES = {
   HOME: '/',
