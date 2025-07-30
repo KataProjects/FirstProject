@@ -69,6 +69,7 @@ export const TableTimeZone = () => {
 
   if (isLoading || !data) return <div>Loading...</div>;
   if (error) return <div>Error!</div>;
+  if (!data) return <div>No data</div>;
 
   return (
     <div className={styles.wrapper}>
@@ -86,9 +87,9 @@ export const TableTimeZone = () => {
         rowKey="id"
         onChange={handleTableChange}
         pagination={{
-         current: data.number + 1,
-         pageSize: data.size,
-         total: data.totalElements,
+          current: (data.number ?? 0) + 1,
+          pageSize: data.size ?? 10,
+          total: data.totalElements ?? 0,
         }}
       />
     </div>
