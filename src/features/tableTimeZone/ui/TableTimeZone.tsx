@@ -4,7 +4,8 @@ import { useGetTimeZonesListQuery } from '@features/tableTimeZone/models/timeZon
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentTimeZoneTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button } from 'antd';
+import { Button,  type TablePaginationConfig } from 'antd';
+import { useState } from 'react';
 
 import { type FC, useCallback } from 'react';
 
@@ -15,7 +16,16 @@ const DragHandle: FC = () => {
 };
 
 export const TableTimeZone = () => {
-  const { data, isLoading, error } = useGetTimeZonesListQuery();
+
+  const [page, setPage] = useState(0);
+  const { data, isLoading, error } = useGetTimeZonesListQuery(page);
+
+    const handleTableChange = (pagination: TablePaginationConfig) => {
+    if (pagination.current !== undefined) {
+      setPage(pagination.current - 1);  
+    }
+  };
+  
 
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
@@ -56,7 +66,8 @@ export const TableTimeZone = () => {
     },
   ];
 
-  if (isLoading) return <div>Loading...</div>;
+
+  if (isLoading || !data) return <div>Loading...</div>;
   if (error) return <div>Error!</div>;
 
   return (
@@ -70,13 +81,14 @@ export const TableTimeZone = () => {
       />
 
       <Table<IContentTimeZoneTable>
-        dataSource={data?.content}
+        dataSource={data.content}
         columns={columns}
         rowKey="id"
+        onChange={handleTableChange}
         pagination={{
-          current: (data?.number ?? 0) + 1,
-          pageSize: data?.size,
-          total: data?.totalElements,
+         current: data.number + 1,
+         pageSize: data.size,
+         total: data.totalElements,
         }}
       />
     </div>

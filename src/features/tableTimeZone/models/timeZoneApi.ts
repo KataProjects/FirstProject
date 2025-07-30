@@ -3,8 +3,8 @@ import type { IContentTimeZoneTable, IDataSource } from '@shared/types';
 
 const timeZonesApi = baseAPI.injectEndpoints({
   endpoints: (build) => ({
-    getTimeZonesList: build.query<IDataSource<IContentTimeZoneTable>, void>({
-      query: () => 'timezones',
+    getTimeZonesList: build.query<IDataSource<IContentTimeZoneTable>, number>({
+      query: (page) => `timezones?size=10&page=${page}`,
     }),
   }),
 });
