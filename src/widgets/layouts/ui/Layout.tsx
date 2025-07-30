@@ -3,11 +3,15 @@ import { Header } from '@widgets/header';
 
 import { Outlet } from 'react-router-dom';
 
+import styles from './Layout.module.scss';
+
 export const Layout = () => (
-  <div className="flex flex-col min-h-screen">
+  <div className={styles.wrapper}>
     <Header />
-    <main className="flex-grow">
-      <Outlet />
+    <main className={styles.main}>
+      <div className={styles.content}>
+        <Outlet />
+      </div>
     </main>
     <Footer />
   </div>

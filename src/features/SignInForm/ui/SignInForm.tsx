@@ -3,9 +3,7 @@ import { Input } from 'antd';
 import { Controller, useForm } from 'react-hook-form';
 
 import { type FormValues } from '../model/types';
-
 import styles from './SignInForm.module.scss';
-
 
 const SignInForm: React.FC = () => {
   const {

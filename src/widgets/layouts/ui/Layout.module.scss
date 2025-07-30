@@ -1,0 +1,13 @@
+@use 'tailwindcss';
+
+.wrapper {
+  @apply flex flex-col min-h-screen;
+
+  .main {
+    @apply flex-1 flex;
+
+    .content {
+      @apply w-full max-w-screen-xl mx-auto flex items-center justify-center;
+    }
+  }
+}

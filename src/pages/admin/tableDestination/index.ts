@@ -1,0 +1,1 @@
+export { TableDestinationPage } from './TableDestination';

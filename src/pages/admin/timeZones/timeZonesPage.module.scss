@@ -1,0 +1,56 @@
+@import '../../../app/styles/variables.scss';
+
+
+.page {
+  font-family: 'Open Sans', sans-serif;
+  font-style: italic;
+  padding: 24px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  font-size: $size-text-24;
+  font-weight: bold;
+  color: $color-black-08;
+}
+
+.button {
+  background-color: $color-primary-05;
+  color: white;
+  font-weight: 500;
+  padding: 8px 20px;
+  border-radius: $border-radius-secondary;
+  box-shadow: $drop-shadow-02;
+  transition: 0.2s;
+
+  &:hover {
+    background-color: $color-primary-06;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $size-text-14;
+
+  thead {
+    background-color: $color-black-01;
+    color: $color-black-08;
+  }
+
+  th, td {
+    padding: 12px;
+    border: 1px solid $color-black-02;
+    text-align: center;
+  }
+
+  tbody tr:nth-child(even) {
+    background-color: $color-black-01;
+  }
+}
