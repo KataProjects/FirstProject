@@ -56,3 +56,14 @@ export interface IColumnTableAntd<T> {
   width?: number | string;
   align?: 'left' | 'right' | 'center';
 }
+
+export interface IFlight {
+  id: number;
+  code: string;
+  airportFrom: string | null;
+  airportTo: string;
+  departureDateTime: string;
+  arrivalDateTime: string;
+  aircraftId: number;
+  flightStatus: 'ON_TIME' | 'COMPLETED' | 'CANCELLED'; // возможные значения
+}

@@ -1,9 +1,8 @@
 import { MyTable } from '@shared/ui/table/ui/Table.tsx';
-import type { ColumnsType } from 'antd/es/table';
 import { mockFlights } from '../model/mokData.ts';
-import type { Flight } from '@shared/types/flight';
+import type { IColumnTableAntd, IFlight } from '@shared/types';
 
-const columns: ColumnsType<Flight> = [
+const columns: Array<IColumnTableAntd<IFlight>> = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Код', dataIndex: 'code', key: 'code' },
   {
@@ -32,7 +31,7 @@ const columns: ColumnsType<Flight> = [
 export const FlightsTable = () => {
   return (
     <MyTable
-      dataSource={mockFlights}
+      dataSource={mockFlights.content}
       columns={columns}
       rowKey="id"
     />

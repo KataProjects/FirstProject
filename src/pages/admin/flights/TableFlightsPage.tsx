@@ -1,7 +1,7 @@
 import { FlightsTable } from '@widgets/flightsTable/ui/flightTable.tsx';
 import { Button } from '@shared/ui/button/button.tsx';
 
-export const FlightsPage = () => {
+export const TableFlightsPage = () => {
   return (
     <div className="p-6">
       <div className="flex items-center justify-between mb-4">
