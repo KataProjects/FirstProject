@@ -1,20 +1,25 @@
 import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
-import type { IColumnTableAntd } from '@shared/types';
-import type { IContentAircraftTable } from '@shared/types';
+import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
 import { Button } from 'antd';
-
-import { type FC, useCallback } from 'react';
-
-import { aircraftMock } from '../models/aircraft.mock';
+import { useCallback, useState } from 'react';
+import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
 import styles from './TableAircraft.module.scss';
 
-const DragHandle: FC = () => {
-  return <Button type="text" size="small" icon={<HolderOutlined />} />;
-};
+const DragHandle = () => <Button type="text" size="small" icon={<HolderOutlined />} />;
+
 
 export const TableAircraft = () => {
+  const [page, setPage] = useState(0);
+  const size = 10;
+
+  const {
+    data: aircraftList,
+    isLoading,
+    isError,
+  } = useGetAircraftListQuery ({ page, size });
+
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
   }, []);
@@ -54,6 +59,8 @@ export const TableAircraft = () => {
     },
   ];
 
+  if (isError) return <div>Ошибка загрузки</div>;
+
   return (
     <div className={styles.wrapper}>
       <TableHeader
@@ -65,13 +72,15 @@ export const TableAircraft = () => {
       />
 
       <Table<IContentAircraftTable>
-        dataSource={aircraftMock.content}
+        dataSource={aircraftList?.content || []}
         columns={columns}
         rowKey="id"
+        loading={isLoading}
         pagination={{
-          current: aircraftMock.number + 1,
-          pageSize: aircraftMock.size,
-          total: aircraftMock.totalElements,
+          current: aircraftList? aircraftList.number + 1: 1,
+          pageSize: aircraftList?.size || size,
+          total: aircraftList?.totalElements || 0,
+          onChange: (pageNum) => setPage(pageNum - 1),
         }}
       />
     </div>
