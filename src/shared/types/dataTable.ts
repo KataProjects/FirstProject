@@ -13,6 +13,7 @@ export interface IPageable {
   pageSize: number;
   offset: number;
   sort: IDataSort | [];
+
 }
 
 export interface IContentAircraftTable {
@@ -21,6 +22,15 @@ export interface IContentAircraftTable {
   model: string;
   modelYear: number;
   flightRange: number;
+}
+
+export interface IContentDestinationTable {
+  id: number;
+  airportCode: string;
+  timezone: string;
+  countryName: string;
+  cityName: string;
+  airportName: string;
 }
 
 export interface IDataSource<T> {
