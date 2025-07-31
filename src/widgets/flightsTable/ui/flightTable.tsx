@@ -1,7 +1,14 @@
 import { MyTable } from '@shared/ui/table/ui/Table.tsx';
 import { mockFlights } from '../model/mokData.ts';
 import type { IColumnTableAntd, IFlight } from '@shared/types';
+import type { FC } from 'react';
+import { Button } from 'antd';
+import { HolderOutlined } from '@ant-design/icons';
 
+
+const DragHandle: FC = () => {
+  return <Button type="text" size="small" icon={<HolderOutlined />} />;
+};
 const columns: Array<IColumnTableAntd<IFlight>> = [
   { title: 'ID', dataIndex: 'id', key: 'id' },
   { title: 'Код', dataIndex: 'code', key: 'code' },
@@ -26,6 +33,13 @@ const columns: Array<IColumnTableAntd<IFlight>> = [
   },
   { title: 'Самолёт', dataIndex: 'aircraftId', key: 'aircraftId' },
   { title: 'Статус', dataIndex: 'flightStatus', key: 'flightStatus' },
+  {
+    key: 'sort',
+    title: '',
+    width: 50,
+    align: 'center',
+    render: () => <DragHandle />,
+  },
 ];
 
 export const FlightsTable = () => {
