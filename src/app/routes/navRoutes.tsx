@@ -10,6 +10,8 @@ import { NotFoundPage } from '@pages/notFoundPage';
 import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
+import { TicketsPage } from '@pages/ticketsPage';
+
 
 export const ROUTES = {
   HOME: '/',
@@ -43,4 +45,5 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TIMEZONES, element: <TableTimeZonesPage /> },
+  { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
 ];
