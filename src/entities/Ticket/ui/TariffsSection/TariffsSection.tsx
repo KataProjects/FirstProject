@@ -1,53 +1,91 @@
 import { useState } from 'react';
-import { BackpackIcon, SuitcaseIcon, ArrowsClockwiseIcon, ArmchairIcon } from '@shared/ui/icons';
+import {
+  BackpackIcon,
+  SuitcaseIcon,
+  ArrowsClockwiseIcon,
+  ArmchairIcon
+} from '@shared/ui/icons';
 import { TariffCard } from '@entities/Ticket/ui/TariffCard';
 import type { ITicket } from '@entities/Ticket';
 
-export interface TariffsSectionProps {
-  tariffs: ITicket['tariffs'];
-  seatsLeft: number;
-}
+export type TariffsSectionProps = Pick<ITicket, 'tariffs' | 'seatsLeft'>;
 
 export const TariffsSection = ({ tariffs, seatsLeft }: TariffsSectionProps) => {
   const [selectedTariff, setSelectedTariff] = useState<string | null>(null);
 
+  const servicesAvailability = {
+    basic: {
+      backpack: true,
+      suitcase: false,
+      arrows: false,
+      armchair: false
+    },
+    standard: {
+      backpack: true,
+      suitcase: true,
+      arrows: false,
+      armchair: false
+    },
+    plus: {
+      backpack: true,
+      suitcase: true,
+      arrows: true,
+      armchair: true
+    }
+  };
+
+  const getColorClass = (
+    tariffType: keyof typeof servicesAvailability,
+    icon: keyof typeof servicesAvailability.basic
+  ) => {
+    return servicesAvailability[tariffType][icon]
+      ? 'text-[#227420]'
+      : 'text-[#808080]';
+  };
+
   const tariffConfigs = [
     {
-      type: 'basic',
+      type: 'basic' as const,
       title: 'Эконом Базовый',
       price: tariffs.economy.basic,
       bgColor: 'bg-[#EBF3FF]',
-      icons: [
-        <BackpackIcon key="backpack" className="w-5 h-4.5 text-gray-400 mr-[3px] ml-[10px]" />,
-        <SuitcaseIcon key="suitcase" className="text-[#808080] mr-[3px]" />,
-        <ArrowsClockwiseIcon key="arrows" className="text-[#808080] mr-[3px]" />,
-        <ArmchairIcon key="armchair" className="text-[#808080]" />
-      ],
+      icons: (
+        <>
+          <BackpackIcon className={`w-5 h-4.5 mr-[3px] ml-[10px] ${getColorClass('basic', 'backpack')}`} />
+          <SuitcaseIcon className={`mr-[3px] ${getColorClass('basic', 'suitcase')}`} />
+          <ArrowsClockwiseIcon className={`mr-[3px] ${getColorClass('basic', 'arrows')}`} />
+          <ArmchairIcon className={`${getColorClass('basic', 'armchair')}`} />
+        </>
+      ),
       showSeatsLeft: true
     },
     {
-      type: 'standard',
+      type: 'standard' as const,
       title: 'Эконом Стандарт',
       price: tariffs.economy.standard,
       bgColor: 'bg-[#EBF3FF]',
-      icons: [
-        <BackpackIcon key="backpack" className="w-4.5 h-4.5 text-gray-400 mr-[2px] ml-[10px]" />,
-        <SuitcaseIcon key="suitcase" className="text-[#227420] mr-[4px]" />,
-        <ArrowsClockwiseIcon key="arrows" className="text-[#808080] mr-[2px]" />,
-        <ArmchairIcon key="armchair" className="text-[#808080]" />
-      ]
+      icons: (
+        <>
+          <BackpackIcon className={`w-4.5 h-4.5 mr-[2px] ml-[10px] ${getColorClass('standard', 'backpack')}`} />
+          <SuitcaseIcon className={`mr-[4px] ${getColorClass('standard', 'suitcase')}`} />
+          <ArrowsClockwiseIcon className={`mr-[2px] ${getColorClass('standard', 'arrows')}`} />
+          <ArmchairIcon className={`${getColorClass('standard', 'armchair')}`} />
+        </>
+      )
     },
     {
-      type: 'plus',
+      type: 'plus' as const,
       title: 'Эконом Плюс',
       price: tariffs.economy.plus,
       bgColor: 'bg-[#C2DCFF]',
-      icons: [
-        <BackpackIcon key="backpack" className="w-5 h-4.5 text-blue-500 mr-[3px]" />,
-        <SuitcaseIcon key="suitcase" className="text-[#227420] mr-[4.88px]" />,
-        <ArrowsClockwiseIcon key="arrows" className="text-[#227420] mr-[3px]" />,
-        <ArmchairIcon key="armchair" className="text-[#227420]" />
-      ],
+      icons: (
+        <>
+          <BackpackIcon className={`w-5 h-4.5 mr-[3px] ${getColorClass('plus', 'backpack')}`} />
+          <SuitcaseIcon className={`mr-[4.88px] ${getColorClass('plus', 'suitcase')}`} />
+          <ArrowsClockwiseIcon className={`mr-[3px] ${getColorClass('plus', 'arrows')}`} />
+          <ArmchairIcon className={`${getColorClass('plus', 'armchair')}`} />
+        </>
+      ),
       dimensions: 'w-[260px] h-[165px]'
     }
   ];
@@ -61,7 +99,7 @@ export const TariffsSection = ({ tariffs, seatsLeft }: TariffsSectionProps) => {
           price={config.price}
           isSelected={selectedTariff === config.type}
           onClick={() => setSelectedTariff(config.type)}
-          icons={<>{config.icons}</>}
+          icons={config.icons}
           showSeatsLeft={config.showSeatsLeft}
           seatsLeft={seatsLeft}
           bgColor={config.bgColor}

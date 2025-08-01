@@ -1,7 +1,4 @@
-interface IconProps {
-  size?: number;
-  className?: string;
-}
+import type { IconProps } from './types';
 
 export const ArmchairIcon = ({ size = 20, className = '' }: IconProps) => (
   <svg

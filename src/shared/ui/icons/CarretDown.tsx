@@ -1,7 +1,4 @@
-interface IconProps {
-  size?: number;
-  className?: string;
-}
+import type { IconProps } from './types';
 
 export const CaretDownIcon = ({ size = 12, className = '' }: IconProps) => (
   <svg

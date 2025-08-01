@@ -1,9 +1,7 @@
 import { CaretDownIcon, LogoIcon } from '@shared/ui/icons';
+import type { ITicket } from '@entities/Ticket';
 
-export interface TicketHeaderProps {
-  airline: string;
-  isDirect: boolean;
-}
+export type TicketHeaderProps = Pick<ITicket, 'airline' | 'isDirect'>;
 
 export const TicketHeader = ({ airline, isDirect }: TicketHeaderProps) => {
   return (

@@ -1,7 +1,4 @@
-interface IconProps {
-  size?: number;
-  className?: string;
-}
+import type { IconProps } from './types';
 
 export const ArrowsClockwiseIcon = ({ size = 18, className = '' }: IconProps) => (
   <svg

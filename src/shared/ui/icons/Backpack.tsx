@@ -1,7 +1,4 @@
-interface IconProps {
-  size?: number;
-  className?: string;
-}
+import type { IconProps } from './types';
 
 export const BackpackIcon = ({ size = 20, className = '' }: IconProps) => (
   <svg
@@ -36,7 +33,7 @@ export const BackpackIcon = ({ size = 20, className = '' }: IconProps) => (
     />
     <path
       d="M8.25 12.5C7.90482 12.5 7.625 12.7798 7.625 13.125V14.375C7.625 14.7202 7.90482 15 8.25 15C8.59518 15 8.875 14.7202 8.875 14.375V13.125C8.875 12.7798 8.59518 12.5 8.25 12.5Z"
-      fill="#227420"
+      fill="currentColor"
     />
   </svg>
 );

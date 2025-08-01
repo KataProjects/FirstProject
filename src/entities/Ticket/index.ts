@@ -1,7 +1,6 @@
 export { TicketCard } from './ui/TicketCard';
 export { TariffsSection } from './ui/TariffsSection';
 export { RouteInfo } from './ui/RouteInfo';
-export { SeatsLeft } from './ui/SeatsLeft';
 export { TicketHeader } from './ui/TicketHeader';
 
 export type { ITicket } from './model';
