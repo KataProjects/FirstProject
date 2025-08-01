@@ -14,7 +14,7 @@ const DragHandle: FC = () => {
   return <Button type="text" size="small" icon={<HolderOutlined />} />;
 };
 
-export const TableDestination = () => {
+export const TableDestination: FC = () => {
   const [data, setData] = useState(destinationMock.content);
   const [editingKey, setEditingKey] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<Partial<IContentDestinationTable>>({});
@@ -35,7 +35,7 @@ export const TableDestination = () => {
     setEditingData({});
   };
 
-  const save = async (id: number) => {
+  const save = (id: number) => {
     try {
       const newData = [...data];
       const index = newData.findIndex(item => id === item.id);
