@@ -50,7 +50,7 @@ export interface IContentSeatsTable {
   isRegistered: boolean;
   isSold: boolean;
   isBooked: boolean;
-  flightsId: number;
+  flightId: number;
   seat: {  
   id: number;
   seatNumber:string;

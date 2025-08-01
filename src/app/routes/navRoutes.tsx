@@ -3,6 +3,7 @@ import type { RoutesProps } from '@app/types';
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
+import { TableSeatsPage } from '@pages/admin/tableSeats';
 import { TimeZonesPage } from '@pages/admin/timeZones/timeZonesPage'
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
@@ -40,6 +41,7 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
+  { path: ROUTES.TABLE_BOARDING, element: <TableSeatsPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TIMEZONES, element: <TimeZonesPage /> }
 ];

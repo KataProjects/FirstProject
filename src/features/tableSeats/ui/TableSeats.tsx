@@ -9,7 +9,7 @@ import { useState } from 'react';
 
 import { type FC, useCallback } from 'react';
 
-import styles from './TableTimeZone.module.scss';
+import styles from './TableSeats.module.scss';
 
 const DragHandle: FC = () => {
   return <Button type="text" size="small" icon={<HolderOutlined />} />;
@@ -31,6 +31,12 @@ export const TableSeats = () => {
     console.log('open modal');
   }, []);
 
+  const transformedData = data?.content.map(item => ({
+  ...item,
+  seatId: item.seat?.id ?? '-',
+  category: item.seat?.category ?? '-',
+})) ?? [];
+
   const columns: Array<IColumnTableAntd<IContentSeatsTable>> = [
     {
       title: 'ID',
@@ -39,7 +45,7 @@ export const TableSeats = () => {
     },
     {
       title: 'ID рейса',
-      dataIndex: 'flightsId',
+      dataIndex: 'flightId',
       key: 'flightsId',
     },
     {
@@ -61,16 +67,19 @@ export const TableSeats = () => {
       title: 'Продано',
       dataIndex: 'isSold',
       key: 'isSold',
+      render: (isBooked: boolean) => isBooked ? 'Да' : 'Нет',
     },
         {
       title: 'Зарегистрировано',
       dataIndex: 'isRegistered',
       key: 'isRegistered',
+      render: (isBooked: boolean) => isBooked ? 'Да' : 'Нет',
     },
         {
       title: 'Забронировано',
       dataIndex: 'isBooked',
       key: 'isBooked',
+      render: (isBooked: boolean) => isBooked ? 'Да' : 'Нет',
     },
     {
       key: 'sort',
@@ -89,15 +98,15 @@ export const TableSeats = () => {
   return (
     <div className={styles.wrapper}>
       <TableHeader
-        title="Часовые пояса"
-        btnName="Добавить часовой пояс"
+        title="Посадочные места"
+        btnName="Добавить посадочное место"
         btnIcon={<PlusOutlined style={{ marginLeft: '8px' }} />}
         onBtnClick={handleBtnClick}
         className={styles.customHeader}
       />
 
       <Table<IContentSeatsTable>
-        dataSource={data.content}
+        dataSource={transformedData}
         columns={columns}
         rowKey="id"
         onChange={handleTableChange}
