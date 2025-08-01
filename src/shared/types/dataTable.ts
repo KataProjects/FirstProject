@@ -33,9 +33,9 @@ export interface IContentDestinationTable {
   airportName: string;
 }
 
-export interface IContentSeatsTable {
+export interface IContentSeatsTableTransformed {
   id: number;
-  flightsId: number;
+  flightId: number;
   seatId: number;
   fare: number;
   category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";

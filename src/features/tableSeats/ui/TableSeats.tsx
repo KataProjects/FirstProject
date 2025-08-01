@@ -2,7 +2,7 @@ import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { useGetFlightSeatListQuery } from '@features/tableSeats/models/flightSeatApi';
 import type { IColumnTableAntd } from '@shared/types';
-import type { IContentSeatsTable } from '@shared/types';
+import type { IContentSeatsTableTransformed } from '@shared/types';
 import { Table } from '@shared/ui/table';
 import { Button,  type TablePaginationConfig } from 'antd';
 import { useState } from 'react';
@@ -37,7 +37,7 @@ export const TableSeats = () => {
   category: item.seat?.category ?? '-',
 })) ?? [];
 
-  const columns: Array<IColumnTableAntd<IContentSeatsTable>> = [
+  const columns: Array<IColumnTableAntd<IContentSeatsTableTransformed>> = [
     {
       title: 'ID',
       dataIndex: 'id',
@@ -105,7 +105,7 @@ export const TableSeats = () => {
         className={styles.customHeader}
       />
 
-      <Table<IContentSeatsTable>
+      <Table<IContentSeatsTableTransformed>
         dataSource={transformedData}
         columns={columns}
         rowKey="id"
