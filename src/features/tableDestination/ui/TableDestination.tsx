@@ -1,13 +1,14 @@
 import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
+import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentDestinationTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button } from 'antd';
+import { Button, Spin, type TablePaginationConfig } from 'antd';
 
-import { type FC, useCallback } from 'react';
+import { type FC, useCallback, useEffect, useState } from 'react';
 
-import { destinationMock } from '../models/destination.mock';
+import { useGetDestinationListQuery } from '../models/destinationApi';
 import styles from './TableDestination.module.scss';
 
 const DragHandle: FC = () => {
@@ -18,6 +19,24 @@ export const TableDestination = () => {
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
   }, []);
+
+  const [page, setPage] = useState(0);
+  const { data, isSuccess, isLoading, isError } = useGetDestinationListQuery({
+    page: page,
+    size: DEFAULT_PAGE_LIMIT,
+  });
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    if (pagination.current !== undefined) {
+      setPage(pagination.current - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(data);
+    }
+  }, [data]);
 
   const columns: Array<IColumnTableAntd<IContentDestinationTable>> = [
     {
@@ -54,7 +73,11 @@ export const TableDestination = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <Spin size="large" />
+  ) : isError ? (
+    <div>Oops error</div>
+  ) : isSuccess ? (
     <div className={styles.wrapper}>
       <TableHeader
         title="Место назначения"
@@ -65,17 +88,18 @@ export const TableDestination = () => {
       />
 
       <Table<IContentDestinationTable>
-        dataSource={destinationMock.content}
+        dataSource={data?.content}
         columns={columns}
         rowKey="id"
+        onChange={handleTableChange}
         pagination={{
           position: ['bottomLeft'],
           showSizeChanger: false,
-          current: destinationMock.number + 1,
-          pageSize: destinationMock.size,
-          total: destinationMock.totalElements,
+          current: (data?.number ?? 0) + 1,
+          pageSize: data?.size,
+          total: data?.totalElements ?? 0,
         }}
       />
     </div>
-  );
+  ) : null;
 };

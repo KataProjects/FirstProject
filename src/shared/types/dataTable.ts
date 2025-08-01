@@ -13,7 +13,6 @@ export interface IPageable {
   pageSize: number;
   offset: number;
   sort: IDataSort | [];
-
 }
 
 export interface IContentAircraftTable {
@@ -55,4 +54,13 @@ export interface IColumnTableAntd<T> {
   sorter?: boolean | ((a: T, b: T) => number);
   width?: number | string;
   align?: 'left' | 'right' | 'center';
+}
+
+export interface IContentDestinationTable {
+  id: number;
+  airportCode: string;
+  timezone: string;
+  countryName: string;
+  cityName: string;
+  airportName: string;
 }
