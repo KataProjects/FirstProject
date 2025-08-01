@@ -1,0 +1,1 @@
+export { tableBooking } from './tableBooking';
