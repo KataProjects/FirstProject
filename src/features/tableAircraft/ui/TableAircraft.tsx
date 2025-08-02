@@ -2,19 +2,19 @@ import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentAircraftTable } from '@shared/types';
+import { ContextMenu, useContextMenu } from '@shared/ui/contexMenu';
 import { Table } from '@shared/ui/table';
 import { Button } from 'antd';
+import { MoreHorizontal, Pencil, X } from 'lucide-react';
 
-import { type FC, useCallback } from 'react';
+import { useCallback } from 'react';
 
 import { aircraftMock } from '../models/aircraft.mock';
 import styles from './TableAircraft.module.scss';
 
-const DragHandle: FC = () => {
-  return <Button type="text" size="small" icon={<HolderOutlined />} />;
-};
-
 export const TableAircraft = () => {
+  const { contextData, open, close } = useContextMenu<IContentAircraftTable>();
+
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
   }, []);
@@ -46,11 +46,13 @@ export const TableAircraft = () => {
       key: 'flightRange',
     },
     {
-      key: 'sort',
+      key: 'actions',
       title: '',
       width: 50,
       align: 'center',
-      render: () => <DragHandle />,
+      render: (_, row) => (
+        <Button type="text" size="small" icon={<HolderOutlined />} onClick={(e) => open(e, row)} />
+      ),
     },
   ];
 
@@ -74,6 +76,31 @@ export const TableAircraft = () => {
           total: aircraftMock.totalElements,
         }}
       />
+
+      {contextData && (
+        <ContextMenu
+          x={contextData.x}
+          y={contextData.y}
+          onClose={close}
+          items={[
+            {
+              label: 'Подробности',
+              icon: <MoreHorizontal size={16} />,
+              onClick: () => console.log('Подробности', contextData.data),
+            },
+            {
+              label: 'Редактировать',
+              icon: <Pencil size={16} />,
+              onClick: () => console.log('Редактировать', contextData.data),
+            },
+            {
+              label: 'Удалить',
+              icon: <X size={16} />,
+              onClick: () => console.log('Удалить', contextData.data),
+            },
+          ]}
+        />
+      )}
     </div>
   );
 };

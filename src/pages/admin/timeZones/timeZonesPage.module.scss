@@ -1,6 +1,5 @@
 @import '../../../app/styles/variables.scss';
 
-
 .page {
   font-family: 'Open Sans', sans-serif;
   font-style: italic;
@@ -44,7 +43,8 @@
     color: $color-black-08;
   }
 
-  th, td {
+  th,
+  td {
     padding: 12px;
     border: 1px solid $color-black-02;
     text-align: center;

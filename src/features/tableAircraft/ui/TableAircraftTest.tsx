@@ -1,16 +1,15 @@
-import { useGetAircraftListQuery } from "../models/aircraftApi";
-import { useEffect } from "react";
+import { useEffect } from 'react';
+
+import { useGetAircraftListQuery } from '../models/aircraftApi';
 
 export const TableAircraftTest = () => {
-  const {data: aircraftList, isSuccess} = useGetAircraftListQuery(null)
+  const { data: aircraftList, isSuccess } = useGetAircraftListQuery(null);
 
   useEffect(() => {
-    if(isSuccess) {
+    if (isSuccess) {
       console.log(aircraftList.content);
     }
-  }, [aircraftList])
+  }, [aircraftList]);
 
-  return (
-    <div>Рез-тат в консоли</div>
-  )
-}
+  return <div>Рез-тат в консоли</div>;
+};
