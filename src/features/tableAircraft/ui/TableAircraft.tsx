@@ -1,29 +1,50 @@
-import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
+import {
+  HolderOutlined,
+  PlusOutlined,
+  EditOutlined,
+  SaveOutlined,
+  CloseOutlined,
+} from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button, Spin, type TablePaginationConfig } from 'antd';
-
+import {
+  Button,
+  Input,
+  Space,
+  Spin,
+  message,
+  type TablePaginationConfig,
+} from 'antd';
 import { type FC, useCallback, useEffect, useState } from 'react';
-import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
+import {
+  useGetAircraftListQuery,
+  useUpdateAircraftMutation,
+} from '@features/tableAircraft/models/aircraftApi.ts';
 import styles from './TableAircraft.module.scss';
 
 const DragHandle: FC = () => {
   return <Button type="text" size="small" icon={<HolderOutlined />} />;
 };
 
-export const TableAircraft = () => {
+export const TableAircraft: FC = () => {
   const [page, setPage] = useState(0);
+  const [editingKey, setEditingKey] = useState<number | null>(null);
+  const [editingData, setEditingData] = useState<Partial<IContentAircraftTable>>({});
 
   const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
     page,
     size: DEFAULT_PAGE_LIMIT,
   });
 
-  const handleBtnClick = useCallback(() => {
-    console.log('open modal');
-  }, []);
+  const [updateAircraft] = useUpdateAircraftMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log('Получены данные:', aircraftList);
+    }
+  }, [isSuccess, aircraftList]);
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     if (pagination.current !== undefined) {
@@ -31,11 +52,32 @@ export const TableAircraft = () => {
     }
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(aircraftList);
+  const isEditing = (record: IContentAircraftTable) => record.id === editingKey;
+
+  const edit = (record: IContentAircraftTable) => {
+    setEditingKey(record.id);
+    setEditingData({ ...record });
+  };
+
+  const cancel = () => {
+    setEditingKey(null);
+    setEditingData({});
+  };
+
+  const save = async (id: number) => {
+    try {
+      await updateAircraft({ id, ...editingData }).unwrap();
+      setEditingKey(null);
+      setEditingData({});
+      message.success('Изменения сохранены на сервер');
+    } catch (err) {
+      message.error('Ошибка при сохранении на сервер');
     }
-  }, [aircraftList, isSuccess]);
+  };
+
+  const handleInputChange = (field: keyof IContentAircraftTable, value: string | number) => {
+    setEditingData(prev => ({ ...prev, [field]: value }));
+  };
 
   const columns: Array<IColumnTableAntd<IContentAircraftTable>> = [
     {
@@ -47,21 +89,93 @@ export const TableAircraft = () => {
       title: 'Модель',
       dataIndex: 'model',
       key: 'model',
+      render: (text, record) =>
+        isEditing(record) ? (
+          <Input
+            value={editingData.model || ''}
+            onChange={e => handleInputChange('model', e.target.value)}
+            size="small"
+          />
+        ) : (
+          text
+        ),
     },
     {
       title: 'Номер',
       dataIndex: 'aircraftNumber',
       key: 'aircraftNumber',
+      render: (text, record) =>
+        isEditing(record) ? (
+          <Input
+            value={editingData.aircraftNumber || ''}
+            onChange={e => handleInputChange('aircraftNumber', e.target.value)}
+            size="small"
+          />
+        ) : (
+          text
+        ),
     },
     {
       title: 'Год выпуска',
       dataIndex: 'modelYear',
       key: 'modelYear',
+      render: (text, record) =>
+        isEditing(record) ? (
+          <Input
+            value={editingData.modelYear || ''}
+            onChange={e => handleInputChange('modelYear', Number(e.target.value))}
+            size="small"
+          />
+        ) : (
+          text
+        ),
     },
     {
       title: 'Дальность полета (км)',
       dataIndex: 'flightRange',
       key: 'flightRange',
+      render: (text, record) =>
+        isEditing(record) ? (
+          <Input
+            value={editingData.flightRange || ''}
+            onChange={e => handleInputChange('flightRange', Number(e.target.value))}
+            size="small"
+          />
+        ) : (
+          text
+        ),
+    },
+    {
+      title: 'Действия',
+      key: 'actions',
+      width: 120,
+      render: (_, record) => {
+        const editable = isEditing(record);
+        return editable ? (
+          <Space>
+            <Button
+              type="link"
+              size="small"
+              icon={<SaveOutlined />}
+              onClick={() => save(record.id)}
+            />
+            <Button
+              type="link"
+              size="small"
+              icon={<CloseOutlined />}
+              onClick={cancel}
+            />
+          </Space>
+        ) : (
+          <Button
+            type="link"
+            size="small"
+            icon={<EditOutlined />}
+            disabled={editingKey !== null}
+            onClick={() => edit(record)}
+          />
+        );
+      },
     },
     {
       key: 'sort',
@@ -72,10 +186,14 @@ export const TableAircraft = () => {
     },
   ];
 
+  const handleBtnClick = useCallback(() => {
+    console.log('open modal');
+  }, []);
+
   if (isLoading) return <Spin size="large" />;
   if (isError) return <div>Ошибка загрузки</div>;
 
-  return isSuccess ? (
+  return (
     <div className={styles.wrapper}>
       <TableHeader
         title="Самолёты"
@@ -86,7 +204,7 @@ export const TableAircraft = () => {
       />
 
       <Table<IContentAircraftTable>
-        dataSource={aircraftList?.content ?? []}
+        dataSource={aircraftList?.content || []}
         columns={columns}
         rowKey="id"
         onChange={handleTableChange}
@@ -99,5 +217,5 @@ export const TableAircraft = () => {
         }}
       />
     </div>
-  ) : null;
+  );
 };

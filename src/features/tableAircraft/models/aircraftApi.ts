@@ -8,7 +8,18 @@ const aircraftApi = baseAPI.injectEndpoints({
     getAircraftList: build.query<IDataSource<IContentAircraftTable>, PaginationParams>({
       query: ({ page = 1, size = DEFAULT_PAGE_LIMIT }) => `aircrafts?size=${size}&page=${page}`,
     }),
+
+    updateAircraft: build.mutation<IContentAircraftTable, Partial<IContentAircraftTable> & { id: number }>({
+      query: ({ id, ...body }) => ({
+        url: `aircrafts/${id}`,
+        method: 'PUT',
+        body,
+      }),
+    }),
   }),
 });
 
-export const { useGetAircraftListQuery } = aircraftApi;
+export const {
+  useGetAircraftListQuery,
+  useUpdateAircraftMutation,
+} = aircraftApi;
