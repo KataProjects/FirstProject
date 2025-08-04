@@ -35,7 +35,11 @@ export const SignUpForm: React.FC = () => {
       </Form.Item>
       <Form.Item
         label="Ответ на секрестный вопрос"
+<<<<<<< HEAD
         name="password"
+=======
+        name="securityQuestionResponse"
+>>>>>>> dev
         required={false}
         rules={[
           { required: true, message: 'Введите пароль' },

@@ -1,0 +1,1 @@
+export { TableTimeZonesPage } from './TableTimeZonesPage';
