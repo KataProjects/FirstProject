@@ -212,6 +212,10 @@ export const TableDestination: FC = () => {
           current: destinationMock.number + 1,
           pageSize: destinationMock.size,
           total: destinationMock.totalElements,
+          onChange: () => {
+            setEditingKey(null);
+            setEditingData({});
+          },
         }}
       />
     </div>
