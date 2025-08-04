@@ -1,16 +1,10 @@
 import { Table } from "@shared/ui/table";
 import { TableHeader } from "@entities/tableHeader";
 import styles from "./tableBooking.module.css";
+import { type bookingData } from "@shared/types/dataTable";
 
 export const TableBooking = () => {
-interface bookingData {
-    id: number,
-    passengerId: number,
-    bookingDate: string,
-    bookingStatus: string,
-    flightSeatId: number,
-    flightId: number
-}
+
 
 const bookingMockData: bookingData[] = [
     {
