@@ -6,24 +6,19 @@ import type { PaginationParams } from '@shared/types/pagination';
 const aircraftAPI = baseAPI.injectEndpoints({
   endpoints: (build) => ({
     getAircraftList: build.query<IDataSource<IContentAircraftTable>, PaginationParams>({
-      query: ({ page = 1, size = DEFAULT_PAGE_LIMIT }) => `aircrafts?size=${size}&page=${page}`,
-      // Добавляем теги для кэширования
+      query: ({ page = 0, size = DEFAULT_PAGE_LIMIT }: PaginationParams) =>
+        `aircrafts?page=${page}&size=${size}`,
       providesTags: ['Aircraft'],
     }),
-
-    updateAircraft: build.mutation<IContentAircraftTable, Partial<IContentAircraftTable> & { id: number }>({
-      query: ({ id, ...body }) => ({
+    updateAircraft: build.mutation<void, Partial<IContentAircraftTable> & { id: number }>({
+      query: ({ id, ...patch }) => ({
         url: `aircrafts/${id}`,
         method: 'PATCH',
-        body,
+        body: patch,
       }),
-      // Инвалидируем кэш после обновления
       invalidatesTags: ['Aircraft'],
     }),
   }),
 });
 
-export const {
-  useGetAircraftListQuery,
-  useUpdateAircraftMutation,
-} = aircraftAPI;
+export const { useGetAircraftListQuery, useUpdateAircraftMutation } = aircraftAPI;
