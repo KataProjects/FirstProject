@@ -22,9 +22,15 @@ export const TableDestination: FC = () => {
     size: DEFAULT_PAGE_LIMIT,
   });
 
-  const [data, setData] = useState(destinationList?.content);
+  const [data, setData] = useState<IContentDestinationTable[]>([]);
   const [editingKey, setEditingKey] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<Partial<IContentDestinationTable>>({});
+
+  useEffect(() => {
+    if (isSuccess && destinationList?.content) {
+      setData(destinationList.content)
+    }
+  }, [destinationList]);
 
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
@@ -72,12 +78,6 @@ export const TableDestination: FC = () => {
       setPage(pagination.current - 1);
     }
   };
-
-  useEffect(() => {
-    if (isSuccess) {
-      console.log(destinationList);
-    }
-  }, [destinationList]);
 
   const columns: Array<IColumnTableAntd<IContentDestinationTable>> = [
     {
@@ -238,7 +238,6 @@ export const TableDestination: FC = () => {
           pageSize: destinationList?.size,
           total: destinationList?.totalElements ?? 0,
           onChange: () => {
-            // handleTableChange({current: page, pageSize});
             setEditingKey(null);
             setEditingData({});
           },

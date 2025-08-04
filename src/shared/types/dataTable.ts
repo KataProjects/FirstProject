@@ -23,15 +23,6 @@ export interface IContentAircraftTable {
   flightRange: number;
 }
 
-export interface IContentDestinationTable {
-  id: number;
-  airportCode: string;
-  timezone: string;
-  countryName: string;
-  cityName: string;
-  airportName: string;
-}
-
 export interface IContentTimeZoneTable {
   id: number;
   countryName: string;
