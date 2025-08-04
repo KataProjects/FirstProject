@@ -1,5 +1,6 @@
-import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
+import { HolderOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
+import { AddButton } from '@shared/ui/AddButton';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
@@ -59,7 +60,7 @@ export const TableAircraft = () => {
       <TableHeader
         title="Самолёты"
         btnName="Добавить самолеты"
-        btnIcon={<PlusOutlined style={{ marginLeft: '8px' }} />}
+        btnIcon={<AddButton text="Добавить самолеты" onClick={handleBtnClick} />}
         onBtnClick={handleBtnClick}
         className={styles.customHeader}
       />

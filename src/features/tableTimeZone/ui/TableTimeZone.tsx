@@ -1,6 +1,7 @@
-import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
+import { HolderOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { useGetTimeZonesListQuery } from '@features/tableTimeZone/models/timeZoneApi';
+import { AddButton } from '@shared/ui/AddButton';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentTimeZoneTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
@@ -76,7 +77,7 @@ export const TableTimeZone = () => {
       <TableHeader
         title="Часовые пояса"
         btnName="Добавить часовой пояс"
-        btnIcon={<PlusOutlined style={{ marginLeft: '8px' }} />}
+        btnIcon={<AddButton text="Добавить часовой пояс" onClick={handleBtnClick} />}
         onBtnClick={handleBtnClick}
         className={styles.customHeader}
       />

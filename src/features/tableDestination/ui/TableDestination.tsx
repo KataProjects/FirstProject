@@ -1,5 +1,6 @@
-import { HolderOutlined, PlusOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
+import { HolderOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
+import { AddButton } from '@shared/ui/AddButton';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentDestinationTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
@@ -197,7 +198,7 @@ export const TableDestination: FC = () => {
       <TableHeader
         title="Место назначения"
         btnName="Добавить пункт назначения"
-        btnIcon={<PlusOutlined style={{ marginLeft: '8px' }} />}
+        btnIcon={<AddButton text="Добавить пункт назначения" onClick={handleBtnClick} />}
         onBtnClick={handleBtnClick}
         className={styles.customHeader}
       />
