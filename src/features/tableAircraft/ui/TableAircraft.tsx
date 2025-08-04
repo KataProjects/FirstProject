@@ -20,8 +20,8 @@ import {
 import { type FC, useCallback, useEffect, useState } from 'react';
 import {
   useGetAircraftListQuery,
-  useUpdateAircraftMutation,
-} from '@features/tableAircraft/models/aircraftAPI.ts';
+  useUpdateAircraftMutation
+} from '@features/tableAircraft/models/aircraftApi.ts';
 import styles from './TableAircraft.module.scss';
 
 const DragHandle: FC = () => {
@@ -46,9 +46,15 @@ export const TableAircraft: FC = () => {
     }
   }, [isSuccess, aircraftList]);
 
+  const handleBtnClick = useCallback(() => {
+    console.log('open modal');
+  }, []);
+
   const handleTableChange = (pagination: TablePaginationConfig) => {
     if (pagination.current !== undefined) {
       setPage(pagination.current - 1);
+      setEditingKey(null);
+      setEditingData({});
     }
   };
 
@@ -69,9 +75,9 @@ export const TableAircraft: FC = () => {
       await updateAircraft({ id, ...editingData }).unwrap();
       setEditingKey(null);
       setEditingData({});
-      message.success('Изменения сохранены на сервер');
-    } catch (err) {
-      message.error('Ошибка при сохранении на сервер');
+      message.success('Изменения сохранены');
+    } catch (errInfo) {
+      message.error('Ошибка при сохранении');
     }
   };
 
@@ -84,72 +90,81 @@ export const TableAircraft: FC = () => {
       title: 'ID',
       dataIndex: 'id',
       key: 'id',
+      width: 80,
     },
     {
       title: 'Модель',
       dataIndex: 'model',
       key: 'model',
-      render: (text, record) =>
-        isEditing(record) ? (
-          <Input
-            value={editingData.model || ''}
-            onChange={e => handleInputChange('model', e.target.value)}
-            size="small"
-          />
-        ) : (
-          text
-        ),
+      render: (text: string, record: IContentAircraftTable) => {
+        if (isEditing(record)) {
+          return (
+            <Input
+              value={editingData.model || ''}
+              onChange={(e) => handleInputChange('model', e.target.value)}
+              size="small"
+            />
+          );
+        }
+        return text;
+      },
     },
     {
       title: 'Номер',
       dataIndex: 'aircraftNumber',
       key: 'aircraftNumber',
-      render: (text, record) =>
-        isEditing(record) ? (
-          <Input
-            value={editingData.aircraftNumber || ''}
-            onChange={e => handleInputChange('aircraftNumber', e.target.value)}
-            size="small"
-          />
-        ) : (
-          text
-        ),
+      render: (text: string, record: IContentAircraftTable) => {
+        if (isEditing(record)) {
+          return (
+            <Input
+              value={editingData.aircraftNumber || ''}
+              onChange={(e) => handleInputChange('aircraftNumber', e.target.value)}
+              size="small"
+            />
+          );
+        }
+        return text;
+      },
     },
     {
       title: 'Год выпуска',
       dataIndex: 'modelYear',
       key: 'modelYear',
-      render: (text, record) =>
-        isEditing(record) ? (
-          <Input
-            value={editingData.modelYear || ''}
-            onChange={e => handleInputChange('modelYear', Number(e.target.value))}
-            size="small"
-          />
-        ) : (
-          text
-        ),
+      render: (text: number, record: IContentAircraftTable) => {
+        if (isEditing(record)) {
+          return (
+            <Input
+              value={editingData.modelYear || ''}
+              onChange={(e) => handleInputChange('modelYear', Number(e.target.value))}
+              size="small"
+            />
+          );
+        }
+        return text;
+      },
     },
     {
       title: 'Дальность полета (км)',
       dataIndex: 'flightRange',
       key: 'flightRange',
-      render: (text, record) =>
-        isEditing(record) ? (
-          <Input
-            value={editingData.flightRange || ''}
-            onChange={e => handleInputChange('flightRange', Number(e.target.value))}
-            size="small"
-          />
-        ) : (
-          text
-        ),
+      render: (text: number, record: IContentAircraftTable) => {
+        if (isEditing(record)) {
+          return (
+            <Input
+              value={editingData.flightRange || ''}
+              onChange={(e) => handleInputChange('flightRange', Number(e.target.value))}
+              size="small"
+            />
+          );
+        }
+        return text;
+      },
     },
     {
       title: 'Действия',
       key: 'actions',
       width: 120,
-      render: (_, record) => {
+      render: (_: any, record: IContentAircraftTable) => {
         const editable = isEditing(record);
         return editable ? (
           <Space>
@@ -185,10 +200,6 @@ export const TableAircraft: FC = () => {
       render: () => <DragHandle />,
     },
   ];
-
-  const handleBtnClick = useCallback(() => {
-    console.log('open modal');
-  }, []);
 
   if (isLoading) return <Spin size="large" />;
   if (isError) return <div>Ошибка загрузки</div>;
