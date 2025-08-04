@@ -22,21 +22,22 @@ export const ContextMenu: React.FC<Props> = ({ x, y, items, onClose }) => {
       <div className={styles.menu}>
         <div className={styles.menuArrow}></div>
 
-        <ul className={styles.menuList}>
+        <div className={styles.menuList}>
           {items.map((item, idx) => (
-            <li
+            <button
               key={idx}
               onClick={() => {
                 item.onClick();
                 onClose();
               }}
               className={`${styles.menuItem} ${item.active ? styles.menuItemActive : ''}`}
+              type='button'
             >
               <span className={styles.icon}>{item.icon}</span>
               {item.label}
-            </li>
+            </button>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );
