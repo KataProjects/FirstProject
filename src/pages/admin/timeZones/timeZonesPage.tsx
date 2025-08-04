@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 
 import { mockTimezones } from './mock';
@@ -6,7 +7,6 @@ import styles from './timeZonesPage.module.scss';
 
 export const TimeZonesPage = () => {
   const [data] = useState<Timezone[]>(mockTimezones);
-
   return (
     <div className={styles.page}>
       <div className={styles.header}>
