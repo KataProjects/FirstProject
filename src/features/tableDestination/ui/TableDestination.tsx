@@ -16,7 +16,13 @@ const DragHandle: FC = () => {
 };
 
 export const TableDestination: FC = () => {
-  const [data, setData] = useState(destinationMock.content);
+  const [page, setPage] = useState(0);
+  const { data: destinationList, isSuccess, isLoading, isError } = useGetDestinationListQuery({
+    page: page,
+    size: DEFAULT_PAGE_LIMIT,
+  });
+
+  const [data, setData] = useState(destinationList?.content);
   const [editingKey, setEditingKey] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<Partial<IContentDestinationTable>>({});
 
@@ -60,11 +66,6 @@ export const TableDestination: FC = () => {
     setEditingData(prev => ({ ...prev, [field]: value }));
   };
 
-  const [page, setPage] = useState(0);
-  const { data, isSuccess, isLoading, isError } = useGetDestinationListQuery({
-    page: page,
-    size: DEFAULT_PAGE_LIMIT,
-  });
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     if (pagination.current !== undefined) {
@@ -74,9 +75,9 @@ export const TableDestination: FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      console.log(data);
+      console.log(destinationList);
     }
-  }, [data]);
+  }, [destinationList]);
 
   const columns: Array<IColumnTableAntd<IContentDestinationTable>> = [
     {
@@ -226,18 +227,18 @@ export const TableDestination: FC = () => {
       />
 
       <Table<IContentDestinationTable>
-        dataSource={data?.content}
+        dataSource={destinationList?.content}
         columns={columns}
         rowKey="id"
         onChange={handleTableChange}
         pagination={{
           position: ['bottomLeft'],
           showSizeChanger: false,
-          current: (data?.number ?? 0) + 1,
-          pageSize: data?.size,
-          total: data?.totalElements ?? 0,
+          current: (destinationList?.number ?? 0) + 1,
+          pageSize: destinationList?.size,
+          total: destinationList?.totalElements ?? 0,
           onChange: () => {
-            handleTableChange;
+            // handleTableChange({current: page, pageSize});
             setEditingKey(null);
             setEditingData({});
           },

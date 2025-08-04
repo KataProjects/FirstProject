@@ -2,11 +2,7 @@ import type { RoutesProps } from '@app/types';
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
-<<<<<<< HEAD
-import { TimeZonesPage } from '@pages/admin/timeZones/timeZonesPage';
-=======
 import { TableTimeZonesPage } from '@pages/admin/tableTimeZones';
->>>>>>> dev
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
