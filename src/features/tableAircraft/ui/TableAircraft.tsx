@@ -13,7 +13,7 @@ const DragHandle: FC = () => {
   return <Button type="text" size="small" icon={<HolderOutlined />} />;
 };
 
-export const TableAircraft = () => {
+export const TableAircraft: FC = () => {
   const [page, setPage] = useState(0);
 
   const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
