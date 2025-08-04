@@ -11,6 +11,7 @@ import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
+import { PassengersPage } from '@pages/passengersPage'; 
 
 export const ROUTES = {
   HOME: '/',
@@ -30,7 +31,6 @@ export const ROUTES = {
   TABLE_BOARDING: '/admin/boarding',
   TABLE_USERS: '/admin/users',
   NOT_FOUND: '*',
-  TIMEZONES: 'admin/timezones',
 };
 
 export const navRoutes: RoutesProps = [
@@ -43,6 +43,6 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
-  { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
-  { path: ROUTES.TIMEZONES, element: <TimeZonesPage /> },
+  { path: ROUTES.TABLE_TIMEZONES, element: <TimeZonesPage /> },
+  { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
 ];
