@@ -3,7 +3,7 @@ import type { RoutesProps } from '@app/types';
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
-import { TimeZonesPage } from '@pages/admin/timeZones/timeZonesPage'
+import { TableTimeZonesPage } from '@pages/admin/tableTimeZones';
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
@@ -11,7 +11,8 @@ import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
-import { PassengersPage } from '@pages/passengersPage'; 
+import { PassengersPage } from '@pages/passengersPage';
+
 
 export const ROUTES = {
   HOME: '/',
@@ -43,6 +44,7 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
-  { path: ROUTES.TABLE_TIMEZONES, element: <TimeZonesPage /> },
+  { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
+  { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
 ];
