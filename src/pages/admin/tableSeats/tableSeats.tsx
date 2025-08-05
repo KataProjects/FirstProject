@@ -17,11 +17,20 @@ export const TableSeatsPage = () => {
             createdAt: 'string',
             updatedAt: 'string',
         },
-        
+    ]
+
+    const data = [
+        {
+            id: 1,
+            name: 'string',
+            description: 'string',
+            createdAt: 'string',
+            updatedAt: 'string',
+        },
     ]
 return (
     <div>
-        <Table dataSource={[]} columns={columns} />
+        <Table dataSource={data} columns={columns} />
     </div>
 )
 }
