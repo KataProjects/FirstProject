@@ -50,7 +50,20 @@ const columns = [
     {
         title: "Дата бронирования",
         dataIndex: "bookingDate",
-        key: "bookingDate"
+        key: "bookingDate",
+        render: (text: string) => {
+            return <span>{
+                new Date(text).toLocaleString('ru-RU', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+              })
+              }
+              </span>
+        }
     },
     {
         title: "Идентификатор пассажира",
@@ -60,6 +73,7 @@ const columns = [
     {
         title: "Идентификатор рейса",
         dataIndex: "flightId",
+        key: "flightId"
     }
 ]
 
