@@ -2,6 +2,7 @@ import { Table } from "@shared/ui/table";
 import { TableHeader } from "@entities/tableHeader";
 import styles from "./tableBooking.module.css";
 import { type bookingData } from "@shared/types/dataTable";
+import { formatDateTime } from "@shared/lib/date/formatters";
 
 export const TableBooking = () => {
 
@@ -52,16 +53,8 @@ const columns = [
         dataIndex: "bookingDate",
         key: "bookingDate",
         render: (text: string) => {
-            return <span>{
-                new Date(text).toLocaleString('ru-RU', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit',
-                hour: '2-digit',
-                minute: '2-digit',
-                hour12: false
-              })
-              }
+            return <span>
+              {formatDateTime(text)}
               </span>
         }
     },
