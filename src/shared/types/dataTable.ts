@@ -33,6 +33,14 @@ export interface IContentDestinationTable {
   airportName: string;
 }
 
+export interface IContentTimeZoneTable {
+  id: number;
+  countryName: string;
+  cityName: string;
+  gmt: string;
+  gmtWinter: string;
+}
+
 export interface IContentSeatsTableTransformed {
   id: number;
   flightId: number;
