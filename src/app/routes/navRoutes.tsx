@@ -1,5 +1,4 @@
 import type { RoutesProps } from '@app/types';
-
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
