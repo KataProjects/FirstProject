@@ -16,7 +16,34 @@ const aircraftAPI = baseAPI.injectEndpoints({
         method: 'PATCH',
         body: patch,
       }),
-      invalidatesTags: ['Aircraft'],
+      async onQueryStarted({ id, ...patch }, { dispatch, queryFulfilled, getState }) {
+        try {
+          await queryFulfilled;
+          const state = getState() as any;
+          const cacheEntries = state.api.queries;
+
+          Object.keys(cacheEntries).forEach(key => {
+            if (key.startsWith('getAircraftList(')) {
+              const match = key.match(/getAircraftList\((.+)\)/);
+              if (match) {
+                try {
+                  const params = JSON.parse(match[1]);
+                  dispatch(
+                    aircraftAPI.util.updateQueryData('getAircraftList', params, (draft) => {
+                      const item = draft.content.find(aircraft => aircraft.id === id);
+                      if (item) {
+                        Object.assign(item, patch);
+                      }
+                    })
+                  );
+                } catch (parseError) {
+                }
+              }
+            }
+          });
+        } catch (error) {
+        }
+      },
     }),
   }),
 });
