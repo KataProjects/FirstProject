@@ -31,6 +31,34 @@ export interface IContentTimeZoneTable {
   gmtWinter: string;
 }
 
+export interface IContentSeatsTableTransformed {
+  id: number;
+  flightId: number;
+  seatId: number;
+  fare: number;
+  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
+  isSold: boolean;
+  isRegistered: boolean;
+  isBooked: boolean;
+}
+
+export interface IContentSeatsTable {
+  id: number;
+  fare: number;
+  isRegistered: boolean;
+  isSold: boolean;
+  isBooked: boolean;
+  flightId: number;
+  seat: {  
+  id: number;
+  seatNumber:string;
+  isNearEmergencyExit:boolean;
+  isLockedBack: boolean;
+  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
+  aircraftId: number; 
+  }
+}
+
 export interface IDataSource<T> {
   totalPages: number;
   totalElements: number;
