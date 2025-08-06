@@ -1,8 +1,11 @@
 import { Table } from '@shared/ui/table';
 
+import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
+import { useGetPassangerListQuery } from '../model/tablePassengersApi';
+import { useState, useEffect } from 'react';
 import type { Passenger } from '@features/tablePassengers/ui/dataTypes'; 
-import {data} from './mockData';
-import { Button } from 'antd';
+
+import { Button, type TablePaginationConfig } from 'antd';
 import moment from 'moment';
 
 const columns = [
@@ -58,13 +61,41 @@ const columns = [
 
 
 export const PassengersPage = () => {
+    const [page, setPage] = useState(0);
+    const { data: paseengerList, isSuccess, isLoading, isError } = useGetPassangerListQuery({
+        page: page,
+        size: DEFAULT_PAGE_LIMIT,
+    });
+
+    const handleTableChange = (pagination: TablePaginationConfig) => {
+        if (pagination.current !== undefined) {
+            setPage(pagination.current - 1);
+        }
+    };
+
+    useEffect(() => {
+        if (isSuccess) {
+            console.log(paseengerList);
+        }
+    }, [paseengerList]);
+
     return (
         <div>
             <div className='flex justify-between mb-[15px]'>
                 <h1 className='text-[20px] italic'>Пассажиры</h1>
                 <Button className='flex justify-start w-[200px] rounded-[1px] text-[14px] italic'>Добавить пассажира +</Button>
                 </div>
-            <Table<Passenger> dataSource={data} columns={columns} />
+            <Table<Passenger> 
+            dataSource={paseengerList?.content} 
+            columns={columns}
+            onChange={handleTableChange}
+            pagination={{
+                position: ['bottomLeft'],
+                showSizeChanger: false,
+                current: (paseengerList?.number ?? 0) + 1,
+                pageSize: paseengerList?.size,
+                total: paseengerList?.totalElements ?? 0,
+        }} />
         </div>
     )
 }
