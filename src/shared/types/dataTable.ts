@@ -13,7 +13,6 @@ export interface IPageable {
   pageSize: number;
   offset: number;
   sort: IDataSort | [];
-
 }
 
 export interface IContentAircraftTable {
@@ -24,13 +23,40 @@ export interface IContentAircraftTable {
   flightRange: number;
 }
 
-export interface IContentDestinationTable {
+export interface IContentTimeZoneTable {
   id: number;
-  airportCode: string;
-  timezone: string;
   countryName: string;
   cityName: string;
-  airportName: string;
+  gmt: string;
+  gmtWinter: string;
+}
+
+export interface IContentSeatsTableTransformed {
+  id: number;
+  flightId: number;
+  seatId: number;
+  fare: number;
+  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
+  isSold: boolean;
+  isRegistered: boolean;
+  isBooked: boolean;
+}
+
+export interface IContentSeatsTable {
+  id: number;
+  fare: number;
+  isRegistered: boolean;
+  isSold: boolean;
+  isBooked: boolean;
+  flightId: number;
+  seat: {  
+  id: number;
+  seatNumber:string;
+  isNearEmergencyExit:boolean;
+  isLockedBack: boolean;
+  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
+  aircraftId: number; 
+  }
 }
 
 export interface IDataSource<T> {
@@ -55,4 +81,13 @@ export interface IColumnTableAntd<T> {
   sorter?: boolean | ((a: T, b: T) => number);
   width?: number | string;
   align?: 'left' | 'right' | 'center';
+}
+
+export interface IContentDestinationTable {
+  id: number;
+  airportCode: string;
+  timezone: string;
+  countryName: string;
+  cityName: string;
+  airportName: string;
 }

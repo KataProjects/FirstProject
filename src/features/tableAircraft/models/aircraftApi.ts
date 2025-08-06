@@ -1,11 +1,11 @@
-import { baseAPI } from "@shared/api/baseAPI";
+import { baseAPI } from '@shared/api/baseAPI';
 
 const aircraftApi = baseAPI.injectEndpoints({
   endpoints: (build) => ({
     getAircraftList: build.query({
-      query: () => 'aircrafts'
-    })
-  })
-})
+      query: () => 'aircrafts',
+    }),
+  }),
+});
 
-export  const {useGetAircraftListQuery} = aircraftApi
+export const { useGetAircraftListQuery } = aircraftApi;
