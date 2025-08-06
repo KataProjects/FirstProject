@@ -1,9 +1,9 @@
 import type { RoutesProps } from '@app/types';
-
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
 import { TableTimeZonesPage } from '@pages/admin/tableTimeZones';
+import { TableSeatsPage } from '@pages/admin/tableSeats';
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
@@ -44,6 +44,7 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
+  { path: ROUTES.TABLE_BOARDING, element: <TableSeatsPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
