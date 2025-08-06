@@ -3,7 +3,7 @@ import { ROUTES } from '@app/routes';
 import { LogoIcon } from '@shared/ui/icons';
 import { Avatar, Button, Space, Tooltip } from 'antd';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 
@@ -24,11 +24,16 @@ const ADMIN_NAV_ITEMS = [
 export const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [isAuth, setIsAuth] = useState(true);
+  const [isAuth, setIsAuth] = useState(false);
+
+  useEffect(() => {
+    setIsAuth(!!sessionStorage.getItem('token'));
+  }, [location]);
 
   const isAdminRoute = location.pathname.includes('/admin');
 
   const handleLogout = () => {
+    sessionStorage.removeItem('token');
     setIsAuth(false);
     navigate(ROUTES.HOME);
   };
@@ -58,11 +63,11 @@ export const Header = () => {
       )}
 
       <Space wrap size={16} align="center">
-        {!isAuth ? (
+        {isAuth ? (
           <>
             <Tooltip title="Профиль">
               <Space>
-                <span>UserName</span>
+                <span>User</span>
                 <Avatar size={40} icon={<UserOutlined />} />
               </Space>
             </Tooltip>

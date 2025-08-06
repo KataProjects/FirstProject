@@ -4,17 +4,35 @@ import { Controller, useForm } from 'react-hook-form';
 
 import { type FormValues } from '../model/types';
 import styles from './SignInForm.module.scss';
+import { useLoginMutation } from '../../../shared/api/authApi';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 const SignInForm: React.FC = () => {
   const {
     control,
+    handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
     mode: 'onChange',
   });
+  const [login, { isLoading }] = useLoginMutation();
+  const navigate = useNavigate();
+  const [error, setError] = useState<string | null>(null);
+
+  const onSubmit = async (data: FormValues) => {
+    setError(null);
+    try {
+      const result = await login(data).unwrap();
+      sessionStorage.setItem('token', result.token);
+      navigate('/');
+    } catch (e: any) {
+      setError(e?.data?.message || 'Ошибка авторизации');
+    }
+  };
 
   return (
-    <form className={styles.signInForm}>
+    <form className={styles.signInForm} onSubmit={handleSubmit(onSubmit)}>
       <label className={styles.signInForm__inputLabel}>
         Email
         <Controller
@@ -64,7 +82,10 @@ const SignInForm: React.FC = () => {
           <span className={styles.signInForm__error}>{errors.password.message}</span>
         )}
       </label>
-      <button className={styles.signInForm__button}>Войти</button>
+      <button className={styles.signInForm__button} type="submit" disabled={isLoading}>
+        {isLoading ? 'Входим...' : 'Войти'}
+      </button>
+      {error && <div className={styles.signInForm__error}>{error}</div>}
     </form>
   );
 };

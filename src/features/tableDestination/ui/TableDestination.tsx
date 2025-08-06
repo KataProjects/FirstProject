@@ -1,14 +1,14 @@
 import { HolderOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
-import { AddButton } from '@shared/ui/AddButton';
+import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentDestinationTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button, Input, Space, message } from 'antd';
+import { Button, Input, Space, message, Spin, type TablePaginationConfig } from 'antd';
 
-import { type FC, useCallback, useState } from 'react';
+import { type FC, useCallback, useState, useEffect} from 'react';
 
-import { destinationMock } from '../models/destination.mock';
+import { useGetDestinationListQuery } from '../models/destinationApi';
 import styles from './TableDestination.module.scss';
 
 const DragHandle: FC = () => {
@@ -16,9 +16,21 @@ const DragHandle: FC = () => {
 };
 
 export const TableDestination: FC = () => {
-  const [data, setData] = useState(destinationMock.content);
+  const [page, setPage] = useState(0);
+  const { data: destinationList, isSuccess, isLoading, isError } = useGetDestinationListQuery({
+    page: page,
+    size: DEFAULT_PAGE_LIMIT,
+  });
+
+  const [data, setData] = useState<IContentDestinationTable[]>([]);
   const [editingKey, setEditingKey] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<Partial<IContentDestinationTable>>({});
+
+  useEffect(() => {
+    if (isSuccess && destinationList?.content) {
+      setData(destinationList.content)
+    }
+  }, [destinationList]);
 
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
@@ -58,6 +70,13 @@ export const TableDestination: FC = () => {
 
   const handleInputChange = (field: keyof IContentDestinationTable, value: string) => {
     setEditingData(prev => ({ ...prev, [field]: value }));
+  };
+
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    if (pagination.current !== undefined) {
+      setPage(pagination.current - 1);
+    }
   };
 
   const columns: Array<IColumnTableAntd<IContentDestinationTable>> = [
@@ -193,7 +212,11 @@ export const TableDestination: FC = () => {
     },
   ];
 
-  return (
+  return isLoading ? (
+    <Spin size="large" />
+  ) : isError ? (
+    <div>Oops error</div>
+  ) : isSuccess ? (
     <div className={styles.wrapper}>
       <TableHeader
         title="Место назначения"
@@ -204,15 +227,16 @@ export const TableDestination: FC = () => {
       />
 
       <Table<IContentDestinationTable>
-        dataSource={data}
+        dataSource={destinationList?.content}
         columns={columns}
         rowKey="id"
+        onChange={handleTableChange}
         pagination={{
           position: ['bottomLeft'],
           showSizeChanger: false,
-          current: destinationMock.number + 1,
-          pageSize: destinationMock.size,
-          total: destinationMock.totalElements,
+          current: (destinationList?.number ?? 0) + 1,
+          pageSize: destinationList?.size,
+          total: destinationList?.totalElements ?? 0,
           onChange: () => {
             setEditingKey(null);
             setEditingData({});
@@ -220,5 +244,5 @@ export const TableDestination: FC = () => {
         }}
       />
     </div>
-  );
+  ) : null;
 };
