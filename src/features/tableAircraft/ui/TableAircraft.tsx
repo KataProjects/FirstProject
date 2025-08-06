@@ -1,44 +1,50 @@
-import {
-  HolderOutlined,
-  PlusOutlined,
-  EditOutlined,
-  SaveOutlined,
-  CloseOutlined,
-} from '@ant-design/icons';
+import { PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
+import { validateAircraftData } from '@features/tableAircraft/lib/validation.ts';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import {
-  Button,
-  Input,
-  Space,
-  Spin,
-  message,
-  type TablePaginationConfig,
-} from 'antd';
-import { type FC, useCallback, useEffect, useState } from 'react';
+import { useTableEditor } from '@entities/table/lib/hooks/useTableEditor';
+import { Input, Space, Button } from 'antd';
+import { EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
+import { Spin } from 'antd';
+import { type FC, useState, useEffect, useCallback } from 'react';
 import {
   useGetAircraftListQuery,
   useUpdateAircraftMutation
-} from '@features/tableAircraft/models/aircraftAPI.ts';
+} from '@features/tableAircraft/models/aircraftAPI';
 import styles from './TableAircraft.module.scss';
 
-const DragHandle: FC = () => {
-  return <Button type="text" size="small" icon={<HolderOutlined />} />;
-};
-
 export const TableAircraft: FC = () => {
-  const [page, setPage] = useState(0);
-  const [editingKey, setEditingKey] = useState<number | null>(null);
-  const [editingData, setEditingData] = useState<Partial<IContentAircraftTable>>({});
-
-  const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
-    page,
+  const [pagination, setPagination] = useState({
+    page: 0,
     size: DEFAULT_PAGE_LIMIT,
   });
 
+  const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
+    page: pagination.page,
+    size: pagination.size,
+  });
+
   const [updateAircraft] = useUpdateAircraftMutation();
+
+  const {
+    editingKey,
+    editingData,
+    isEditing,
+    edit,
+    cancel,
+    save,
+    handleInputChange,
+    handleTableChange,
+    getInputStatus
+  } = useTableEditor<IContentAircraftTable>({
+    data: aircraftList?.content || [],
+    updateMutation: updateAircraft,
+    validator: validateAircraftData,
+    successMessage: 'Изменения сохранены на сервер',
+    setPagination,
+  });
 
   useEffect(() => {
     if (isSuccess) {
@@ -49,41 +55,6 @@ export const TableAircraft: FC = () => {
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
   }, []);
-
-  const handleTableChange = (pagination: TablePaginationConfig) => {
-    if (pagination.current !== undefined) {
-      setPage(pagination.current - 1);
-      setEditingKey(null);
-      setEditingData({});
-    }
-  };
-
-  const isEditing = (record: IContentAircraftTable) => record.id === editingKey;
-
-  const edit = (record: IContentAircraftTable) => {
-    setEditingKey(record.id);
-    setEditingData({ ...record });
-  };
-
-  const cancel = () => {
-    setEditingKey(null);
-    setEditingData({});
-  };
-
-  const save = async (id: number) => {
-    try {
-      await updateAircraft({ id, ...editingData }).unwrap();
-      setEditingKey(null);
-      setEditingData({});
-      message.success('Изменения сохранены');
-    } catch (errInfo) {
-      message.error('Ошибка при сохранении');
-    }
-  };
-
-  const handleInputChange = (field: keyof IContentAircraftTable, value: string | number) => {
-    setEditingData(prev => ({ ...prev, [field]: value }));
-  };
 
   const columns: Array<IColumnTableAntd<IContentAircraftTable>> = [
     {
@@ -103,6 +74,8 @@ export const TableAircraft: FC = () => {
               value={editingData.model || ''}
               onChange={(e) => handleInputChange('model', e.target.value)}
               size="small"
+              status={getInputStatus('model')}
+              placeholder="Введите модель"
             />
           );
         }
@@ -120,6 +93,8 @@ export const TableAircraft: FC = () => {
               value={editingData.aircraftNumber || ''}
               onChange={(e) => handleInputChange('aircraftNumber', e.target.value)}
               size="small"
+              status={getInputStatus('aircraftNumber')}
+              placeholder="Введите номер"
             />
           );
         }
@@ -135,8 +110,11 @@ export const TableAircraft: FC = () => {
           return (
             <Input
               value={editingData.modelYear || ''}
-              onChange={(e) => handleInputChange('modelYear', Number(e.target.value))}
+              onChange={(e) => handleInputChange('modelYear', Number(e.target.value) || 0)}
               size="small"
+              status={getInputStatus('modelYear')}
+              placeholder="Год"
+              type="number"
             />
           );
         }
@@ -152,8 +130,11 @@ export const TableAircraft: FC = () => {
           return (
             <Input
               value={editingData.flightRange || ''}
-              onChange={(e) => handleInputChange('flightRange', Number(e.target.value))}
+              onChange={(e) => handleInputChange('flightRange', Number(e.target.value) || 0)}
               size="small"
+              status={getInputStatus('flightRange')}
+              placeholder="Дальность"
+              type="number"
             />
           );
         }
@@ -192,13 +173,6 @@ export const TableAircraft: FC = () => {
         );
       },
     },
-    {
-      key: 'sort',
-      title: '',
-      width: 50,
-      align: 'center',
-      render: () => <DragHandle />,
-    },
   ];
 
   if (isLoading) return <Spin size="large" />;
@@ -222,8 +196,8 @@ export const TableAircraft: FC = () => {
         pagination={{
           position: ['bottomLeft'],
           showSizeChanger: false,
-          current: (aircraftList?.number ?? 0) + 1,
-          pageSize: aircraftList?.size,
+          current: pagination.page + 1,
+          pageSize: pagination.size,
           total: aircraftList?.totalElements ?? 0,
         }}
       />
