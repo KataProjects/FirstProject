@@ -11,7 +11,7 @@ import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
-import { PassengersPage } from '@pages/passengersPage';
+import { TablePassengersPage } from '@pages/passengersPage';
 
 
 export const ROUTES = {
@@ -45,6 +45,6 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
-  { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
+  { path: ROUTES.TABLE_PASSENGERS, element: <TablePassengersPage /> },
   { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
 ];

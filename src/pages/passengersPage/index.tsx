@@ -1,1 +1,1 @@
-export { PassengersPage } from './PassengersPage';
+export { TablePassengersPage } from './PassengersPage';
