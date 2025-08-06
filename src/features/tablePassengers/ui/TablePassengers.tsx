@@ -82,46 +82,62 @@ export const PassengersPage = () => {
         },
         {
             title: 'Имя, Фамилия, Отчество',
-            render: (record: IContentPassengerTable) => (
-                `${record.firstName} ${record.lastName} ${record.passport.middleName}`
-            ),
+            render: (record: IContentPassengerTable) => {
+              const editable = isEditing(record);
+              return editable ? (<Input value={`${record.firstName} ${record.lastName} ${record.passport.middleName}`}/> ):
+              (`${record.firstName} ${record.lastName} ${record.passport.middleName}`)
+            },
         },
         {
             title: 'Пол',
-            render: ({ passport } : IContentPassengerTable) => passport.gender === 'male' ? 'Муж.' : 'Жен.'
+            render: (record: IContentPassengerTable) => {
+                const editable = isEditing(record);
+                return editable ? (<Input value={record.passport.gender === 'male' ? 'Муж.' : 'Жен.'}/>) :
+                (record.passport.gender === 'male' ? 'Муж.' : 'Жен.')
+            }
             
         },
         {
             title: 'Телефон',
             render: (record: IContentPassengerTable) => {
-                return `+${record.phoneNumber}`;
+                const editable = isEditing(record);
+                return editable ? (<Input value={record.phoneNumber}/>) :
+                (`+${record.phoneNumber}`)
             }
         },
         {
             title: 'Дата рождения',
             render: (record: IContentPassengerTable) => {
+                const editable = isEditing(record);
                 const date = record.birthDate;
-                return moment(date).format("DD.MM.YYYY");
+                return editable ? (<Input value={moment(date).format("DD.MM.YYYY")}/>):
+                moment(date).format("DD.MM.YYYY");
             }
 
         },
         {
             title: 'Серийный номер',
             render: (record: IContentPassengerTable) => {
-                return record.passport.serialNumberPassport
+                const editable = isEditing(record);
+                return editable ? (<Input value={record.passport.serialNumberPassport}/>):
+                record.passport.serialNumberPassport
             }
         },
         {
             title: 'Гражданство',
             render: (record: IContentPassengerTable) => {
-                return record.passport.passportIssuingCountry
+                const editable = isEditing(record);
+                return editable ? (<Input value={record.passport.passportIssuingCountry}/>):
+                record.passport.passportIssuingCountry
             }
         },
         {
             title: 'Дата выдачи паспорта',
             render: (record: IContentPassengerTable) => {
+                const editable = isEditing(record);
                 const date =  record.passport.passportIssuingDate;
-                return moment(date).format("DD.MM.YYYY");
+                return editable ? (<Input value={moment(date).format("DD.MM.YYYY")}/>):
+                moment(date).format("DD.MM.YYYY");
             }
         },
         {
