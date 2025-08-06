@@ -32,12 +32,12 @@ export interface UseTableEditorReturn<T extends { id: number }> {
 }
 
 export const useTableEditor = <T extends { id: number }>({
-                                                           data,
-                                                           updateMutation,
-                                                           validator,
-                                                           successMessage = 'Изменения сохранены',
-                                                           setPagination,
-                                                         }: Omit<UseTableEditorOptions<T>, 'pagination'>): UseTableEditorReturn<T> => {
+  data,
+  updateMutation,
+  validator,
+  successMessage = 'Изменения сохранены',
+  setPagination,
+}: Omit<UseTableEditorOptions<T>, 'pagination'>): UseTableEditorReturn<T> => {
   const [editingKey, setEditingKey] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<Partial<T>>({});
   const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
