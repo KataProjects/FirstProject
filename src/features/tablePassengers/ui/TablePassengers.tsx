@@ -5,7 +5,10 @@ import { useGetPassangerListQuery } from '../model/tablePassengersApi';
 import { useState, useEffect } from 'react';
 import type { Passenger } from '@features/tablePassengers/ui/dataTypes'; 
 
-import { Button, type TablePaginationConfig } from 'antd';
+import styles from './tablePassengers.module.scss'
+import { type TablePaginationConfig, Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
+import { TableHeader } from '@entities/tableHeader';
 import moment from 'moment';
 
 const columns = [
@@ -80,11 +83,14 @@ export const PassengersPage = () => {
     }, [paseengerList]);
 
     return (
-        <div>
-            <div className='flex justify-between mb-[15px]'>
-                <h1 className='text-[20px] italic'>Пассажиры</h1>
-                <Button className='flex justify-start w-[200px] rounded-[1px] text-[14px] italic'>Добавить пассажира +</Button>
-                </div>
+        <div className={styles.wrapper}>
+            <TableHeader
+                title="Пассажиры"
+                btnName="Добавить пассажира"
+                btnIcon={<PlusOutlined style={{ marginLeft: '8px' }} />}
+                // onBtnClick={handleBtnClick}
+                className={styles.customHeader}
+            />
             <Table<Passenger> 
             dataSource={paseengerList?.content} 
             columns={columns}

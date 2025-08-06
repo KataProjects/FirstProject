@@ -1,0 +1,5 @@
+@use 'tailwindcss';
+
+.wrapper {
+  @apply mx-3 py-5 md:mx-13 flex flex-col;
+}
