@@ -1,5 +1,4 @@
 import { TableHeader } from '@entities/tableHeader';
-import { validateAircraftData } from '@features/tableAircraft/lib/validation.ts';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
@@ -39,7 +38,6 @@ export const TableAircraft: FC = () => {
   } = useTableEditor<IContentAircraftTable>({
     data: aircraftList?.content || [],
     updateMutation: updateAircraft,
-    validator: validateAircraftData,
     successMessage: 'Изменения сохранены на сервер',
     setPagination,
   });
