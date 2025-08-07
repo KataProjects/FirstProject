@@ -1,5 +1,3 @@
-// entities/table/lib/hooks/useTableEditor.ts
-
 import { useState, useCallback } from 'react';
 import { message, type TablePaginationConfig } from 'antd';
 import type { PaginationParams } from '@shared/types/pagination';
@@ -65,20 +63,39 @@ export const useTableEditor = <T extends { id: number }>({
           return;
         }
 
-        const changedFields: Partial<T> = {};
+        const changedFields: Record<string, any> = {};
         let hasChanges = false;
 
-        Object.keys(editingData).forEach(key => {
+        Object.entries(editingData).forEach(([key, value]) => {
           const field = key as keyof T;
-          const newValue = editingData[field];
-          if (newValue !== undefined && newValue !== originalRecord[field]) {
-            changedFields[field] = newValue;
-            hasChanges = true;
+          const newValue: unknown = value;
+          const originalValue = originalRecord[field];
+
+          if (newValue !== undefined && newValue !== originalValue) {
+            if (typeof newValue === 'string') {
+              const trimmedValue = newValue.trim();
+              if (trimmedValue !== '' && trimmedValue !== originalValue) {
+                changedFields[key] = trimmedValue;
+                hasChanges = true;
+              }
+            }
+            else if (typeof newValue === 'number') {
+              if (newValue > 0 && newValue !== originalValue) {
+                changedFields[key] = newValue;
+                hasChanges = true;
+              }
+            }
+            else if (newValue !== originalValue) {
+              changedFields[key] = newValue;
+              hasChanges = true;
+            }
           }
         });
 
         if (!hasChanges) {
           message.info('Нет изменений для сохранения');
+          setEditingKey(null);
+          setEditingData({});
           return;
         }
 
@@ -96,6 +113,7 @@ export const useTableEditor = <T extends { id: number }>({
         setValidationErrors({});
         message.success(successMessage);
       } catch (errInfo) {
+        console.error('Ошибка при сохранении:', errInfo);
         message.error('Ошибка при сохранении');
       }
     },
