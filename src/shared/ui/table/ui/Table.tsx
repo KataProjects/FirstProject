@@ -1,6 +1,7 @@
-import { Table, type TablePaginationConfig, type TableProps } from 'antd';
+import { Table, type TableProps, type TablePaginationConfig } from 'antd';
 
 import styles from './Table.module.scss';
+
 
 export const MyTable = <T extends { id?: number | string } = any>({
   dataSource = [],
