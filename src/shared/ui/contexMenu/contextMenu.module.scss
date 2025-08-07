@@ -1,7 +1,7 @@
 .menuWrapper {
   position: absolute;
   z-index: 50;
- transform: translateX(-100%) translateY(-50%)
+  transform: translateX(-100%) translateY(-50%)
 }
 
 .menu {
@@ -12,12 +12,15 @@
   width: 12rem;
   padding: 0;
   position: relative;
+  left: -10px;
 }
 
 .menuArrow {
   position: absolute;
-  top: 0.75rem;
+  top: 50%;
   right: -0.5rem;
+  transform: translateY(-50%);
+
   width: 0;
   height: 0;
   border-top: 10px solid transparent;

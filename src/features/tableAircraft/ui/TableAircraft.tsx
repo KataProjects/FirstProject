@@ -11,10 +11,6 @@ import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraft
 import styles from './TableAircraft.module.scss';
 
 
-const DragHandle: FC = () => {
-  return <Button type="text" size="small" icon={<HolderOutlined />} />;
-};
-
 export const TableAircraft: FC = () => {
   const [page, setPage] = useState(0);
   const { contextData, open, close } = useContextMenu<IContentAircraftTable>();
@@ -75,14 +71,7 @@ export const TableAircraft: FC = () => {
       render: (_, row) => (
         <Button type="text" size="small" icon={<HolderOutlined />} onClick={(e) => open(e, row)} />
       ),
-    },
-    {
-      key: 'sort',
-      title: '',
-      width: 50,
-      align: 'center',
-      render: () => <DragHandle />,
-    },
+    }
   ];
 
   if (isLoading) return <Spin size="large" />;
