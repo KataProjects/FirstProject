@@ -1,18 +1,16 @@
-import { PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { validateAircraftData } from '@features/tableAircraft/lib/validation.ts';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
 import { useTableEditor } from '@entities/table/lib/hooks/useTableEditor';
-import { Input, Space, Button } from 'antd';
-import { EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
-import { Spin } from 'antd';
+import { Input, Space, Button, Spin } from 'antd';
+import { EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { type FC, useState, useEffect, useCallback } from 'react';
 import {
   useGetAircraftListQuery,
   useUpdateAircraftMutation
-} from '@features/tableAircraft/models/aircraftAPI';
+} from '@features/tableAircraft/models/aircraftAPI.ts';
 import styles from './TableAircraft.module.scss';
 
 export const TableAircraft: FC = () => {
