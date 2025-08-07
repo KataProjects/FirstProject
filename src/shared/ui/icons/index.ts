@@ -1,1 +1,10 @@
-export { LogoIcon } from './Logo';
+export { AirplaneLandingIcon } from './AirplaneLanding.tsx';
+export { AirplaneTakeoffIcon } from './AirplaneTakeoff.tsx';
+export { CaretDownIcon } from './CarretDown.tsx';
+export { LogoIcon } from './LogoIcon.tsx';
+export { LineIcon } from './Line.tsx';
+export { BackpackIcon } from './Backpack.tsx';
+export { SuitcaseIcon } from './Suitcase.tsx';
+export { ArrowsClockwiseIcon } from './ArrowsClockwise.tsx';
+export { ArmchairIcon } from './Armchair.tsx';
+export { WarningCircleIcon } from './WarningCircle.tsx';
