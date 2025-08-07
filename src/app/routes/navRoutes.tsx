@@ -10,6 +10,7 @@ import { NotFoundPage } from '@pages/notFoundPage';
 import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
+import {TimeZonesPage} from '@pages/admin/timeZones/timeZonesPage.tsx';
 import { TicketsPage } from '@pages/ticketsPage';
 import { PassengersPage } from '@pages/passengersPage';
 
