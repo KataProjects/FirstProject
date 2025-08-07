@@ -1,1 +1,0 @@
-export { TableAircraftTest } from './TableAircraftTest';
