@@ -36,7 +36,7 @@ export interface IContentSeatsTableTransformed {
   flightId: number;
   seatId: number;
   fare: number;
-  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
+  category: 'BUSINESS' | 'FIRST' | 'ECONOMY' | 'PREMIUM_ECONOMY';
   isSold: boolean;
   isRegistered: boolean;
   isBooked: boolean;
@@ -49,14 +49,14 @@ export interface IContentSeatsTable {
   isSold: boolean;
   isBooked: boolean;
   flightId: number;
-  seat: {  
-  id: number;
-  seatNumber:string;
-  isNearEmergencyExit:boolean;
-  isLockedBack: boolean;
-  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
-  aircraftId: number; 
-  }
+  seat: {
+    id: number;
+    seatNumber: string;
+    isNearEmergencyExit: boolean;
+    isLockedBack: boolean;
+    category: 'BUSINESS' | 'FIRST' | 'ECONOMY' | 'PREMIUM_ECONOMY';
+    aircraftId: number;
+  };
 }
 
 export interface IDataSource<T> {

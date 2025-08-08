@@ -4,9 +4,9 @@ import { useGetTimeZonesListQuery } from '@features/tableTimeZone/models/timeZon
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentTimeZoneTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button,  type TablePaginationConfig } from 'antd';
-import { useState } from 'react';
+import { Button, type TablePaginationConfig } from 'antd';
 
+import { useState } from 'react';
 import { type FC, useCallback } from 'react';
 
 import styles from './TableTimeZone.module.scss';
@@ -16,16 +16,14 @@ const DragHandle: FC = () => {
 };
 
 export const TableTimeZone = () => {
-
   const [page, setPage] = useState(0);
   const { data, isLoading, error } = useGetTimeZonesListQuery(page);
 
-    const handleTableChange = (pagination: TablePaginationConfig) => {
+  const handleTableChange = (pagination: TablePaginationConfig) => {
     if (pagination.current !== undefined) {
-      setPage(pagination.current - 1);  
+      setPage(pagination.current - 1);
     }
   };
-  
 
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
@@ -65,7 +63,6 @@ export const TableTimeZone = () => {
       render: () => <DragHandle />,
     },
   ];
-
 
   if (isLoading || !data) return <div>Loading...</div>;
   if (error) return <div>Error!</div>;

@@ -38,7 +38,7 @@ export const SignUpForm: React.FC = () => {
         name="securityQuestionResponse"
         required={false}
         rules={[
-          { required: true, message: 'Введите пароль' },
+          { required: true, message: 'Введите ответ на секретный вопрос' },
           { min: 6, message: 'Пароль должен состоять минимум из 6 символов' },
         ]}
       >
@@ -48,11 +48,27 @@ export const SignUpForm: React.FC = () => {
         label="Пароль"
         name="password"
         required={false}
-        rules={[{ required: true, message: 'Повторите пароль' }]}
+        rules={[{ required: true, message: 'Введите пароль' }]}
       >
         <Input.Password placeholder="Придумайте пароль" />
       </Form.Item>
-      <Form.Item label="Повторите пароль">
+      <Form.Item
+        label="Повторите пароль"
+        name="confirmPassword"
+        required={false}
+        dependencies={['password']}
+        rules={[
+          { required: true, message: 'Повторите пароль' },
+          ({ getFieldValue }) => ({
+            validator(_, value) {
+              if (!value || getFieldValue('password') === value) {
+                return Promise.resolve();
+              }
+              return Promise.reject(new Error('Пароли не совпадают'));
+            },
+          }),
+        ]}
+      >
         <Input.Password placeholder="Повторите пароль" />
       </Form.Item>
       <Form.Item>

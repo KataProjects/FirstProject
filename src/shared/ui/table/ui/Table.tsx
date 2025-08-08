@@ -1,7 +1,6 @@
-import { Table, type TableProps, type TablePaginationConfig } from 'antd';
+import { Table, type TablePaginationConfig, type TableProps } from 'antd';
 
 import styles from './Table.module.scss';
-
 
 export const MyTable = <T extends { id?: number | string } = any>({
   dataSource = [],
@@ -13,11 +12,11 @@ export const MyTable = <T extends { id?: number | string } = any>({
     key: item.id?.toString() || Math.random().toString(),
   }));
 
-const mergedPagination:TablePaginationConfig = {
-  position: ['bottomLeft'],   
-  showSizeChanger: false,    
-  ...pagination              
-};
+  const mergedPagination: TablePaginationConfig = {
+    position: ['bottomLeft'],
+    showSizeChanger: false,
+    ...pagination,
+  };
 
   return (
     <div className={styles.tableWrapper}>
