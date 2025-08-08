@@ -2,7 +2,7 @@ import { TableHeader } from '@entities/tableHeader';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { useTableEditor } from '@entities/table/lib/hooks/useTableEditor';
+import { useTableEditor, type ValidationResult } from '@entities/table/lib/hooks/useTableEditor';
 import { Input, Space, Button, Spin } from 'antd';
 import { EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
 import { type FC, useState, useEffect, useCallback } from 'react';
@@ -11,6 +11,50 @@ import {
   useUpdateAircraftMutation
 } from '@features/tableAircraft/models/aircraftAPI.ts';
 import styles from './TableAircraft.module.scss';
+
+const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
+  const errors: string[] = [];
+
+  if (data.aircraftNumber !== undefined) {
+    const trimmed = data.aircraftNumber.trim();
+    if (trimmed.length < 4 || trimmed.length > 15) {
+      errors.push('Номер самолёта должен содержать от 4 до 15 символов');
+    }
+  }
+
+  if (data.modelYear !== undefined) {
+    if (data.modelYear <= 2000) {
+      errors.push('Год выпуска должен быть позже 2000');
+    }
+    if (data.modelYear > new Date().getFullYear()) {
+      errors.push('Год выпуска не может быть в будущем');
+    }
+  }
+
+  if (data.flightRange !== undefined) {
+    if (data.flightRange <= 0) {
+      errors.push('Дальность полета должна быть больше 0');
+    }
+    if (data.flightRange > 50000) {
+      errors.push('Дальность полета не может превышать 50,000 км');
+    }
+  }
+
+  if (data.model !== undefined) {
+    const trimmed = data.model.trim();
+    if (trimmed.length === 0) {
+      errors.push('Модель не может быть пустой');
+    }
+    if (trimmed.length > 50) {
+      errors.push('Модель не может превышать 50 символов');
+    }
+  }
+
+  return {
+    isValid: errors.length === 0,
+    errors
+  };
+};
 
 export const TableAircraft: FC = () => {
   const [pagination, setPagination] = useState({
@@ -38,6 +82,7 @@ export const TableAircraft: FC = () => {
   } = useTableEditor<IContentAircraftTable>({
     data: aircraftList?.content || [],
     updateMutation: updateAircraft,
+    validator: validateAircraft,
     successMessage: 'Изменения сохранены на сервер',
     setPagination,
   });
@@ -71,7 +116,8 @@ export const TableAircraft: FC = () => {
               onChange={(e) => handleInputChange('model', e.target.value)}
               size="small"
               status={getInputStatus('model')}
-              placeholder="Введите модель"
+              placeholder="до 50 символов"
+              maxLength={50}
             />
           );
         }
@@ -90,7 +136,8 @@ export const TableAircraft: FC = () => {
               onChange={(e) => handleInputChange('aircraftNumber', e.target.value)}
               size="small"
               status={getInputStatus('aircraftNumber')}
-              placeholder="Введите номер"
+              placeholder="4-15 символов"
+              maxLength={15}
             />
           );
         }
@@ -106,11 +153,18 @@ export const TableAircraft: FC = () => {
           return (
             <Input
               value={editingData.modelYear || ''}
-              onChange={(e) => handleInputChange('modelYear', Number(e.target.value) || 0)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === '' || /^\d+$/.test(value)) {
+                  handleInputChange('modelYear', value === '' ? 0 : Number(value));
+                }
+              }}
               size="small"
               status={getInputStatus('modelYear')}
-              placeholder="Год"
+              placeholder="> 2000 г."
               type="number"
+              min={2001}
+              max={new Date().getFullYear()}
             />
           );
         }
@@ -126,11 +180,18 @@ export const TableAircraft: FC = () => {
           return (
             <Input
               value={editingData.flightRange || ''}
-              onChange={(e) => handleInputChange('flightRange', Number(e.target.value) || 0)}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (value === '' || /^\d+$/.test(value)) {
+                  handleInputChange('flightRange', value === '' ? 0 : Number(value));
+                }
+              }}
               size="small"
               status={getInputStatus('flightRange')}
-              placeholder="Дальность"
+              placeholder=" > 50,000 км"
               type="number"
+              min={1}
+              max={50000}
             />
           );
         }
@@ -150,12 +211,14 @@ export const TableAircraft: FC = () => {
               size="small"
               icon={<SaveOutlined />}
               onClick={() => save(record.id)}
+              title="Сохранить изменения"
             />
             <Button
               type="link"
               size="small"
               icon={<CloseOutlined />}
               onClick={cancel}
+              title="Отменить изменения"
             />
           </Space>
         ) : (
@@ -165,6 +228,7 @@ export const TableAircraft: FC = () => {
             icon={<EditOutlined />}
             disabled={editingKey !== null}
             onClick={() => edit(record)}
+            title="Редактировать"
           />
         );
       },

@@ -30,11 +30,11 @@ export interface UseTableEditorReturn<T extends { id: number }> {
 }
 
 export const useTableEditor = <T extends { id: number }>({
-   data,
-   updateMutation,
-   validator,
-   successMessage = 'Изменения сохранены',
-   setPagination,
+  data,
+  updateMutation,
+  validator,
+  successMessage = 'Изменения сохранены',
+  setPagination,
 }: Omit<UseTableEditorOptions<T>, 'pagination'>): UseTableEditorReturn<T> => {
   const [editingKey, setEditingKey] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<Partial<T>>({});
@@ -112,9 +112,40 @@ export const useTableEditor = <T extends { id: number }>({
         setEditingData({});
         setValidationErrors({});
         message.success(successMessage);
-      } catch (errInfo) {
+      } catch (errInfo: any) {
         console.error('Ошибка при сохранении:', errInfo);
-        message.error('Ошибка при сохранении');
+        if (errInfo?.data?.message) {
+          const serverMessage = errInfo.data.message;
+          if (serverMessage.includes('{') && serverMessage.includes('}')) {
+            try {
+              const errorMatch = serverMessage.match(/{([^}]+)}/);
+              if (errorMatch) {
+                const errorString = errorMatch[1];
+                const fieldErrors: Record<string, string> = {};
+
+                errorString.split(', ').forEach((pair: string) => {
+                  const [field, error] = pair.split('=', 2);
+                  if (field && error) {
+                    fieldErrors[field.trim()] = error.trim();
+                  }
+                });
+
+                if (Object.keys(fieldErrors).length > 0) {
+                  setValidationErrors(fieldErrors);
+                  const errorMessages = Object.values(fieldErrors);
+                  message.error(`Ошибки валидации: ${errorMessages.join(', ')}`);
+                  return;
+                }
+              }
+            } catch (parseError) {
+              console.error('Ошибка парсинга серверных ошибок:', parseError);
+            }
+          }
+
+          message.error(`Ошибка сервера: ${serverMessage}`);
+        } else {
+          message.error('Ошибка при сохранении');
+        }
       }
     },
     [data, editingData, updateMutation, validator, successMessage]
@@ -123,7 +154,6 @@ export const useTableEditor = <T extends { id: number }>({
   const handleInputChange = useCallback(
     (field: keyof T, value: string | number) => {
       setEditingData(prev => ({ ...prev, [field]: value }));
-
       if (validationErrors[field as string]) {
         setValidationErrors(prev => {
           const newErrors = { ...prev };
