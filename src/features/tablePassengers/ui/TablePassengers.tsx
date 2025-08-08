@@ -67,6 +67,9 @@ export const PassengersPage = () => {
     if (pagination.current !== undefined) {
           setPage(pagination.current - 1);
     }
+
+    setEditingKey(null);
+    setEditingData({});
   };
 
   useEffect(() => {
