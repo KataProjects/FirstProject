@@ -76,9 +76,7 @@ export const TableTimeZone = () => {
     <div className={styles.wrapper}>
       <TableHeader
         title="Часовые пояса"
-        btnName="Добавить часовой пояс"
-        btnIcon={<AddButton text="Добавить часовой пояс" onClick={handleBtnClick} />}
-        onBtnClick={handleBtnClick}
+        extraContent={<AddButton text="Добавить часовой пояс" onClick={handleBtnClick} />}
         className={styles.customHeader}
       />
 

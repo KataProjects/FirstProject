@@ -197,9 +197,7 @@ export const TableDestination: FC = () => {
     <div className={styles.wrapper}>
       <TableHeader
         title="Место назначения"
-        btnName="Добавить пункт назначения"
-        btnIcon={<AddButton text="Добавить пункт назначения" onClick={handleBtnClick} />}
-        onBtnClick={handleBtnClick}
+        extraContent={<AddButton text="Добавить пункт назначения" onClick={handleBtnClick} />}
         className={styles.customHeader}
       />
 

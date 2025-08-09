@@ -59,9 +59,7 @@ export const TableAircraft = () => {
     <div className={styles.wrapper}>
       <TableHeader
         title="Самолёты"
-        btnName="Добавить самолеты"
-        btnIcon={<AddButton text="Добавить самолеты" onClick={handleBtnClick} />}
-        onBtnClick={handleBtnClick}
+        extraContent={<AddButton text="Добавить самолеты" onClick={handleBtnClick} />}
         className={styles.customHeader}
       />
 
