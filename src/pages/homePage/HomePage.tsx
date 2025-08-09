@@ -1,3 +1,4 @@
+import { TicketSearchForm } from '../../features/TicketSearchForm';
 export const HomePage = () => {
-  return <div>HomePage</div>;
+  return <TicketSearchForm/>;
 };
