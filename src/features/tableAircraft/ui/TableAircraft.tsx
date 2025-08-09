@@ -1,24 +1,41 @@
 import { HolderOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
-import { AddButton } from '@shared/ui/AddButton';
-import type { IColumnTableAntd } from '@shared/types';
-import type { IContentAircraftTable } from '@shared/types';
+import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
+import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button } from 'antd';
+import { Button, Spin, type TablePaginationConfig } from 'antd';
 
-import { type FC, useCallback } from 'react';
-
-import { aircraftMock } from '../models/aircraft.mock';
+import { type FC, useCallback, useEffect, useState } from 'react';
+import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
 import styles from './TableAircraft.module.scss';
 
 const DragHandle: FC = () => {
   return <Button type="text" size="small" icon={<HolderOutlined />} />;
 };
 
-export const TableAircraft = () => {
+export const TableAircraft: FC = () => {
+  const [page, setPage] = useState(0);
+
+  const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
+    page,
+    size: DEFAULT_PAGE_LIMIT,
+  });
+
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
   }, []);
+
+  const handleTableChange = (pagination: TablePaginationConfig) => {
+    if (pagination.current !== undefined) {
+      setPage(pagination.current - 1);
+    }
+  };
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(aircraftList);
+    }
+  }, [aircraftList, isSuccess]);
 
   const columns: Array<IColumnTableAntd<IContentAircraftTable>> = [
     {
@@ -55,7 +72,10 @@ export const TableAircraft = () => {
     },
   ];
 
-  return (
+  if (isLoading) return <Spin size="large" />;
+  if (isError) return <div>Ошибка загрузки</div>;
+
+  return isSuccess ? (
     <div className={styles.wrapper}>
       <TableHeader
         title="Самолёты"
@@ -64,15 +84,18 @@ export const TableAircraft = () => {
       />
 
       <Table<IContentAircraftTable>
-        dataSource={aircraftMock.content}
+        dataSource={aircraftList?.content ?? []}
         columns={columns}
         rowKey="id"
+        onChange={handleTableChange}
         pagination={{
-          current: aircraftMock.number + 1,
-          pageSize: aircraftMock.size,
-          total: aircraftMock.totalElements,
+          position: ['bottomLeft'],
+          showSizeChanger: false,
+          current: (aircraftList?.number ?? 0) + 1,
+          pageSize: aircraftList?.size,
+          total: aircraftList?.totalElements ?? 0,
         }}
       />
     </div>
-  );
+  ) : null;
 };
