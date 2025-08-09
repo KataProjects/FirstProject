@@ -7,5 +7,6 @@ export const baseAPI = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: BASE_API_URL,
   }),
+  tagTypes: ['Passenger'],
   endpoints: () => ({}),
 });

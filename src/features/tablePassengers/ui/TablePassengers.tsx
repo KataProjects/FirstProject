@@ -1,12 +1,12 @@
 import { Table } from '@shared/ui/table';
 
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
-import { useGetPassangerListQuery } from '../model/tablePassengersApi';
+import { useGetPassengerListQuery, useUpdatePassengerMutation } from '../model/tablePassengersApi';
 import { useState, useEffect } from 'react';
 import type { IContentPassengerTable } from '@shared/types';
 
 import styles from './tablePassengers.module.scss'
-import { type TablePaginationConfig, Button, Space, message, Input } from 'antd';
+import { type TablePaginationConfig, Button, Space, message, Input, DatePicker } from 'antd';
 import { PlusOutlined, SaveOutlined, CloseOutlined, EditOutlined} from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import moment from 'moment';
@@ -14,13 +14,21 @@ import moment from 'moment';
 
 export const PassengersPage = () => {
   const [page, setPage] = useState(0);
-  const { data: passengerList, isSuccess, isLoading, isError } = useGetPassangerListQuery({
+  const { data: passengerList, isSuccess, isLoading, isError } = useGetPassengerListQuery({
     page: page,
     size: DEFAULT_PAGE_LIMIT,
   });
+  const [updatePassenger] = useUpdatePassengerMutation()
   const [data, setData] = useState<IContentPassengerTable[]>([]);
   const [editingKey, setEditingKey] = useState<number | null>(null);
   const [editingData, setEditingData] = useState<Partial<IContentPassengerTable>>({});
+
+  const [fullName, setFullName] = useState('');
+  useEffect(() => {
+    if (editingKey !== null) {
+      setFullName(`${editingData.lastName ?? ''} ${editingData.firstName ?? ''}`);
+    }
+  }, [editingData, editingKey]);
 
   useEffect(() => {
     if (isSuccess && passengerList?.content) {
@@ -30,6 +38,7 @@ export const PassengersPage = () => {
  const isEditing = (record: IContentPassengerTable) => record.id === editingKey;
 
   const edit = (record: IContentPassengerTable) => {
+    console.log(record);
     setEditingKey(record.id);
     setEditingData({ ...record });
   };
@@ -39,8 +48,10 @@ export const PassengersPage = () => {
     setEditingData({});
   };
 
-  const save = (id: number) => {
+  const save =  async(id: number) => {
     try {
+      console.log({id, ...editingData});
+      await updatePassenger({id, ...editingData}).unwrap()
       const newData = [...data];
       const index = newData.findIndex(item => id === item.id);
       if (index > -1) {
@@ -59,8 +70,12 @@ export const PassengersPage = () => {
     }
   };
 
-  const handleInputChange = (field: keyof IContentPassengerTable, value: string) => {
-    setEditingData(prev => ({ ...prev, [field]: value }));
+  // const handleInputChange = (field: keyof IContentPassengerTable, value: string) => {
+  //   setEditingData(prev => ({ ...prev, [field]: value }));
+  // };
+
+  const handleInputChange = (changes: Partial<IContentPassengerTable>) => {
+    setEditingData(prev => ({ ...prev, ...changes }));
   };
     
   const handleTableChange = (pagination: TablePaginationConfig) => {
@@ -84,18 +99,36 @@ export const PassengersPage = () => {
             dataIndex: 'id',
         },
         {
-            title: 'Имя, Фамилия, Отчество',
+            title: 'Фамилия, Имя, Отчество',
             render: (record: IContentPassengerTable) => {
               const editable = isEditing(record);
-              return editable ? (<Input value={`${record.firstName} ${record.lastName} ${record.passport.middleName}`}/> ):
-              (`${record.firstName} ${record.lastName} ${record.passport.middleName}`)
+              return editable ? (
+              <Input 
+              value={fullName}
+              // onChange={(e) => {
+              //   const value = e.target.value;
+              //   setFullName(value);
+              //   if(value === '') {
+              //     handleInputChange({firstName: '', lastName: ''})
+              //     return
+              //   }
+              //   const parth = value.split(' ')
+              //   const lastName = parth[0]
+              //   const firstName = parth.slice(1).join(' ') || ''
+              //   handleInputChange({lastName, firstName})
+              // }}
+              />):
+              (`${record.lastName} ${record.firstName}`)
             },
         },
         {
             title: 'Пол',
             render: (record: IContentPassengerTable) => {
                 const editable = isEditing(record);
-                return editable ? (<Input value={record.passport.gender === 'male' ? 'Муж.' : 'Жен.'}/>) :
+                return editable ? (<Input 
+                  value={record.passport.gender === 'male' ? 'Муж.' : 'Жен.'}
+                  // onChange={(e) => handleInputChange(repassport.gender, e.target.value)}
+                  />) :
                 (record.passport.gender === 'male' ? 'Муж.' : 'Жен.')
             }
             
@@ -104,19 +137,31 @@ export const PassengersPage = () => {
             title: 'Телефон',
             render: (record: IContentPassengerTable) => {
                 const editable = isEditing(record);
-                return editable ? (<Input value={record.phoneNumber}/>) :
+                return editable ? (<Input value={editingData.phoneNumber}
+                onChange={(e) => {
+                  handleInputChange({phoneNumber: e.target.value})
+                }}/>) :
                 (`+${record.phoneNumber}`)
             }
         },
         {
-            title: 'Дата рождения',
-            render: (record: IContentPassengerTable) => {
-                const editable = isEditing(record);
-                const date = record.birthDate;
-                return editable ? (<Input value={moment(date).format("DD.MM.YYYY")}/>):
-                moment(date).format("DD.MM.YYYY");
-            }
-
+          title: 'Дата рождения',
+          render: (record: IContentPassengerTable) => {
+            const editable = isEditing(record);
+            const date = editingData.birthDate ? moment(editingData.birthDate) : null;
+            return editable ? (
+              <DatePicker
+                value={date}
+                onChange={(dateMoment) => {
+                  console.log(dateMoment.format('YYYY-MM-DD'));
+                  handleInputChange({ birthDate: dateMoment.format('YYYY-MM-DD')});
+                }}
+                format="DD.MM.YYYY"
+              />
+            ) : (
+              moment(record.birthDate).format("DD.MM.YYYY")
+            );
+          }
         },
         {
             title: 'Серийный номер',

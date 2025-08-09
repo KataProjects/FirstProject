@@ -5,10 +5,19 @@ import type { PaginationParams } from '@shared/types/pagination';
 
 const tablePassangersApi = baseAPI.injectEndpoints({
   endpoints: (build) => ({
-    getPassangerList: build.query<IDataSource<IContentPassengerTable>, PaginationParams>({
+    getPassengerList: build.query<IDataSource<IContentPassengerTable>, PaginationParams>({
       query: ({ page = 1, size = DEFAULT_PAGE_LIMIT }) => `passengers?size=${size}&page=${page}`,
+      providesTags: ['Passenger']
     }),
+    updatePassenger: build.mutation({
+      query: ({id, ...patch}) => ({
+        url:  `passengers/${id}`,
+        method: 'PATCH',
+        body: {id, ...patch}
+      }),
+      invalidatesTags: ['Passenger']
+    })
   }),
 });
 
-export const { useGetPassangerListQuery } = tablePassangersApi;
+export const { useGetPassengerListQuery, useUpdatePassengerMutation } = tablePassangersApi;
