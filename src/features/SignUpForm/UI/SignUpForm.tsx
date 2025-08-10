@@ -1,15 +1,56 @@
 import { Button, Checkbox, Form, Input, Select } from 'antd';
 
+import { useState } from 'react';
+
+import { useNavigate } from 'react-router-dom';
+
 import { securityQuestions } from '../model/constants';
+import { useRegisterMutation } from '../model/registerApi';
+import { type FormValues } from '../model/types';
 import styles from './SignUpForm.module.scss';
 
 export const SignUpForm: React.FC = () => {
+  const [register, { isLoading }] = useRegisterMutation();
+  const navigate = useNavigate();
+  const [form] = Form.useForm();
+  const [message, setEMessage] = useState('');
+
+  const onSubmit = async (values: FormValues) => {
+    try {
+      const { confirmPassword, ...registerData } = values;
+      await register(registerData).unwrap();
+      form.resetFields();
+      setEMessage('Регистрации прошла успешно');
+      setTimeout(() => setEMessage(''), 2000);
+      setTimeout(() => navigate('/'), 2500);
+    } catch {
+      setEMessage('Ошибка регистрации');
+      setTimeout(() => setEMessage(''), 2000);
+    }
+  };
+
   return (
     <Form
+      form={form}
+      onFinish={onSubmit}
       layout="vertical"
-      initialValues={{ securityQuestion: securityQuestions[0].label }}
+      initialValues={{
+        securityQuestion: securityQuestions[0].label,
+        agreement: false,
+      }}
       className={styles['signup-form']}
     >
+      {message && (
+        <div
+          className={
+            message === 'Ошибка регистрации'
+              ? styles['signup-form__error']
+              : styles['signup-form__success']
+          }
+        >
+          {message}
+        </div>
+      )}
       <Form.Item
         label="Email"
         name="email"
@@ -35,11 +76,11 @@ export const SignUpForm: React.FC = () => {
       </Form.Item>
       <Form.Item
         label="Ответ на секрестный вопрос"
-        name="securityQuestionResponse"
+        name="answerQuestion"
         required={false}
         rules={[
           { required: true, message: 'Введите ответ на секретный вопрос' },
-          { min: 6, message: 'Пароль должен состоять минимум из 6 символов' },
+          { min: 3, message: 'Ответ должен состоять минимум из 3 символов' },
         ]}
       >
         <Input placeholder="Введите ответ на секретный вопрос" />
@@ -48,7 +89,10 @@ export const SignUpForm: React.FC = () => {
         label="Пароль"
         name="password"
         required={false}
-        rules={[{ required: true, message: 'Введите пароль' }]}
+        rules={[
+          { required: true, message: 'Введите пароль' },
+          { min: 5, message: 'Ответ должен состоять минимум из 5 символов' },
+        ]}
       >
         <Input.Password placeholder="Придумайте пароль" />
       </Form.Item>
@@ -71,15 +115,26 @@ export const SignUpForm: React.FC = () => {
       >
         <Input.Password placeholder="Повторите пароль" />
       </Form.Item>
-      <Form.Item>
+      <Form.Item
+        name="agreement"
+        valuePropName="checked"
+        rules={[
+          {
+            validator: (_, value) =>
+              value
+                ? Promise.resolve()
+                : Promise.reject(new Error('Необходимо принять условия соглашения')),
+          },
+        ]}
+      >
         <Checkbox>
           Я прочитал(-а) все условия <a href="#">пользовательского соглашения</a> и согласен(-на) с
           ними
         </Checkbox>
       </Form.Item>
       <Form.Item label={null} className={styles['signup-form__submit']}>
-        <Button type="primary" htmlType="submit">
-          Зарегистрироваться
+        <Button type="primary" htmlType="submit" disabled={isLoading}>
+          {isLoading ? 'Загрузка...' : 'Зарегистрироваться'}
         </Button>
       </Form.Item>
     </Form>
