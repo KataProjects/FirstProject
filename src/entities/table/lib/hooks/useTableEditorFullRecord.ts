@@ -12,18 +12,12 @@ export interface UseTableEditorFullRecordOptions<T extends { id: number }> {
 export type UseTableEditorFullRecordReturn<T extends { id: number }> = UseBaseTableEditorReturn<T>;
 
 export const useTableEditorFullRecord = <T extends { id: number }>({
-  data,
-  updateMutation,
-  validator,
   successMessage = 'Изменения сохранены',
-  setPagination,
+  ...rest
 }: UseTableEditorFullRecordOptions<T>): UseTableEditorFullRecordReturn<T> => {
   return useBaseTableEditor({
-    data,
-    updateMutation,
-    validator,
     successMessage,
-    setPagination,
     useFullRecord: true,
+    ...rest,
   });
 };
