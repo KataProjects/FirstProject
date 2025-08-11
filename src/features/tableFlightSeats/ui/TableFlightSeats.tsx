@@ -1,6 +1,6 @@
 import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
-import { useGetFlightSeatListQuery } from '@features/tableSeats/models/flightSeatApi';
+import { useGetFlightSeatListQuery } from '@features/tableFlightSeats/models/flightSeatApi';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentSeatsTableTransformed } from '@shared/types';
 import { Table } from '@shared/ui/table';
@@ -9,13 +9,13 @@ import { useState } from 'react';
 
 import { type FC, useCallback } from 'react';
 
-import styles from './TableSeats.module.scss';
+import styles from './TableFlightSeats.module.scss';
 
 const DragHandle: FC = () => {
   return <Button type="text" size="small" icon={<HolderOutlined />} />;
 };
 
-export const TableSeats = () => {
+export const TableFlightSeats = () => {
 
   const [page, setPage] = useState(0);
   const { data, isLoading, error } = useGetFlightSeatListQuery(page);
