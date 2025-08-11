@@ -12,7 +12,7 @@ import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
 import { PassengersPage } from '@pages/passengersPage';
-import { TableSeatsPage } from '@pages/admin/tableSeats';
+import { TableSeats } from '@pages/admin/tableSeats';
 
 export const ROUTES = {
   HOME: '/',
@@ -47,5 +47,5 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
   { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
-  { path: ROUTES.TABLE_SEATS, element: <TableSeatsPage /> },
+  { path: ROUTES.TABLE_SEATS, element: <TableSeats /> },
 ];
