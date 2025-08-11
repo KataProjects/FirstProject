@@ -1,4 +1,5 @@
 import type { RoutesProps } from '@app/types';
+
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
@@ -12,6 +13,10 @@ import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
 import { PassengersPage } from '@pages/passengersPage';
+
+
+
+import {  TableFlightsPage } from '@pages/admin/flights/TableFlightsPage.tsx';
 
 
 export const ROUTES = {
@@ -31,6 +36,7 @@ export const ROUTES = {
   TABLE_BOOKINGS: '/admin/bookings',
   TABLE_BOARDING: '/admin/boarding',
   TABLE_USERS: '/admin/users',
+  FLIGHTS_PAGE: 'admin/flights',
   NOT_FOUND: '*',
 };
 
@@ -38,6 +44,7 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.HOME, element: <HomePage /> },
   { path: ROUTES.SIGN_IN, element: <SignIn /> },
   { path: ROUTES.SIGN_UP, element: <SignUp /> },
+  { path: ROUTES.FLIGHTS_PAGE, element: <TableFlightsPage /> },
   { path: ROUTES.ABOUT_US, element: <About /> },
   { path: ROUTES.CONTACT_US, element: <Contact /> },
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
