@@ -1,1 +1,1 @@
-export { TableSeatsPage } from "./tableSeatsPage";
+export { TableSeats } from "./tableSeats";

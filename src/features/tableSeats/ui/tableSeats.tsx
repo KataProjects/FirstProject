@@ -10,7 +10,7 @@ import { DropDownList } from "@features/dropDownList/ui/index";
 import styles from "./tableSeats.module.css"
 
 
-export const TableSeatsPage = () => {
+export const TableSeats = () => {
     const { category } = useSelector((state: any) => state.categories)
     const { data: seatsData, isLoading: isLoadingSeats } = useGetSeatsQuery({});
     const { data: categoriesData, isLoading: isLoadingCategories } = useGetCategoriesQuery({});
