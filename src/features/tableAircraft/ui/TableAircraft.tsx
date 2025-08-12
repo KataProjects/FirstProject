@@ -7,6 +7,7 @@ import { Button, Spin, type TablePaginationConfig } from 'antd';
 
 import { type FC, useCallback, useEffect, useState } from 'react';
 import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
+import { AddButton } from '@shared/ui/AddButton';
 import styles from './TableAircraft.module.scss';
 
 const DragHandle: FC = () => {
