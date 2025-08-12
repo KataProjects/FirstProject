@@ -9,7 +9,7 @@ import { type FC, useCallback, useEffect, useState } from 'react';
 import {
   useGetAircraftListQuery,
   useUpdateAircraftMutation
-} from '@features/tableAircraft/models/aircraftApi.ts';
+} from '@features/tableAircraft/models/aircraftAPI.ts';
 import styles from './TableAircraft.module.scss';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
