@@ -14,10 +14,11 @@ import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
 import { PassengersPage } from '@pages/passengersPage';
 
-
-
 import {  TableFlightsPage } from '@pages/admin/flights/TableFlightsPage.tsx';
 
+
+
+import { TableBooking } from '@pages/admin/tableBooking';
 
 export const ROUTES = {
   HOME: '/',
@@ -55,4 +56,5 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
   { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
+  { path: ROUTES.TABLE_BOOKINGS, element: <TableBooking /> }
 ];
