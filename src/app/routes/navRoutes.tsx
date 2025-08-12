@@ -19,6 +19,9 @@ import { TableSeatsPage } from '@pages/admin/tableSeats';
 import {  TableFlightsPage } from '@pages/admin/flights/TableFlightsPage.tsx';
 
 
+
+import { TableBooking } from '@pages/admin/tableBooking';
+
 export const ROUTES = {
   HOME: '/',
   SIGN_UP: '/sign_up',
@@ -55,5 +58,6 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
   { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
+  { path: ROUTES.TABLE_BOOKINGS, element: <TableBooking /> }
   { path: ROUTES.TABLE_SEATS, element: <TableSeatsPage /> },
 ];
