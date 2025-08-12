@@ -49,13 +49,13 @@ export interface IContentSeatsTable {
   isSold: boolean;
   isBooked: boolean;
   flightId: number;
-  seat: {  
+  seat: {
   id: number;
   seatNumber:string;
   isNearEmergencyExit:boolean;
   isLockedBack: boolean;
   category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
-  aircraftId: number; 
+  aircraftId: number;
   }
 }
 
@@ -83,6 +83,17 @@ export interface IColumnTableAntd<T> {
   align?: 'left' | 'right' | 'center';
 }
 
+export interface IFlight {
+  id: number;
+  code: string;
+  airportFrom: string | null;
+  airportTo: string;
+  departureDateTime: string;
+  arrivalDateTime: string;
+  aircraftId: number;
+  flightStatus: 'ON_TIME' | 'COMPLETED' | 'CANCELLED'; // возможные значения
+}
+
 export interface IContentDestinationTable {
   id: number;
   airportCode: string;
@@ -91,3 +102,5 @@ export interface IContentDestinationTable {
   cityName: string;
   airportName: string;
 }
+
+
