@@ -1,18 +1,18 @@
 import { baseAPI } from '@shared/api/baseAPI';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
-import type { IContentTimeZoneTable, IDataSource } from '@shared/types';
+import type { IContentAircraftTable, IDataSource } from '@shared/types';
 import type { PaginationParams } from '@shared/types/pagination';
 
-const timeZonesApi = baseAPI.injectEndpoints({
+const aircraftAPI = baseAPI.injectEndpoints({
   endpoints: (build) => ({
-    getTimeZonesList: build.query<IDataSource<IContentTimeZoneTable>, PaginationParams>({
+    getAircraftList: build.query<IDataSource<IContentAircraftTable>, PaginationParams>({
       query: ({ page = 0, size = DEFAULT_PAGE_LIMIT }: PaginationParams) =>
-        `timezones?page=${page}&size=${size}`,
-      providesTags: ['TimeZone'],
+        `aircrafts?page=${page}&size=${size}`,
+      providesTags: ['Aircraft'],
     }),
-    updateTimeZone: build.mutation<void, Partial<IContentTimeZoneTable> & { id: number }>({
+    updateAircraft: build.mutation<void, Partial<IContentAircraftTable> & { id: number }>({
       query: ({ id, ...patch }) => ({
-        url: `timezones/${id}`,
+        url: `aircrafts/${id}`,
         method: 'PATCH',
         body: patch,
       }),
@@ -23,14 +23,14 @@ const timeZonesApi = baseAPI.injectEndpoints({
           const cacheEntries = state.api.queries;
 
           Object.keys(cacheEntries).forEach(key => {
-            if (key.startsWith('getTimeZonesList(')) {
-              const match = key.match(/getTimeZonesList\((.+)\)/);
+            if (key.startsWith('getAircraftList(')) {
+              const match = key.match(/getAircraftList\((.+)\)/);
               if (match) {
                 try {
                   const params = JSON.parse(match[1]);
                   dispatch(
-                    timeZonesApi.util.updateQueryData('getTimeZonesList', params, (draft) => {
-                      const item = draft.content.find(timeZone => timeZone.id === id);
+                    aircraftAPI.util.updateQueryData('getAircraftList', params, (draft) => {
+                      const item = draft.content.find(aircraft => aircraft.id === id);
                       if (item) {
                         Object.assign(item, patch);
                       }
@@ -48,4 +48,4 @@ const timeZonesApi = baseAPI.injectEndpoints({
   }),
 });
 
-export const { useGetTimeZonesListQuery, useUpdateTimeZoneMutation } = timeZonesApi;
+export const { useGetAircraftListQuery, useUpdateAircraftMutation } = aircraftAPI;
