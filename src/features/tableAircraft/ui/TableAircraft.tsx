@@ -1,20 +1,20 @@
 import { TableHeader } from '@entities/tableHeader';
-import type { IContentAircraftTable, IColumnTableAntd } from '@shared/types';
-import { ContextMenu, useContextMenu } from '@shared/ui/contexMenu';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
+import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { MoreHorizontal, Pencil, X } from 'lucide-react';
-import { Button, Spin, type TablePaginationConfig } from 'antd';
-import { type FC, useCallback, useEffect, useState } from 'react';
-import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
 import { useTableEditor, type ValidationResult } from '@entities/table/lib/hooks/useTableEditor';
-import { Input, Space, Button, Spin } from 'antd';
-import { EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { Input, Space, Button, Spin} from 'antd';
+import { MoreHorizontal, Pencil, X } from 'lucide-react';
+import { EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined, HolderOutlined } from '@ant-design/icons';
 import { type FC, useState, useEffect, useCallback } from 'react';
 import {
   useGetAircraftListQuery,
   useUpdateAircraftMutation
 } from '@features/tableAircraft/models/aircraftAPI.ts';
+import {
+  ContextMenu,
+  useContextMenu,
+} from '@shared/ui/contexMenu';
 import styles from './TableAircraft.module.scss';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
@@ -62,7 +62,6 @@ const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResul
 };
 
 export const TableAircraft: FC = () => {
-  const [page, setPage] = useState(0);
   const { contextData, open, close } = useContextMenu<IContentAircraftTable>();
 
   const [pagination, setPagination] = useState({
@@ -214,7 +213,8 @@ export const TableAircraft: FC = () => {
       render: (_, row) => (
         <Button type="text" size="small" icon={<HolderOutlined />} onClick={(e) => open(e, row)} />
       ),
-    }
+    },
+    {
       title: 'Действия',
       key: 'actions',
       width: 120,
