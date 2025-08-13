@@ -10,6 +10,7 @@ import {
   useGetAircraftListQuery,
   useUpdateAircraftMutation
 } from '@features/tableAircraft/models/aircraftAPI.ts';
+import { AddButton } from '@shared/ui/addButton';
 import styles from './TableAircraft.module.scss';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
