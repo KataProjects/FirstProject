@@ -1,7 +1,11 @@
+import { HolderOutlined, PlusOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
+import { useTableEditor, type ValidationResult } from '@entities/table';
+import { Input, Space, Button, Spin, type TablePaginationConfig } from 'antd';
+import { type FC, useCallback, useEffect, useState } from 'react';
 import { useTableEditor, type ValidationResult } from '@entities/table/lib/hooks/useTableEditor';
 import { Input, Space, Button, Spin} from 'antd';
 import { MoreHorizontal, Pencil, X } from 'lucide-react';
@@ -61,6 +65,10 @@ const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResul
   };
 };
 
+const DragHandle: FC = () => {
+  return <Button type="text" size="small" icon={<HolderOutlined />} />;
+};
+
 export const TableAircraft: FC = () => {
   const { contextData, open, close } = useContextMenu<IContentAircraftTable>();
 
@@ -68,13 +76,18 @@ export const TableAircraft: FC = () => {
     page: 0,
     size: DEFAULT_PAGE_LIMIT,
   });
+  const [page, setPage] = useState(0);
 
   const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
-    page: pagination.page,
-    size: pagination.size,
+    page,
+    size: DEFAULT_PAGE_LIMIT,
   });
 
   const [updateAircraft] = useUpdateAircraftMutation();
+
+  const setPagination = useCallback((pagination: { page: number; size: number }) => {
+    setPage(pagination.page);
+  }, []);
 
   const {
     editingKey,
@@ -94,15 +107,22 @@ export const TableAircraft: FC = () => {
     setPagination,
   });
 
-  useEffect(() => {
-    if (isSuccess) {
-      console.log('Получены данные:', aircraftList);
+  const handleTableChangeLocal = (pagination: TablePaginationConfig) => {
+    if (pagination.current !== undefined) {
+      setPage(pagination.current - 1);
     }
-  }, [isSuccess, aircraftList]);
+    handleTableChange(pagination);
+  };
 
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
   }, []);
+
+  useEffect(() => {
+    if (isSuccess) {
+      console.log(aircraftList);
+    }
+  }, [aircraftList, isSuccess]);
 
   const columns: Array<IColumnTableAntd<IContentAircraftTable>> = [
     {
@@ -195,7 +215,7 @@ export const TableAircraft: FC = () => {
               }}
               size="small"
               status={getInputStatus('flightRange')}
-              placeholder=" > 50,000 км"
+              placeholder="< 50,000 км"
               type="number"
               min={1}
               max={50000}
@@ -249,12 +269,19 @@ export const TableAircraft: FC = () => {
         );
       },
     },
+    {
+      key: 'sort',
+      title: '',
+      width: 50,
+      align: 'center',
+      render: () => <DragHandle />,
+    },
   ];
 
   if (isLoading) return <Spin size="large" />;
   if (isError) return <div>Ошибка загрузки</div>;
 
-  return (
+  return isSuccess ? (
     <div className={styles.wrapper}>
       <TableHeader
         title="Самолёты"
@@ -265,15 +292,15 @@ export const TableAircraft: FC = () => {
       />
 
       <Table<IContentAircraftTable>
-        dataSource={aircraftList?.content || []}
+        dataSource={aircraftList?.content ?? []}
         columns={columns}
         rowKey="id"
-        onChange={handleTableChange}
+        onChange={handleTableChangeLocal}
         pagination={{
           position: ['bottomLeft'],
           showSizeChanger: false,
-          current: pagination.page + 1,
-          pageSize: pagination.size,
+          current: (aircraftList?.number ?? 0) + 1,
+          pageSize: aircraftList?.size,
           total: aircraftList?.totalElements ?? 0,
         }}
       />
@@ -303,5 +330,5 @@ export const TableAircraft: FC = () => {
         />
       )}
     </div>
-  );
+  ) : null;
 };
