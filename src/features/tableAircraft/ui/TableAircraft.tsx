@@ -1,12 +1,16 @@
-import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button, Spin, type TablePaginationConfig } from 'antd';
-
-import { type FC, useCallback, useEffect, useState } from 'react';
-import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
+import { useTableEditor, type ValidationResult } from '@entities/table/lib/hooks/useTableEditor';
+import { Input, Space, Button, Spin } from 'antd';
+import { EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined } from '@ant-design/icons';
+import { type FC, useState, useEffect, useCallback } from 'react';
+import {
+  useGetAircraftListQuery,
+  useUpdateAircraftMutation
+} from '@features/tableAircraft/models/aircraftAPI.ts';
+import { showNotification } from '@shared/lib/notification';
 import styles from './TableAircraft.module.scss';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
