@@ -1,0 +1,13 @@
+@use 'tailwindcss';
+
+.wrapper {
+  @apply mx-3 py-5 md:mx-13 flex flex-col;
+}
+
+:global(.ant-table-thead > tr > th) {
+  white-space: nowrap !important;
+}
+
+:global(.ant-table-tbody > tr > td) {
+  white-space: nowrap !important;
+}

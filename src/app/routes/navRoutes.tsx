@@ -14,7 +14,7 @@ import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
 import { PassengersPage } from '@pages/passengersPage';
 
-import {  TableFlightsPage } from '@pages/admin/flights/TableFlightsPage.tsx';
+import {  TableFlightsPage } from '@pages/admin/tableFlights/TableFlightsPage.tsx';
 
 
 
@@ -33,11 +33,11 @@ export const ROUTES = {
   TABLE_SEATS: '/admin/seats',
   TABLE_TIMEZONES: '/admin/timezones',
   TABLE_TICKETS: '/admin/tickets',
-  TABLE_FLIGHTS: '/admin/flights',
+  TABLE_FLIGHTS: '/admin/tableFlights',
   TABLE_BOOKINGS: '/admin/bookings',
   TABLE_BOARDING: '/admin/boarding',
   TABLE_USERS: '/admin/users',
-  FLIGHTS_PAGE: 'admin/flights',
+  FLIGHTS_PAGE: 'admin/tableFlights',
   NOT_FOUND: '*',
 };
 
