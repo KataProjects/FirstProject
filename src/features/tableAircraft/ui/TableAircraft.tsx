@@ -1,12 +1,13 @@
 import { HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
+import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
 import { Button, Spin, type TablePaginationConfig } from 'antd';
 
 import { type FC, useCallback, useEffect, useState } from 'react';
-import { useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
+
 import styles from './TableAircraft.module.scss';
 
 const DragHandle: FC = () => {
@@ -16,7 +17,12 @@ const DragHandle: FC = () => {
 export const TableAircraft: FC = () => {
   const [page, setPage] = useState(0);
 
-  const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
+  const {
+    data: aircraftList,
+    isSuccess,
+    isLoading,
+    isError,
+  } = useGetAircraftListQuery({
     page,
     size: DEFAULT_PAGE_LIMIT,
   });

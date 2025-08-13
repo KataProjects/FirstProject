@@ -7,16 +7,16 @@ const tablePassangersApi = baseAPI.injectEndpoints({
   endpoints: (build) => ({
     getPassengerList: build.query<IDataSource<IContentPassengerTable>, PaginationParams>({
       query: ({ page = 1, size = DEFAULT_PAGE_LIMIT }) => `passengers?size=${size}&page=${page}`,
-      providesTags: ['Passenger']
+      providesTags: ['Passenger'],
     }),
     updatePassenger: build.mutation({
-      query: ({id, ...patch}) => ({
-        url:  `passengers/${id}`,
+      query: ({ id, ...patch }) => ({
+        url: `passengers/${id}`,
         method: 'PATCH',
-        body: {id, ...patch}
+        body: { id, ...patch },
       }),
-      invalidatesTags: ['Passenger']
-    })
+      invalidatesTags: ['Passenger'],
+    }),
   }),
 });
 

@@ -1,9 +1,9 @@
-import {PassengersPage} from '@features/tablePassengers/ui/TablePassengers'
+import { PassengersPage } from '@features/tablePassengers/ui/TablePassengers';
 
 export const TablePassengersPage = () => {
-    return (
-        <>
-            <PassengersPage/>
-        </>
-    )
-}
+  return (
+    <>
+      <PassengersPage />
+    </>
+  );
+};

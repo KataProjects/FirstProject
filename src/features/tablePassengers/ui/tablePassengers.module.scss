@@ -2,4 +2,12 @@
 
 .wrapper {
   @apply mx-3 py-5 md:mx-13 flex flex-col;
+  :global {
+ .ant-picker {
+  width: 110% !important; 
+  padding: 4px 2px;
+}
+
+        }
+
 }
