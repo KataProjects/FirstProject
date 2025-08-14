@@ -98,12 +98,14 @@ export interface IContentPassengerTable {
   lastName: string;
   birthDate: string;
   phoneNumber: string;
-  passport: {
-    middleName: string;
-    gender: string;
-    serialNumberPassport: string;
-    passportIssuingDate: string;
-    passportIssuingCountry: string;
-  };
+  passport: IPassportData;
   email: string;
+}
+
+export interface IPassportData {
+  middleName?: string;
+  gender?: string;
+  serialNumberPassport?: string;
+  passportIssuingDate?: string;
+  passportIssuingCountry?: string;
 }
