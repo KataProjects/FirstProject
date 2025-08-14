@@ -3,6 +3,10 @@ import { formatDateTime } from '@shared/lib/date';
 import { Table } from '@shared/ui/table';
 import { Button } from 'antd';
 
+import { formatDateTime } from '@shared/lib/date';
+import { ticketsMockData, type Ticket } from '@entities/Ticket';
+
+
 const columns = [
   {
     title: 'ID',

@@ -7,10 +7,19 @@ import { useTableEditor, type ValidationResult } from '@entities/table';
 import { Input, Space, Button, Spin, type TablePaginationConfig } from 'antd';
 import { type FC, useCallback, useEffect, useState } from 'react';
 
+import { useTableEditor, type ValidationResult } from '@entities/table/lib/hooks/useTableEditor';
+import { Input, Space, Button, Spin} from 'antd';
+import { MoreHorizontal, Pencil, X } from 'lucide-react';
+import { EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined, HolderOutlined } from '@ant-design/icons';
+import { type FC, useState, useEffect, useCallback } from 'react';
 import {
   useGetAircraftListQuery,
   useUpdateAircraftMutation
-} from '@features/tableAircraft/models/aircraftApi.ts';
+} from '@features/tableAircraft/models/aircraftAPI.ts';
+import {
+  ContextMenu,
+  useContextMenu,
+} from '@shared/ui/contexMenu';
 
 import styles from './TableAircraft.module.scss';
 
@@ -63,6 +72,12 @@ const DragHandle: FC = () => {
 };
 
 export const TableAircraft: FC = () => {
+  const { contextData, open, close } = useContextMenu<IContentAircraftTable>();
+
+  const [pagination, setPagination] = useState({
+    page: 0,
+    size: DEFAULT_PAGE_LIMIT,
+  });
   const [page, setPage] = useState(0);
 
   const {
@@ -218,6 +233,15 @@ export const TableAircraft: FC = () => {
       },
     },
     {
+      key: 'actions',
+      title: '',
+      width: 50,
+      align: 'center',
+      render: (_, row) => (
+        <Button type="text" size="small" icon={<HolderOutlined />} onClick={(e) => open(e, row)} />
+      ),
+    },
+    {
       title: 'Действия',
       key: 'actions',
       width: 120,
@@ -287,6 +311,31 @@ export const TableAircraft: FC = () => {
           total: aircraftList?.totalElements ?? 0,
         }}
       />
+
+      {contextData && (
+        <ContextMenu
+          x={contextData.x}
+          y={contextData.y}
+          onClose={close}
+          items={[
+            {
+              label: 'Подробности',
+              icon: <MoreHorizontal size={16} />,
+              onClick: () => console.log('Подробности', contextData.data),
+            },
+            {
+              label: 'Редактировать',
+              icon: <Pencil size={16} />,
+              onClick: () => console.log('Редактировать', contextData.data),
+            },
+            {
+              label: 'Удалить',
+              icon: <X size={16} />,
+              onClick: () => console.log('Удалить', contextData.data),
+            },
+          ]}
+        />
+      )}
     </div>
   ) : null;
 };
