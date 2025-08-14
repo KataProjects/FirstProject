@@ -50,13 +50,13 @@ export interface IContentSeatsTable {
   isBooked: boolean;
   flightId: number;
   seat: {
-    id: number;
-    seatNumber: string;
-    isNearEmergencyExit: boolean;
-    isLockedBack: boolean;
-    category: 'BUSINESS' | 'FIRST' | 'ECONOMY' | 'PREMIUM_ECONOMY';
-    aircraftId: number;
-  };
+  id: number;
+  seatNumber:string;
+  isNearEmergencyExit:boolean;
+  isLockedBack: boolean;
+  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
+  aircraftId: number;
+  }
 }
 
 export interface IDataSource<T> {
@@ -81,6 +81,17 @@ export interface IColumnTableAntd<T> {
   sorter?: boolean | ((a: T, b: T) => number);
   width?: number | string;
   align?: 'left' | 'right' | 'center';
+}
+
+export interface IFlight {
+  id: number;
+  code: string;
+  airportFrom: string | null;
+  airportTo: string;
+  departureDateTime: string;
+  arrivalDateTime: string;
+  aircraftId: number;
+  flightStatus: 'ON_TIME' | 'COMPLETED' | 'CANCELLED'; // возможные значения
 }
 
 export interface IContentDestinationTable {
@@ -109,3 +120,4 @@ export interface IPassportData {
   passportIssuingDate?: string;
   passportIssuingCountry?: string;
 }
+

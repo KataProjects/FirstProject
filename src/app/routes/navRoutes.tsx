@@ -1,18 +1,24 @@
 import type { RoutesProps } from '@app/types';
+
 import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
-import { TableSeatsPage } from '@pages/admin/tableSeats';
 import { TableTimeZonesPage } from '@pages/admin/tableTimeZones';
-import { TimeZonesPage } from '@pages/admin/timeZones/timeZonesPage.tsx';
+import { TableFlightSeatsPage } from '@pages/admin/tableFlightSeats';
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
-import { TablePassengersPage } from '@pages/passengersPage';
 import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
+import { TablePassengersPage } from '@pages/admin/tablePassengers';
+
+import {  TableFlightsPage } from '@pages/admin/flights/TableFlightsPage.tsx';
+
+
+
+import { TableBooking } from '@pages/admin/tableBooking';
 
 export const ROUTES = {
   HOME: '/',
@@ -31,6 +37,7 @@ export const ROUTES = {
   TABLE_BOOKINGS: '/admin/bookings',
   TABLE_BOARDING: '/admin/boarding',
   TABLE_USERS: '/admin/users',
+  FLIGHTS_PAGE: 'admin/flights',
   NOT_FOUND: '*',
 };
 
@@ -38,14 +45,16 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.HOME, element: <HomePage /> },
   { path: ROUTES.SIGN_IN, element: <SignIn /> },
   { path: ROUTES.SIGN_UP, element: <SignUp /> },
+  { path: ROUTES.FLIGHTS_PAGE, element: <TableFlightsPage /> },
   { path: ROUTES.ABOUT_US, element: <About /> },
   { path: ROUTES.CONTACT_US, element: <Contact /> },
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
-  { path: ROUTES.TABLE_BOARDING, element: <TableSeatsPage /> },
+  { path: ROUTES.TABLE_BOARDING, element: <TableFlightSeatsPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <TablePassengersPage /> },
   { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
+  { path: ROUTES.TABLE_BOOKINGS, element: <TableBooking /> }
 ];

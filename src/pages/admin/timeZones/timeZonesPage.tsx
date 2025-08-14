@@ -1,6 +1,5 @@
 import { useState } from 'react';
-
-import { mockTimezones } from './mock';
+import { mockTimezones} from './mock';
 import type { Timezone } from './mock';
 import styles from './timeZonesPage.module.scss';
 
