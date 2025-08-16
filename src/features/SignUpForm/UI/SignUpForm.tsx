@@ -15,19 +15,27 @@ export const SignUpForm: React.FC = () => {
   const [form] = Form.useForm();
   const [message, setEMessage] = useState('');
 
-  const onSubmit = async (values: FormValues) => {
-    try {
-      const { confirmPassword, ...registerData } = values;
-      await register(registerData).unwrap();
-      form.resetFields();
-      setEMessage('Регистрации прошла успешно');
-      setTimeout(() => setEMessage(''), 2000);
-      setTimeout(() => navigate('/'), 2500);
-    } catch {
-      setEMessage('Ошибка регистрации');
-      setTimeout(() => setEMessage(''), 2000);
+  const showMessage = (message: string, isSuccess: boolean) => {
+  setEMessage(message);
+  const timer = setTimeout(() => {
+    setEMessage('');
+    if (isSuccess) {
+      navigate('/');
     }
-  };
+  }, 2000);
+  return () => clearTimeout(timer);
+};
+
+const onSubmit = async (values: FormValues) => {
+  try {
+    const { confirmPassword, ...registerData } = values;
+    await register(registerData).unwrap();
+    form.resetFields();
+    showMessage('Регистрация прошла успешно', true);
+  } catch (error) {
+    showMessage('Ошибка регистрации', false);
+  }
+};
 
   return (
     <Form
@@ -35,7 +43,7 @@ export const SignUpForm: React.FC = () => {
       onFinish={onSubmit}
       layout="vertical"
       initialValues={{
-        securityQuestion: securityQuestions[0].label,
+        securityQuestion: securityQuestions[0].value,
         agreement: false,
       }}
       className={styles['signup-form']}
@@ -60,6 +68,8 @@ export const SignUpForm: React.FC = () => {
           { type: 'email', message: 'Введите корректный email' },
         ]}
         className={styles['signup-form__input-label']}
+        getValueFromEvent={(e) => e.target.value.trim()} 
+        normalize={(value) => value.trim()}
       >
         <Input placeholder="Введите ваш email" className={styles['signup-form__input']} />
       </Form.Item>
@@ -82,6 +92,8 @@ export const SignUpForm: React.FC = () => {
           { required: true, message: 'Введите ответ на секретный вопрос' },
           { min: 3, message: 'Ответ должен состоять минимум из 3 символов' },
         ]}
+          getValueFromEvent={(e) => e.target.value.trim().toLowerCase()}
+          normalize={(value) => value.trim().toLowerCase()}
       >
         <Input placeholder="Введите ответ на секретный вопрос" />
       </Form.Item>
