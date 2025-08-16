@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { securityQuestions } from '../model/constants';
 import { useRegisterMutation } from '../model/registerApi';
-import { type FormValues } from '../model/types';
+import { type FormValues } from '../model/types'
 import styles from './SignUpForm.module.scss';
 
 export const SignUpForm: React.FC = () => {

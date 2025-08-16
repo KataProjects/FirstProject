@@ -102,3 +102,5 @@ export interface IContentDestinationTable {
   cityName: string;
   airportName: string;
 }
+
+

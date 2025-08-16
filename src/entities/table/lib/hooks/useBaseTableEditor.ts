@@ -1,0 +1,235 @@
+import { useState, useCallback } from 'react';
+import { message, type TablePaginationConfig } from 'antd';
+import type { PaginationParams } from '@shared/types/pagination';
+
+export interface ValidationResult {
+  isValid: boolean;
+  errors: string[];
+}
+
+export interface UseBaseTableEditorOptions<T extends { id: number }> {
+  data: T[];
+  updateMutation: any;
+  validator?: (data: Partial<T>) => ValidationResult;
+  successMessage?: string;
+  setPagination: (pagination: Pick<PaginationParams, 'page' | 'size'>) => void;
+  useFullRecord?: boolean;
+}
+
+export interface UseBaseTableEditorReturn<T extends { id: number }> {
+  editingKey: number | null;
+  editingData: Partial<T>;
+  validationErrors: Record<string, string>;
+  isEditing: (record: T) => boolean;
+  edit: (record: T) => void;
+  cancel: () => void;
+  save: (id: number) => Promise<void>;
+  handleInputChange: (field: keyof T, value: string | number) => void;
+  handleTableChange: (pagination: TablePaginationConfig) => void;
+  getInputStatus: (field: keyof T) => 'error' | undefined;
+}
+
+export const useBaseTableEditor = <T extends { id: number }>({
+  data,
+  updateMutation,
+  validator,
+  successMessage = 'Изменения сохранены',
+  setPagination,
+  useFullRecord = false,
+  }: UseBaseTableEditorOptions<T>): UseBaseTableEditorReturn<T> => {
+  const [editingKey, setEditingKey] = useState<number | null>(null);
+  const [editingData, setEditingData] = useState<Partial<T>>({});
+  const [validationErrors, setValidationErrors] = useState<Record<string, string>>({});
+
+  const isEditing = useCallback((record: T) => record.id === editingKey, [editingKey]);
+
+  const edit = useCallback((record: T) => {
+    setEditingKey(record.id);
+    setEditingData({ ...record });
+    setValidationErrors({});
+  }, []);
+
+  const cancel = useCallback(() => {
+    setEditingKey(null);
+    setEditingData({});
+    setValidationErrors({});
+  }, []);
+
+  const save = useCallback(
+    async (id: number) => {
+      try {
+        const originalRecord = data.find(item => item.id === id);
+        if (!originalRecord) {
+          message.error('Запись не найдена');
+          return;
+        }
+
+        let updateData: Record<string, any>;
+        let hasChanges = false;
+
+        if (useFullRecord) {
+          Object.entries(editingData).forEach(([key, value]) => {
+            const field = key as keyof T;
+            const newValue: unknown = value;
+            const originalValue = originalRecord[field];
+
+            if (newValue !== undefined && newValue !== originalValue) {
+              if (typeof newValue === 'string') {
+                const trimmedValue = newValue.trim();
+                if (trimmedValue !== '' && trimmedValue !== originalValue) {
+                  hasChanges = true;
+                }
+              }
+              else if (typeof newValue === 'number') {
+                if (newValue > 0 && newValue !== originalValue) {
+                  hasChanges = true;
+                }
+              }
+              else if (newValue !== originalValue) {
+                hasChanges = true;
+              }
+            }
+          });
+
+          const { id: recordId, ...fullData } = editingData as T;
+          updateData = fullData;
+        } else {
+          const changedFields: Record<string, any> = {};
+
+          Object.entries(editingData).forEach(([key, value]) => {
+            const field = key as keyof T;
+            const newValue: unknown = value;
+            const originalValue = originalRecord[field];
+
+            if (newValue !== undefined && newValue !== originalValue) {
+              if (typeof newValue === 'string') {
+                const trimmedValue = newValue.trim();
+                if (trimmedValue !== '' && trimmedValue !== originalValue) {
+                  changedFields[key] = trimmedValue;
+                  hasChanges = true;
+                }
+              }
+              else if (typeof newValue === 'number') {
+                if (newValue > 0 && newValue !== originalValue) {
+                  changedFields[key] = newValue;
+                  hasChanges = true;
+                }
+              }
+              else if (newValue !== originalValue) {
+                changedFields[key] = newValue;
+                hasChanges = true;
+              }
+            }
+          });
+
+          updateData = changedFields;
+        }
+
+        if (!hasChanges) {
+          message.info('Нет изменений для сохранения');
+          setEditingKey(null);
+          setEditingData({});
+          return;
+        }
+
+        if (validator) {
+          const validation = validator(updateData as Partial<T>);
+          if (!validation.isValid) {
+            message.error('Ошибка валидации: ' + validation.errors.join(', '));
+            return;
+          }
+        }
+
+        await updateMutation({ id, ...updateData }).unwrap();
+        setEditingKey(null);
+        setEditingData({});
+        setValidationErrors({});
+        message.success(successMessage);
+      } catch (errInfo: any) {
+        console.error('Ошибка при сохранении:', errInfo);
+        if (errInfo?.data?.message) {
+          const serverMessage = errInfo.data.message;
+          if (serverMessage.includes('{') && serverMessage.includes('}')) {
+            try {
+              const errorMatch = serverMessage.match(/{([^}]+)}/);
+              if (errorMatch) {
+                const errorString = errorMatch[1];
+                const fieldErrors: Record<string, string> = {};
+
+                errorString.split(', ').forEach((pair: string) => {
+                  const [field, error] = pair.split('=', 2);
+                  if (field && error) {
+                    fieldErrors[field.trim()] = error.trim();
+                  }
+                });
+
+                if (Object.keys(fieldErrors).length > 0) {
+                  setValidationErrors(fieldErrors);
+                  const errorMessages = Object.values(fieldErrors);
+                  message.error(`Ошибки валидации: ${errorMessages.join(', ')}`);
+                  return;
+                }
+              }
+            } catch (parseError) {
+              console.error('Ошибка парсинга серверных ошибок:', parseError);
+            }
+          }
+
+          message.error(`Ошибка сервера: ${serverMessage}`);
+        } else {
+          message.error('Ошибка при сохранении');
+        }
+      }
+    },
+    [data, editingData, updateMutation, validator, successMessage, useFullRecord]
+  );
+
+  const handleInputChange = useCallback(
+    (field: keyof T, value: string | number) => {
+      setEditingData(prev => ({ ...prev, [field]: value }));
+      if (validationErrors[field as string]) {
+        setValidationErrors(prev => {
+          const newErrors = { ...prev };
+          delete newErrors[field as string];
+          return newErrors;
+        });
+      }
+    },
+    [validationErrors]
+  );
+
+  const handleTableChange = useCallback(
+    (pagination: TablePaginationConfig) => {
+      if (pagination.current !== undefined && pagination.pageSize !== undefined) {
+        setPagination({
+          page: pagination.current - 1,
+          size: pagination.pageSize,
+        });
+        setEditingKey(null);
+        setEditingData({});
+        setValidationErrors({});
+      }
+    },
+    [setPagination]
+  );
+
+  const getInputStatus = useCallback(
+    (field: keyof T) => {
+      return validationErrors[field as string] ? 'error' : undefined;
+    },
+    [validationErrors]
+  );
+
+  return {
+    editingKey,
+    editingData,
+    validationErrors,
+    isEditing,
+    edit,
+    cancel,
+    save,
+    handleInputChange,
+    handleTableChange,
+    getInputStatus,
+  };
+};
