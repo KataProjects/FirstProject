@@ -4,7 +4,15 @@ import { data } from './mockData';
 import type { Passenger } from './dataTypes';
 
 import { Button } from 'antd';
-import moment from 'moment';
+
+// Функция для форматирования даты
+const formatDate = (dateString: string | Date) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+};
 
 const columns = [
     {
@@ -31,8 +39,7 @@ const columns = [
     {
         title: 'Дата рождения',
         render: (record: Passenger) => {
-            const date = record.birthDate;
-            return moment(date).format("DD.MM.YYYY");
+            return formatDate(record.birthDate);
         }
 
     },
@@ -51,8 +58,7 @@ const columns = [
     {
         title: 'Дата выдачи паспорта',
         render: (record: Passenger) => {
-            const date =  record.passport.passportIssuingDate;
-            return moment(date).format("DD.MM.YYYY");
+            return formatDate(record.passport.passportIssuingDate);
         }
     },
 ]   

@@ -4,7 +4,7 @@ import { About } from '@pages/about';
 import { TableAircraftPage } from '@pages/admin/tableAircraft';
 import { TableDestinationPage } from '@pages/admin/tableDestination';
 import { TableTimeZonesPage } from '@pages/admin/tableTimeZones';
-import { TableSeatsPage } from '@pages/admin/tableSeats';
+import { TableFlightSeatsPage } from '@pages/admin/tableFlightSeats';
 import { Contact } from '@pages/contact';
 import { HomePage } from '@pages/homePage';
 import { NotFoundPage } from '@pages/notFoundPage';
@@ -14,10 +14,11 @@ import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
 import { PassengersPage } from '@pages/passengersPage';
 
-
-
 import {  TableFlightsPage } from '@pages/admin/flights/TableFlightsPage.tsx';
 
+
+
+import { TableBooking } from '@pages/admin/tableBooking';
 
 export const ROUTES = {
   HOME: '/',
@@ -50,9 +51,10 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
-  { path: ROUTES.TABLE_BOARDING, element: <TableSeatsPage /> },
+  { path: ROUTES.TABLE_BOARDING, element: <TableFlightSeatsPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
   { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
+  { path: ROUTES.TABLE_BOOKINGS, element: <TableBooking /> }
 ];

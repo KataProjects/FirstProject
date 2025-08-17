@@ -1,0 +1,1 @@
+export { TableFlightSeatsPage } from './TableFlightSeats.tsx';
