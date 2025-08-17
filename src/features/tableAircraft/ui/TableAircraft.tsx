@@ -7,6 +7,7 @@ import { Input, Space, Button, Spin, type TablePaginationConfig } from 'antd';
 import { type FC, useCallback, useEffect, useState } from 'react';
 import { MoreHorizontal, Pencil, X } from 'lucide-react';
 import { EditOutlined, SaveOutlined, CloseOutlined, HolderOutlined } from '@ant-design/icons';
+import { showNotification } from '@shared/lib/notification';
 import {
   ContextMenu,
   useContextMenu,
@@ -102,7 +103,8 @@ export const TableAircraft: FC = () => {
   };
 
   const handleBtnClick = useCallback(() => {
-    console.log('open modal');
+    // здесь будет логика потом
+    showNotification('success', 'Самолет добавлен', 'Самолет успешно добавлен в систему.');
   }, []);
 
   useEffect(() => {
