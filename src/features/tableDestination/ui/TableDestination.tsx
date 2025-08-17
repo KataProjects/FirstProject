@@ -1,4 +1,4 @@
-import { HolderOutlined, PlusOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
+import { HolderOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd } from '@shared/types';
@@ -220,9 +220,7 @@ export const TableDestination: FC = () => {
     <div className={styles.wrapper}>
       <TableHeader
         title="Место назначения"
-        btnName="Добавить пункт назначения"
-        btnIcon={<PlusOutlined style={{ marginLeft: '8px' }} />}
-        onBtnClick={handleBtnClick}
+        extraContent={<AddButton text="Добавить пункт назначения" onClick={handleBtnClick} />}
         className={styles.customHeader}
       />
 
