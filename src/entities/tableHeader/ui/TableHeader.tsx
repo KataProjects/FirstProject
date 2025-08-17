@@ -4,24 +4,16 @@ import styles from './TableHeader.module.scss';
 
 interface ITableHeader {
   title: string;
-  btnName?: string;
-  onBtnClick?: () => void;
-  btnIcon?: ReactNode;
   extraContent?: ReactNode;
   className?: string;
-  buttonClassName?: string;
   titleClassName?: string;
 }
 
 export const TableHeader = memo(
   ({
     title = '',
-    btnName = '',
-    onBtnClick,
-    btnIcon = <span className={styles.btn__icon}>+</span>,
     extraContent,
     className = '',
-    buttonClassName = '',
     titleClassName = '',
   }: ITableHeader) => {
     return (
@@ -30,13 +22,9 @@ export const TableHeader = memo(
           <h1 className={`${styles.header__title} ${titleClassName}`}>{title}</h1>
         </div>
 
-        {btnName && (
+        {extraContent && (
           <div className={styles['header__btn--wrapper']}>
             {extraContent}
-            <button className={`${styles.header__btn} ${buttonClassName}`} onClick={onBtnClick}>
-              {btnName}
-              {btnIcon}
-            </button>
           </div>
         )}
       </div>

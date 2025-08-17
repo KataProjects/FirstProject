@@ -11,16 +11,7 @@
     @apply font-semibold;
   }
 
-  &__btn {
-    @apply py-2 px-5 ml-2 whitespace-nowrap flex justify-center items-center font-semibold border border-[var(--pagination-border-color)] shadow-md inset-shadow-sm rounded-none cursor-pointer transition-colors duration-300;
-    &:hover {
-      @apply text-[var(--pagination-bg-color)] border border-[var(--pagination-bg-color)];
-    }
-    &--wrapper {
-      @apply flex items-center;
-    }
-  }
-  .btn__icon {
-    @apply text-2xl ml-2;
+  &__btn--wrapper {
+    @apply flex items-center;
   }
 }

@@ -6,13 +6,14 @@ import { useTableEditor, type ValidationResult } from '@entities/table';
 import { Input, Space, Button, Spin, type TablePaginationConfig } from 'antd';
 import { type FC, useCallback, useEffect, useState } from 'react';
 import { MoreHorizontal, Pencil, X } from 'lucide-react';
-import { EditOutlined, SaveOutlined, CloseOutlined, HolderOutlined, PlusOutlined } from '@ant-design/icons';
+import { EditOutlined, SaveOutlined, CloseOutlined, HolderOutlined } from '@ant-design/icons';
 import {
   ContextMenu,
   useContextMenu,
 } from '@shared/ui/contexMenu';
 import styles from './TableAircraft.module.scss';
 import { useUpdateAircraftMutation, useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
+import { AddButton } from '@shared/ui/AddButton';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
   const errors: string[] = [];
@@ -271,9 +272,7 @@ export const TableAircraft: FC = () => {
     <div className={styles.wrapper}>
       <TableHeader
         title="Самолёты"
-        btnName="Добавить самолеты"
-        btnIcon={<PlusOutlined style={{ marginLeft: '8px' }} />}
-        onBtnClick={handleBtnClick}
+        extraContent={<AddButton text="Добавить самолеты" onClick={handleBtnClick} />}
         className={styles.customHeader}
       />
 
