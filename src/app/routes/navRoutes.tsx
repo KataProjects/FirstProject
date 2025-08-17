@@ -51,7 +51,7 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.PRIVACY_POLICY, element: <PrivacyPolicy /> },
   { path: ROUTES.TABLE_AIRCRAFTS, element: <TableAircraftPage /> },
   { path: ROUTES.TABLE_DESTINATION, element: <TableDestinationPage /> },
-  { path: ROUTES.TABLE_BOARDING, element: <TableFlightSeatsPage /> 
+  { path: ROUTES.TABLE_BOARDING, element: <TableFlightSeatsPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
   { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
