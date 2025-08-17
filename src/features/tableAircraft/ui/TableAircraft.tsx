@@ -1,4 +1,3 @@
-import { HolderOutlined, PlusOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentAircraftTable } from '@shared/types';
@@ -6,20 +5,14 @@ import { Table } from '@shared/ui/table';
 import { useTableEditor, type ValidationResult } from '@entities/table';
 import { Input, Space, Button, Spin, type TablePaginationConfig } from 'antd';
 import { type FC, useCallback, useEffect, useState } from 'react';
-import { useTableEditor, type ValidationResult } from '@entities/table/lib/hooks/useTableEditor';
-import { Input, Space, Button, Spin} from 'antd';
 import { MoreHorizontal, Pencil, X } from 'lucide-react';
-import { EditOutlined, SaveOutlined, CloseOutlined, PlusOutlined, HolderOutlined } from '@ant-design/icons';
-import { type FC, useState, useEffect, useCallback } from 'react';
-import {
-  useGetAircraftListQuery,
-  useUpdateAircraftMutation
-} from '@features/tableAircraft/models/aircraftAPI.ts';
+import { EditOutlined, SaveOutlined, CloseOutlined, HolderOutlined, PlusOutlined } from '@ant-design/icons';
 import {
   ContextMenu,
   useContextMenu,
 } from '@shared/ui/contexMenu';
 import styles from './TableAircraft.module.scss';
+import { useUpdateAircraftMutation, useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
   const errors: string[] = [];
@@ -76,18 +69,10 @@ export const TableAircraft: FC = () => {
     page: 0,
     size: DEFAULT_PAGE_LIMIT,
   });
-  const [page, setPage] = useState(0);
 
-  const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery({
-    page,
-    size: DEFAULT_PAGE_LIMIT,
-  });
+  const { data: aircraftList, isSuccess, isLoading, isError } = useGetAircraftListQuery(pagination);
 
   const [updateAircraft] = useUpdateAircraftMutation();
-
-  const setPagination = useCallback((pagination: { page: number; size: number }) => {
-    setPage(pagination.page);
-  }, []);
 
   const {
     editingKey,
@@ -109,7 +94,8 @@ export const TableAircraft: FC = () => {
 
   const handleTableChangeLocal = (pagination: TablePaginationConfig) => {
     if (pagination.current !== undefined) {
-      setPage(pagination.current - 1);
+      // @ts-ignore
+      setPagination((prevState) => ({...prevState, page: pagination.current - 1}));
     }
     handleTableChange(pagination);
   };
