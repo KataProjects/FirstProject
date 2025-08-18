@@ -1,0 +1,8 @@
+.categoriesContainer {
+    display: flex;
+    width: 60px;
+    justify-content: space-between;
+    align-items: center;
+    font-style: italic;
+    
+}
