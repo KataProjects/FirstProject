@@ -1,7 +1,6 @@
 import { Input, DatePicker, InputNumber, Radio, Checkbox, Button } from 'antd';
 import styles from './TicketSearchForm.module.scss';
 import HomePageSearch from '../../../assets/HomePageSearch.svg';
-import '@ant-design/v5-patch-for-react-19';
 
 export const TicketSearchForm = () => {
   return (
