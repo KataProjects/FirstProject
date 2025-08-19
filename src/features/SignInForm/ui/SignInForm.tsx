@@ -1,12 +1,13 @@
 import { Input } from 'antd';
 
-import { Controller, useForm } from 'react-hook-form';
+import { useState } from 'react';
 
+import { Controller, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+import { useLoginMutation } from '../../../shared/api/authApi';
 import { type FormValues } from '../model/types';
 import styles from './SignInForm.module.scss';
-import { useLoginMutation } from '../../../shared/api/authApi';
-import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
 
 const SignInForm: React.FC = () => {
   const {

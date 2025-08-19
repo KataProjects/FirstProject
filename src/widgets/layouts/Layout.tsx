@@ -1,7 +1,7 @@
-import type { FC, ReactNode } from 'react';
-
-import { Header } from '@widgets/header';
 import { Footer } from '@widgets/footer';
+import { Header } from '@widgets/header';
+
+import type { FC, ReactNode } from 'react';
 
 interface LayoutProps {
   children: ReactNode;
