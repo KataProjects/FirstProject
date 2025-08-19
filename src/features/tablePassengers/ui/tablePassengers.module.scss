@@ -13,4 +13,7 @@
   .errorText {
     @apply text-red-500;
   }
+  .nameInputs{
+   @apply flex flex-col;
+  }
 }
