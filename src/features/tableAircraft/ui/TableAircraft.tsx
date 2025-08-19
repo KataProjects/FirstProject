@@ -7,13 +7,15 @@ import { Input, Space, Button, Spin, type TablePaginationConfig } from 'antd';
 import { type FC, useCallback, useEffect, useState } from 'react';
 import { MoreHorizontal, Pencil, X } from 'lucide-react';
 import { EditOutlined, SaveOutlined, CloseOutlined, HolderOutlined } from '@ant-design/icons';
-import { showNotification } from '@shared/lib/notification/notifications';
+
+import { showNotification } from '@shared/lib/notification';
 import {
   ContextMenu,
   useContextMenu,
 } from '@shared/ui/contexMenu';
 import styles from './TableAircraft.module.scss';
-import { useUpdateAircraftMutation, useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi';
+
+import { useUpdateAircraftMutation, useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi'
 import { AddButton } from '@shared/ui/AddButton';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {

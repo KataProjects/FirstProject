@@ -1,18 +1,18 @@
 import { baseAPI } from '@shared/api/baseAPI';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
-import type { IContentAircraftTable, IDataSource } from '@shared/types';
+import type { IFlight, IDataSource } from '@shared/types';
 import type { PaginationParams } from '@shared/types/pagination';
 
-const aircraftAPI = baseAPI.injectEndpoints({
+const flightsAPI = baseAPI.injectEndpoints({
   endpoints: (build) => ({
-    getAircraftList: build.query<IDataSource<IContentAircraftTable>, PaginationParams>({
+    getFlightsList: build.query<IDataSource<IFlight>, PaginationParams>({
       query: ({ page = 0, size = DEFAULT_PAGE_LIMIT }: PaginationParams) =>
-        `aircrafts?page=${page}&size=${size}`,
-      providesTags: ['Aircraft'],
+        `flights?page=${page}&size=${size}`,
+      providesTags: ['Flight'],
     }),
-    updateAircraft: build.mutation<void, Partial<IContentAircraftTable> & { id: number }>({
+    updateFlight: build.mutation<void, Partial<IFlight> & { id: number }>({
       query: ({ id, ...patch }) => ({
-        url: `aircrafts/${id}`,
+        url: `flights/${id}`,
         method: 'PATCH',
         body: patch,
       }),
@@ -23,14 +23,14 @@ const aircraftAPI = baseAPI.injectEndpoints({
           const cacheEntries = state.api.queries;
 
           Object.keys(cacheEntries).forEach(key => {
-            if (key.startsWith('getAircraftList(')) {
-              const match = key.match(/getAircraftList\((.+)\)/);
+            if (key.startsWith('getFlightsList(')) {
+              const match = key.match(/getFlightsList\((.+)\)/);
               if (match) {
                 try {
                   const params = JSON.parse(match[1]);
                   dispatch(
-                    aircraftAPI.util.updateQueryData('getAircraftList', params, (draft) => {
-                      const item = draft.content.find(aircraft => aircraft.id === id);
+                    flightsAPI.util.updateQueryData('getFlightsList', params, (draft) => {
+                      const item = draft.content.find(flight => flight.id === id);
                       if (item) {
                         Object.assign(item, patch);
                       }
@@ -45,7 +45,10 @@ const aircraftAPI = baseAPI.injectEndpoints({
         }
       },
     }),
+    getFlightStatuses: build.query<string[], void>({
+      query: () => 'flights/status',
+    }),
   }),
 });
 
-export const { useGetAircraftListQuery, useUpdateAircraftMutation } = aircraftAPI;
+export const { useGetFlightsListQuery, useUpdateFlightMutation, useGetFlightStatusesQuery } = flightsAPI;

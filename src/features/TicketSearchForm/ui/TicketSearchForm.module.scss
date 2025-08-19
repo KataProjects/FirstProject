@@ -1,0 +1,27 @@
+@use 'tailwindcss';
+.wrapper {
+  @apply bg-[#D3EFFF] rounded-[24px] px-5 py-5 flex justify-center;
+}
+
+
+/* Белая карточка внутри */
+.card {
+  @apply bg-white rounded-[20px] shadow w-full min-w-[1120px] p-6 md:p-8;
+}
+
+/* Сетка формы: слева контент, справа радио+кнопка */
+.form {
+  @apply grid gap-6;
+  @apply grid-cols-1 lg:grid-cols-[1fr_240px]; /* левая гибкая, правая фикс ширина */
+  align-items: start;
+}
+
+.left { @apply flex flex-col; }
+.right { @apply flex flex-col; }
+
+/* Ряды */
+.row3 { @apply grid grid-cols-1 md:grid-cols-3 gap-4; }
+.row1 { @apply grid grid-cols-1 justify-items-center relative bottom-[35px]; }
+
+.col   { @apply flex flex-col gap-2; }
+.label { @apply text-sm font-medium text-gray-600; }
