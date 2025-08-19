@@ -13,7 +13,7 @@ import {
   useContextMenu,
 } from '@shared/ui/contexMenu';
 import styles from './TableAircraft.module.scss';
-import { useUpdateAircraftMutation, useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftApi.ts';
+import { useUpdateAircraftMutation, useGetAircraftListQuery } from '@features/tableAircraft/models/aircraftAPI';
 import { AddButton } from '@shared/ui/AddButton';
 
 const validateAircraft = (data: Partial<IContentAircraftTable>): ValidationResult => {
