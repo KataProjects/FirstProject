@@ -21,5 +21,7 @@ const globalSlice = createSlice({
   },
 });
 
+
+
 export const { setLoading, setUser, logout } = globalSlice.actions;
 export default globalSlice.reducer;

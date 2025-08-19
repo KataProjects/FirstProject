@@ -1,1 +1,2 @@
-export { TableSeatsPage } from './TableSeats';
+export { TableSeatsPage } from './tableSeatsPage'
+

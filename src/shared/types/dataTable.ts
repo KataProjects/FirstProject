@@ -91,7 +91,8 @@ export interface IFlight {
   departureDateTime: string;
   arrivalDateTime: string;
   aircraftId: number;
-  flightStatus: 'ON_TIME' | 'COMPLETED' | 'CANCELLED'; 
+  flightStatus: 'ON_TIME' | 'DELAYED' | 'COMPLETED' | 'CANCELED' | 'ARRIVED' | 'DEPARTED';
+
 }
 
 export interface IContentDestinationTable {

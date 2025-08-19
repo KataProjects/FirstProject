@@ -1,6 +1,14 @@
 import { Table } from '@shared/ui/table';
 import { Button } from 'antd';
-import moment from 'moment';
+
+// Функция для форматирования даты
+const formatDate = (dateString: string | Date) => {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}.${month}.${year}`;
+};
 
 import type { Passenger } from './dataTypes';
 import { data } from './mockData';
@@ -23,34 +31,32 @@ const columns = [
     title: 'Телефон',
     render: (record: Passenger) => {
       return `+${record.phoneNumber}`;
-    },
+    }
   },
-  {
-    title: 'Дата рождения',
-    render: (record: Passenger) => {
-      const date = record.birthDate;
-      return moment(date).format('DD.MM.YYYY');
+   {
+     title: 'Дата рождения',
+     render: (record: Passenger) => {
+       return formatDate(record.birthDate);
+       }
+     },
+    {
+        title: 'Серийный номер',
+        render: (record: Passenger) => {
+            return record.passport.serialNumberPassport
+        }
     },
-  },
-  {
-    title: 'Серийный номер',
-    render: (record: Passenger) => {
-      return record.passport.serialNumberPassport;
-    },
-  },
   {
     title: 'Гражданство',
     render: (record: Passenger) => {
       return record.passport.passportIssuingCountry;
+     }
     },
-  },
-  {
-    title: 'Дата выдачи паспорта',
-    render: (record: Passenger) => {
-      const date = record.passport.passportIssuingDate;
-      return moment(date).format('DD.MM.YYYY');
+    {
+        title: 'Дата выдачи паспорта',
+        render: (record: Passenger) => {
+            return formatDate(record.passport.passportIssuingDate);
+        }
     },
-  },
 ];
 
 export const PassengersPage = () => {
