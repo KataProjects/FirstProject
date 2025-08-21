@@ -1,13 +1,15 @@
+
 import { HolderOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
+
 import { TableHeader } from '@entities/tableHeader';
 import { AddButton } from '@shared/ui/AddButton';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentDestinationTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
-import { Button, Input, Space, message, Spin, type TablePaginationConfig } from 'antd';
+import { Button, Input, Space, Spin, type TablePaginationConfig, message } from 'antd';
 
-import { type FC, useCallback, useState, useEffect} from 'react';
+import { type FC, useCallback, useEffect, useState } from 'react';
 
 import { useGetDestinationListQuery } from '../models/destinationApi';
 import styles from './TableDestination.module.scss';
@@ -18,7 +20,12 @@ const DragHandle: FC = () => {
 
 export const TableDestination: FC = () => {
   const [page, setPage] = useState(0);
-  const { data: destinationList, isSuccess, isLoading, isError } = useGetDestinationListQuery({
+  const {
+    data: destinationList,
+    isSuccess,
+    isLoading,
+    isError,
+  } = useGetDestinationListQuery({
     page: page,
     size: DEFAULT_PAGE_LIMIT,
   });
@@ -29,7 +36,7 @@ export const TableDestination: FC = () => {
 
   useEffect(() => {
     if (isSuccess && destinationList?.content) {
-      setData(destinationList.content)
+      setData(destinationList.content);
     }
   }, [destinationList]);
 
@@ -52,7 +59,7 @@ export const TableDestination: FC = () => {
   const save = (id: number) => {
     try {
       const newData = [...data];
-      const index = newData.findIndex(item => id === item.id);
+      const index = newData.findIndex((item) => id === item.id);
       if (index > -1) {
         const item = newData[index];
         newData.splice(index, 1, {
@@ -70,9 +77,8 @@ export const TableDestination: FC = () => {
   };
 
   const handleInputChange = (field: keyof IContentDestinationTable, value: string) => {
-    setEditingData(prev => ({ ...prev, [field]: value }));
+    setEditingData((prev) => ({ ...prev, [field]: value }));
   };
-
 
   const handleTableChange = (pagination: TablePaginationConfig) => {
     if (pagination.current !== undefined) {
@@ -186,12 +192,7 @@ export const TableDestination: FC = () => {
               icon={<SaveOutlined />}
               onClick={() => save(record.id)}
             />
-            <Button
-              type="link"
-              size="small"
-              icon={<CloseOutlined />}
-              onClick={cancel}
-            />
+            <Button type="link" size="small" icon={<CloseOutlined />} onClick={cancel} />
           </Space>
         ) : (
           <Button

@@ -8,3 +8,4 @@ export const formatDateTime = (dateTime: string): string => {
   
   return `${year}-${month}-${day}, ${hours}:${minutes}`;
 };
+
