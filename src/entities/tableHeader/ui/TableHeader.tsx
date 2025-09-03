@@ -6,6 +6,9 @@ interface ITableHeader {
   title: string;
   extraContent?: ReactNode;
   className?: string;
+  btnName: string;
+  onBtnClick: () => void;
+  btnIcon?: ReactNode;
   titleClassName?: string;
 }
 

@@ -1,5 +1,12 @@
 import type { PaginationParams } from '@shared/types/pagination';
-import { useBaseTableEditor, type ValidationResult, type UseBaseTableEditorReturn } from '@entities/table';
+import type { ValidationResult } from './useBaseTableEditor'; 
+
+export type { ValidationResult }; 
+
+import {
+  useBaseTableEditor,
+  type UseBaseTableEditorReturn,
+} from './useBaseTableEditor';
 
 export interface UseTableEditorOptions<T extends { id: number }> {
   data: T[];
