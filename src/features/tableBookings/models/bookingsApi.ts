@@ -23,7 +23,7 @@ interface GetBookingsParams {
 
 export const bookingsApi = createApi({
   reducerPath: 'bookingsApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://92.118.114.29:8080/api/bookings' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://92.118.114.29:8080/api/' }),
   endpoints: (builder) => ({
     getBookings: builder.query<BookingResponse, GetBookingsParams>({
       query: ({ page, size }) => `bookings?page=${page}&size=${size}`,
@@ -40,7 +40,4 @@ export const bookingsApi = createApi({
   }),
 });
 
-export const {
-  useGetBookingsQuery,
-  useUpdateBookingMutation,
-} = bookingsApi;
+export const { useGetBookingsQuery, useUpdateBookingMutation } = bookingsApi;
