@@ -36,7 +36,7 @@ export interface IContentSeatsTableTransformed {
   flightId: number;
   seatId: number;
   fare: number;
-  category: "BUSINESS" | "FIRST" | "ECONOMY" | "PREMIUM_ECONOMY";
+  category: 'BUSINESS' | 'FIRST' | 'ECONOMY' | 'PREMIUM_ECONOMY';
   isSold: boolean;
   isRegistered: boolean;
   isBooked: boolean;
@@ -104,4 +104,21 @@ export interface IContentDestinationTable {
   airportName: string;
 }
 
+export interface IContentPassengerTable {
+  id: number;
+  firstName: string;
+  lastName: string;
+  birthDate: string;
+  phoneNumber: string;
+  passport: IPassportData;
+  email: string;
+}
+
+export interface IPassportData {
+  middleName?: string;
+  gender?: string;
+  serialNumberPassport?: string;
+  passportIssuingDate?: string;
+  passportIssuingCountry?: string;
+}
 

@@ -3,6 +3,7 @@ import { Button } from 'antd';
 import { formatDateTime } from '@shared/lib/date';
 import { ticketsMockData, type Ticket } from '@entities/ticket';
 
+
 const columns = [
   {
     title: 'ID',

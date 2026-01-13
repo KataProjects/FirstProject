@@ -1,0 +1,19 @@
+@use 'tailwindcss';
+
+.wrapper {
+  @apply mx-3 py-5 md:mx-13 flex flex-col;
+  :global {
+    .ant-picker {
+      @apply w-[110%] !p-[4px_2px];
+    }
+    .ant-input-outlined {
+      @apply p-[4px_6px];
+    }
+  }
+  .errorText {
+    @apply text-red-500;
+  }
+  .nameInputs{
+   @apply flex flex-col;
+  }
+}

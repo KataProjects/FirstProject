@@ -1,8 +1,10 @@
 import { HolderOutlined, PlusOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 import { TableHeader } from '@entities/tableHeader';
+import { AddButton } from '@shared/ui/AddButton';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd, IContentTimeZoneTable } from '@shared/types';
 import { Table } from '@shared/ui/table';
+
 import { useTableEditorFullRecord, type ValidationResult } from '@entities/table';
 import { Input, Space, Button, Spin, type TablePaginationConfig } from 'antd';
 import { type FC, useState, useEffect, useCallback } from 'react';
@@ -10,6 +12,7 @@ import {
   useGetTimeZonesListQuery,
   useUpdateTimeZoneMutation
 } from '@features/tableTimeZone/models/timeZoneApi';
+
 import styles from './TableTimeZone.module.scss';
 
 const validateGMT = (value: string): boolean => {
@@ -68,8 +71,11 @@ const DragHandle: FC = () => {
   return <Button type="text" size="small" icon={<HolderOutlined />} />;
 };
 
+
 export const TableTimeZone: FC = () => {
+
   const [page, setPage] = useState(0);
+
 
   const { data: timeZonesList, isSuccess, isLoading, isError } = useGetTimeZonesListQuery({
     page,
@@ -101,17 +107,20 @@ export const TableTimeZone: FC = () => {
   });
 
   const handleTableChangeLocal = (pagination: TablePaginationConfig) => {
+
     if (pagination.current !== undefined) {
       setPage(pagination.current - 1);
     }
     handleTableChange(pagination);
   };
 
+
   useEffect(() => {
     if (isSuccess) {
       console.log('Получены данные:', timeZonesList);
     }
   }, [isSuccess, timeZonesList]);
+
 
   const handleBtnClick = useCallback(() => {
     console.log('open modal');
@@ -245,6 +254,7 @@ export const TableTimeZone: FC = () => {
       render: () => <DragHandle />,
     },
   ];
+
 
   if (isLoading) return <Spin size="large" />;
   if (isError) return <div>Ошибка загрузки</div>;

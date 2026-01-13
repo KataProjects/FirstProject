@@ -12,7 +12,7 @@ import { PrivacyPolicy } from '@pages/privacyPolicy';
 import { SignIn } from '@pages/signIn';
 import { SignUp } from '@pages/signUp';
 import { TicketsPage } from '@pages/ticketsPage';
-import { PassengersPage } from '@pages/passengersPage';
+import { TablePassengersPage } from '@pages/admin/tablePassengers';
 import { TableSeatsPage } from '@pages/admin/tableSeats';
 
 
@@ -56,7 +56,7 @@ export const navRoutes: RoutesProps = [
   { path: ROUTES.TABLE_BOARDING, element: <TableFlightSeatsPage /> },
   { path: ROUTES.NOT_FOUND, element: <NotFoundPage /> },
   { path: ROUTES.TABLE_TIMEZONES, element: <TableTimeZonesPage /> },
-  { path: ROUTES.TABLE_PASSENGERS, element: <PassengersPage /> },
+  { path: ROUTES.TABLE_PASSENGERS, element: <TablePassengersPage /> },
   { path: ROUTES.TABLE_TICKETS, element: <TicketsPage /> },
   { path: ROUTES.TABLE_BOOKINGS, element: <TableBooking /> },
   { path: ROUTES.TABLE_SEATS, element: <TableSeatsPage /> },

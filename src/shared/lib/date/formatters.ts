@@ -1,4 +1,5 @@
 export const formatDateTime = (dateTime: string): string => {
+
   const date = new Date(dateTime);
   const year = date.getFullYear();
   const month = (date.getMonth() + 1).toString().padStart(2, '0');

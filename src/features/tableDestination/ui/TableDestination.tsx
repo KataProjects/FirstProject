@@ -2,6 +2,7 @@
 import { HolderOutlined, EditOutlined, SaveOutlined, CloseOutlined } from '@ant-design/icons';
 
 import { TableHeader } from '@entities/tableHeader';
+import { AddButton } from '@shared/ui/AddButton';
 import { DEFAULT_PAGE_LIMIT } from '@shared/config/pagination';
 import type { IColumnTableAntd } from '@shared/types';
 import type { IContentDestinationTable } from '@shared/types';
